@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MODÈLE D'EXCELLENCE | Congoboost Digital</title>
+    <link rel="stylesheet" href="styles.css?v=2.0">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --p-accent: #0f172a;
+            --p-gold: #d4af37;
+        }
+        body { font-family: 'Outfit', sans-serif; }
+        .demo-bar {
+            background: var(--p-accent);
+            color: white;
+            padding: 12px;
+            text-align: center;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+        .hero-premium {
+            padding: 150px 0 100px;
+            background: radial-gradient(circle at top right, #f8fafc, white);
+            text-align: center;
+        }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        .mockup-pro {
+            width: 100%;
+            max-width: 1000px;
+            margin: 50px auto;
+            border-radius: 30px;
+            background: white;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+        }
+        .sidebar { background: #f8fafc; border-right: 1px solid #e2e8f0; padding: 30px; }
+        .main-view { padding: 40px; background: white; }
+        
+        .stat-card-mini {
+            padding: 20px;
+            border-radius: 16px;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+        
+        .btn-premium {
+            background: var(--p-accent);
+            color: white;
+            padding: 20px 45px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(15, 23, 42, 0.2);
+        }
+        .btn-premium:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(15, 23, 42, 0.3); }
+
+        @media (max-width: 768px) {
+            .mockup-pro { grid-template-columns: 1fr; margin-top: 50px; }
+            .sidebar { display: none; }
+            .main-view { padding: 20px; }
+            .hero-premium { padding: 80px 0 50px; }
+            .hero-premium h1 { font-size: 2.2rem; }
+            .stats-mini-grid { grid-template-columns: 1fr !important; }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="demo-bar">ARCHITECTURE DIGITALE GÉNÉRÉE POUR VOTRE PERFORMANCE</div>
+
+    <nav style="padding: 30px 0; border-bottom: 1px solid #f1f5f9;">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="logo" id="demo-logo" style="font-weight: 800; font-size: 1.5rem; letter-spacing: -1px;">PRO<span>.</span>SYSTEM</div>
+            <a href="https://wa.me/message/ARWYGVW5TELAF1" class="btn-dark" style="padding: 12px 25px; border-radius: 50px; text-decoration: none; color: white; background: #000;">Contact Expert</a>
+        </div>
+    </nav>
+
+    <header class="hero-premium container">
+        <div class="reveal">
+            <span style="color: var(--p-gold); font-weight: 800; letter-spacing: 3px; font-size: 0.8rem; text-transform: uppercase;">Excellence Opérationnelle</span>
+            <h1 id="demo-title" style="font-size: 4.5rem; line-height: 1.1; margin: 20px 0;">Le Futur de votre <br><span style="color: var(--p-gold);">Institution</span> commence ici.</h1>
+            <p id="demo-hero-text" style="max-width: 700px; margin: 30px auto; color: #64748b; font-size: 1.25rem;">
+                Arrêtez de gérer, commencez à piloter. CongoBoost Digital transforme votre désordre administratif en une machine de guerre automatisée.
+            </p>
+            <a href="https://wa.me/message/ARWYGVW5TELAF1" class="btn-premium">Activer ma Transformation</a>
+        </div>
+
+        <div class="mockup-pro" style="margin-top: 100px;">
+            <div class="sidebar">
+                <div style="width: 40px; height: 40px; background: #e2e8f0; border-radius: 10px; margin-bottom: 40px;"></div>
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <div style="height: 10px; width: 80%; background: #e2e8f0; border-radius: 5px;"></div>
+                    <div style="height: 10px; width: 60%; background: #e2e8f0; border-radius: 5px;"></div>
+                    <div style="height: 10px; width: 70%; background: #e2e8f0; border-radius: 5px;"></div>
+                    <div style="height: 10px; width: 50%; background: #e2e8f0; border-radius: 5px;"></div>
+                </div>
+            </div>
+            <div class="main-view">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+                    <h3 style="font-weight: 800;">Tableau de Bord Stratégique</h3>
+                    <span style="padding: 8px 15px; background: #f0fdf4; color: #15803d; border-radius: 50px; font-size: 0.75rem; font-weight: 700;">Système Actif</span>
+                </div>
+                <div class="stats-mini-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin-bottom: 40px;">
+                    <div class="stat-card-mini">
+                        <span id="stat-1-name" style="font-size: 0.7rem; color: #64748b; text-transform: uppercase;">Revenus ce mois</span>
+                        <div id="stat-1-val" style="font-size: 1.5rem; font-weight: 800; margin-top: 5px;">$12,450</div>
+                    </div>
+                    <div class="stat-card-mini">
+                        <span id="stat-2-name" style="font-size: 0.7rem; color: #64748b; text-transform: uppercase;">Efficacité Admin</span>
+                        <div id="stat-2-val" style="font-size: 1.5rem; font-weight: 800; margin-top: 5px; color: #22c55e;">+94%</div>
+                    </div>
+                    <div class="stat-card-mini">
+                        <span id="stat-3-name" style="font-size: 0.7rem; color: #64748b; text-transform: uppercase;">Alertes WhatsApp</span>
+                        <div id="stat-3-val" style="font-size: 1.5rem; font-weight: 800; margin-top: 5px;">1,042</div>
+                    </div>
+                </div>
+                <div style="height: 200px; width: 100%; background: #f8fafc; border-radius: 20px; border: 1px dashed #cbd5e1; display: flex; align-items: center; justify-content: center; color: #94a3b8;">
+                    Graphique de Performance en Temps Réel
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="container" style="padding: 100px 0; text-align: center;">
+        <h2 style="font-size: 3rem; margin-bottom: 30px;">Pourquoi nos clients <span>Excellent</span> ?</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; margin-top: 60px;">
+            <div style="text-align: left; padding: 40px; background: #fff; border-radius: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.05);">
+                <div style="font-size: 3rem; margin-bottom: 20px;">⚡</div>
+                <h4 style="margin-bottom: 15px;">Vitesse Absolue</h4>
+                <p style="color: #64748b;">Plus de temps d'attente. Vos rapports sont prêts en une seconde.</p>
+            </div>
+            <div style="text-align: left; padding: 40px; background: #fff; border-radius: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.05);">
+                <div style="font-size: 3rem; margin-bottom: 20px;">🛡️</div>
+                <h4 style="margin-bottom: 15px;">Sécurité Totale</h4>
+                <p style="color: #64748b;">Vos données sont chiffrées et stockées dans le Cloud Congoboost.</p>
+            </div>
+            <div style="text-align: left; padding: 40px; background: #fff; border-radius: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.05);">
+                <div style="font-size: 3rem; margin-bottom: 20px;">💎</div>
+                <h4 style="margin-bottom: 15px;">Prestige de Marque</h4>
+                <p style="color: #64748b;">Offrez à vos clients une expérience digne des plus grandes entreprises mondiales.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer style="padding: 100px 0; background: #0f172a; color: white; text-align: center;">
+        <h2 style="color: white; margin-bottom: 30px;">Prêt à dominer votre marché ?</h2>
+        <a href="https://wa.me/message/ARWYGVW5TELAF1" class="btn-premium" style="background: var(--p-gold);">Demander mon Étude Personnalisée</a>
+        <p style="margin-top: 40px; font-size: 0.8rem; color: #64748b;">© 2026 Congoboost Digital. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        // --- LOGIQUE DE PERSONNALISATION DYNAMIQUE & CALCULS RÉELS ---
+        const auditRaw = localStorage.getItem('currentAudit');
+        const audit = auditRaw ? JSON.parse(auditRaw) : { type: 'pro', url: 'BUSINESS', revenue: 100000, loss: 20000, efficiency: 40, staff: 10, customers: 500 };
+        
+        const content = {
+            school: {
+                title: `Le Futur de <br><span style='color: var(--p-gold);'>${audit.url.toUpperCase()}</span>`,
+                logo: "EDU<span>.</span>PRO",
+                stat1: "Frais Scolaires",
+                stat2: "Suivi Éducatif",
+                stat3: "Alertes Parents",
+                hero: `Gérez vos ${audit.staff} collaborateurs et vos finances sans aucune erreur papier.`
+            },
+            shop: {
+                title: `Le Futur de <br><span style='color: var(--p-gold);'>${audit.url.toUpperCase()}</span>`,
+                logo: "SHOP<span>.</span>MAX",
+                stat1: "Ventes Hebdo",
+                stat2: "Gestion Stock",
+                stat3: "Commandes WA",
+                hero: `Automatisez vos ventes et votre stock pour sécuriser vos $${audit.revenue.toLocaleString()} de CA.`
+            },
+            pro: {
+                title: `Le Futur de <br><span style='color: var(--p-gold);'>${audit.url.toUpperCase()}</span>`,
+                logo: "PRO<span>.</span>SYSTEM",
+                stat1: "Dossiers Clients",
+                stat2: "Efficacité Flux",
+                stat3: "Facturation",
+                hero: `Pilotez vos activités professionnelles avec une précision chirurgicale.`
+            }
+        };
+
+        const config = content[audit.type];
+        document.getElementById('demo-title').innerHTML = config.title;
+        document.getElementById('demo-logo').innerHTML = config.logo;
+        document.getElementById('demo-hero-text').innerText = config.hero;
+        document.getElementById('stat-1-name').innerText = config.stat1;
+        document.getElementById('stat-2-name').innerText = config.stat2;
+        document.getElementById('stat-3-name').innerText = config.stat3;
+
+        // Injection des chiffres réels calculés
+        document.getElementById('stat-1-val').innerText = `$${Math.floor(audit.revenue / 12).toLocaleString()}`;
+        document.getElementById('stat-2-val').innerText = `+${90 + (audit.efficiency % 10)}%`; // Simulation d'amélioration
+        document.getElementById('stat-3-val').innerText = audit.customers.toLocaleString();
+
+        // Animations Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
