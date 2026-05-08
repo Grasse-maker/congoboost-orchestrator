@@ -4,7 +4,7 @@ from datetime import datetime
 
 class Agent3DExplorer:
     """
-    Agent 3D Explorer - Congoboost Digital
+    Agent 3D Explorer - Agentcy Enterprise
     Role : Explore les tendances du web 3D et propose des prototypes interactifs.
     """
 

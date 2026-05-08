@@ -4,7 +4,7 @@ from datetime import datetime
 
 class AgentAuditor:
     """
-    Agent Auditor - Congoboost Digital
+    Agent Auditor - Agentcy Enterprise
     Analyse profonde basée sur les meilleures pratiques mondiales adaptées à la RDC.
     """
 

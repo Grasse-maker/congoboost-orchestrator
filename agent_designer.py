@@ -3,9 +3,9 @@ import time
 import json
 import datetime
 
-class CongoboostDesignerAgent:
+class Agentcy EnterpriseDesignerAgent:
     """
-    Agent de Design Autonome pour Congoboost Digital.
+    Agent de Design Autonome pour Agentcy Enterprise.
     Recherche les tendances, améliore le code et planifie les notifications.
     """
     
@@ -75,7 +75,7 @@ class CongoboostDesignerAgent:
             time.sleep(14400) # 4 heures
 
 if __name__ == "__main__":
-    designer = CongoboostDesignerAgent()
+    designer = Agentcy EnterpriseDesignerAgent()
     # designer.run_cycle() # Désactivé pour ne pas bloquer l'exécution ici
     # Exécution d'un seul test
     trend = designer.scan_for_trends()

@@ -12,7 +12,7 @@ class AgentSentinel:
         self.brand = "AGENTCY ENTERPRISE"
         self.module_id = "SENTINEL-X"
         self.targets = {
-            "tiktok": "https://www.tiktok.com/@congoboost.digita",
+            "tiktok": "https://www.tiktok.com/@Agentcy Enterprise.digita",
             "whatsapp": "https://wa.me/message/ARWYGVW5TELAF1",
             "competitors": [
                 "Kinshasa Digital",
