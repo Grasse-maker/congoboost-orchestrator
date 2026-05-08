@@ -19,8 +19,8 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
-      - name: Exécuter l'Orchestrateur
-        run: python agent_organizer.py
+      - name: Run ATLAS Strategic Briefing
+        run: python agent_atlas.py
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
           WEBHOOK_URL: "https://script.google.com/macros/s/AKfycbyuISpIUfYCRElys3ZxvENsFQDsh1O7yP239QSyGm1k9LUSxZQakv8kq-VzAwPO0Ho/exec"

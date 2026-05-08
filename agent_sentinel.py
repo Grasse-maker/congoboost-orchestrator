@@ -2,14 +2,15 @@ import json
 import os
 import time
 
-class CongoboostSentinel:
+class AgentSentinel:
     """
-    Agent d'Intelligence Central pour Congoboost Digital.
-    Responsable de la surveillance de l'empreinte numérique et des tendances du marché.
+    SENTINEL - Module de Veille Stratégique d'AGENTCY ENTERPRISE.
+    Surveille l'innovation IA et les opportunités de marché 24/7.
     """
     
     def __init__(self):
-        self.brand_name = "Congoboost Digital"
+        self.brand = "AGENTCY ENTERPRISE"
+        self.module_id = "SENTINEL-X"
         self.targets = {
             "tiktok": "https://www.tiktok.com/@congoboost.digita",
             "whatsapp": "https://wa.me/message/ARWYGVW5TELAF1",
