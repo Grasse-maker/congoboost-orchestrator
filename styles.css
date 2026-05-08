@@ -111,7 +111,7 @@ nav {
 
 .btn-nav {
     background: var(--text-main);
-    color: #fff !important;
+    color: var(--bg) !important;
     padding: 10px 20px;
     border-radius: 8px;
 }
@@ -169,7 +169,7 @@ nav {
 
 .btn-primary {
     background: var(--text-main);
-    color: #fff;
+    color: var(--bg);
 }
 
 .btn-primary:hover {
@@ -278,7 +278,7 @@ section {
 }
 
 .sim-module {
-    background: #fff;
+    background: var(--bg);
     padding: 32px;
     border-radius: 20px;
     border: 1px solid var(--border);
@@ -317,6 +317,8 @@ select {
     padding: 12px 16px;
     border: 1px solid var(--border);
     border-radius: 8px;
+    background: var(--bg);
+    color: var(--text-main);
     font-family: inherit;
     font-size: 0.95rem;
     transition: var(--transition);
@@ -328,18 +330,19 @@ input:focus {
 }
 
 .sim-results {
-    background: var(--text-main);
-    color: #fff;
+    background: var(--surface);
+    color: var(--text-main);
     padding: 48px;
     border-radius: 24px;
     position: sticky;
     top: 100px;
+    border: 1px solid var(--border);
 }
 
 .res-header {
     font-size: 0.7rem;
     font-weight: 700;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-muted);
     margin-bottom: 12px;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -354,7 +357,7 @@ input:focus {
 
 .loss-desc {
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--text-muted);
     margin-bottom: 40px;
 }
 
@@ -374,7 +377,7 @@ input:focus {
 
 .sub-metric label {
     margin-bottom: 0;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--text-muted);
     text-transform: none;
     font-size: 0.85rem;
 }
@@ -385,7 +388,7 @@ input:focus {
 }
 
 .recommendation {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--primary-soft);
     padding: 24px;
     border-radius: 12px;
     border-left: 4px solid var(--primary);
@@ -400,7 +403,7 @@ input:focus {
 }
 
 .recommendation p {
-    color: #fff;
+    color: var(--text-main);
     font-size: 0.88rem;
     line-height: 1.5;
 }
