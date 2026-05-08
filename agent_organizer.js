@@ -77,8 +77,35 @@ const AgentOrganizer = {
                 status: "new"
             });
             console.log(`[+] Lead de contact loggé dans ${collectionName}`);
+            
+            // Déclenchement de l'alerte WhatsApp via le Nexus
+            this.notifyNexus("Nouveau Lead Détecté", message);
+            
         } catch (error) {
             console.error("Erreur Firestore : ", error);
+        }
+    },
+
+    // Envoi d'une notification push vers le Nexus (Orchestrateur)
+    async notifyNexus(title, message) {
+        const webhookUrl = "https://script.google.com/macros/s/AKfycbyuISpIUfYCRElys3ZxvENsFQDsh1O7yP239QSyGm1k9LUSxZQakv8kq-VzAwPO0Ho/exec";
+        const payload = {
+            title: `[AGENTCY ENTERPRISE] ${title}`,
+            message: message,
+            source: "Agent Organisateur Web"
+        };
+        
+        try {
+            // Note: mode 'no-cors' est souvent nécessaire pour les Google Apps Scripts
+            await fetch(webhookUrl, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+            console.log("[>] Notification envoyée au Nexus.");
+        } catch (error) {
+            console.error("[!] Erreur notification Nexus :", error);
         }
     },
 
