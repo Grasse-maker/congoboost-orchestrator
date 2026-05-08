@@ -9,12 +9,16 @@
     --primary-soft: #eff6ff;
     --border: #e2e8f0;
     --accent-gold: #b59410;
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-    --shadow-md: 0 10px 40px rgba(0,0,0,0.04);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.04);
     --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
     background-color: var(--bg);
@@ -53,7 +57,9 @@ nav {
     letter-spacing: -0.5px;
 }
 
-.logo span { color: var(--primary); }
+.logo span {
+    color: var(--primary);
+}
 
 .nav-links {
     display: flex;
@@ -69,7 +75,9 @@ nav {
     transition: var(--transition);
 }
 
-.nav-links a:hover { color: var(--text-main); }
+.nav-links a:hover {
+    color: var(--text-main);
+}
 
 .btn-nav {
     background: var(--text-main);
@@ -129,14 +137,30 @@ nav {
     border: none;
 }
 
-.btn-primary { background: var(--text-main); color: #fff; }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+.btn-primary {
+    background: var(--text-main);
+    color: #fff;
+}
 
-.btn-outline { background: transparent; color: var(--text-main); border: 1px solid var(--border); }
-.btn-outline:hover { background: var(--surface); }
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--text-main);
+    border: 1px solid var(--border);
+}
+
+.btn-outline:hover {
+    background: var(--surface);
+}
 
 /* SECTIONS */
-section { padding: 100px 0; }
+section {
+    padding: 100px 0;
+}
 
 .section-header {
     margin-bottom: 60px;
@@ -244,7 +268,9 @@ section { padding: 100px 0; }
     margin-bottom: 20px;
 }
 
-.form-group:last-child { margin-bottom: 0; }
+.form-group:last-child {
+    margin-bottom: 0;
+}
 
 label {
     display: block;
@@ -255,7 +281,8 @@ label {
     text-transform: uppercase;
 }
 
-input, select {
+input,
+select {
     width: 100%;
     padding: 12px 16px;
     border: 1px solid var(--border);
@@ -265,7 +292,10 @@ input, select {
     transition: var(--transition);
 }
 
-input:focus { outline: none; border-color: var(--primary); }
+input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
 
 .sim-results {
     background: var(--text-main);
@@ -279,7 +309,7 @@ input:focus { outline: none; border-color: var(--primary); }
 .res-header {
     font-size: 0.7rem;
     font-weight: 700;
-    color: rgba(255,255,255,0.5);
+    color: rgba(255, 255, 255, 0.5);
     margin-bottom: 12px;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -294,7 +324,7 @@ input:focus { outline: none; border-color: var(--primary); }
 
 .loss-desc {
     font-size: 0.9rem;
-    color: rgba(255,255,255,0.6);
+    color: rgba(255, 255, 255, 0.6);
     margin-bottom: 40px;
 }
 
@@ -309,14 +339,23 @@ input:focus { outline: none; border-color: var(--primary); }
     justify-content: space-between;
     align-items: center;
     padding-bottom: 16px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.sub-metric label { margin-bottom: 0; color: rgba(255,255,255,0.6); text-transform: none; font-size: 0.85rem; }
-.sub-metric span { font-weight: 700; font-size: 1.1rem; }
+.sub-metric label {
+    margin-bottom: 0;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: none;
+    font-size: 0.85rem;
+}
+
+.sub-metric span {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
 
 .recommendation {
-    background: rgba(255,255,255,0.05);
+    background: rgba(255, 255, 255, 0.05);
     padding: 24px;
     border-radius: 12px;
     border-left: 4px solid var(--primary);
@@ -402,11 +441,32 @@ footer {
     font-weight: 600;
 }
 
-.copy { color: var(--text-muted); font-size: 0.8rem; width: 100%; text-align: center; margin-top: 40px; }
+.copy {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    width: 100%;
+    text-align: center;
+    margin-top: 40px;
+}
 
 @media (max-width: 900px) {
-    .sim-container, .case-study { grid-template-columns: 1fr; }
-    .hero h1 { font-size: 2.8rem; }
-    .sim-results { position: static; margin-top: 40px; }
-    .footer-inner { flex-direction: column; text-align: center; }
+
+    .sim-container,
+    .case-study {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+        font-size: 2.8rem;
+    }
+
+    .sim-results {
+        position: static;
+        margin-top: 40px;
+    }
+
+    .footer-inner {
+        flex-direction: column;
+        text-align: center;
+    }
 }
