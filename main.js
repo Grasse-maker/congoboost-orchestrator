@@ -90,7 +90,23 @@ function animateDiagnosticValue(id, value, prefix = "") {
     window.requestAnimationFrame(step);
 }
 
-// Initialisation
+// Mobile Menu Toggle
 document.addEventListener('DOMContentLoaded', () => {
+    const navToggle = document.getElementById('nav-toggle');
+    const navLinks = document.getElementById('nav-links');
+
+    if (navToggle && navLinks) {
+        navToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu on link click
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+    }
+    
     runDiagnostic();
 });
