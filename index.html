@@ -3,370 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AGENTCY ENTERPRISE | SaaS & Automation pour Écoles et PME</title>
-    <meta name="description" content="AGENTCY ENTERPRISE : Consulting digital, systèmes SaaS et automatisation pour écoles et petites entreprises africaines.">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #fafafa;
-            --surface: #ffffff;
-            --card: #f5f5f5;
-            --border: #e5e5e5;
-            --accent: #1a1a1a;
-            --blue: #2563eb;
-            --blue-light: #eff6ff;
-            --text: #1a1a1a;
-            --muted: #6b7280;
-            --green: #059669;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.7; }
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-
-        /* NAV */
-        nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 16px 0; position: sticky; top: 0; z-index: 50; }
-        .nav-inner { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.5px; }
-        .logo span { color: var(--blue); }
-        .nav-links { display: flex; align-items: center; gap: 28px; }
-        .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; }
-        .nav-links a:hover { color: var(--text); }
-        .btn-cta { background: var(--blue); color: #fff !important; padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 0.82rem; transition: all 0.2s; }
-        .btn-cta:hover { opacity: 0.9; transform: translateY(-1px); }
-
-        /* HERO */
-        .hero { padding: 100px 0 80px; max-width: 720px; }
-        .hero-label { display: inline-block; background: var(--blue-light); color: var(--blue); font-size: 0.75rem; font-weight: 700; padding: 6px 14px; border-radius: 6px; margin-bottom: 24px; letter-spacing: 0.5px; }
-        .hero h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 900; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 20px; }
-        .hero p { font-size: 1.1rem; color: var(--muted); max-width: 560px; margin-bottom: 36px; }
-        .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
-        .btn-primary { background: var(--accent); color: #fff; padding: 14px 28px; border-radius: 10px; font-weight: 700; text-decoration: none; font-size: 0.9rem; transition: all 0.2s; }
-        .btn-primary:hover { background: var(--blue); }
-        .btn-ghost { background: transparent; color: var(--text); padding: 14px 28px; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 0.9rem; border: 1px solid var(--border); transition: all 0.2s; }
-        .btn-ghost:hover { border-color: var(--blue); color: var(--blue); }
-
-        /* PROOF BAR */
-        .proof { padding: 0 0 80px; }
-        .proof-grid { display: flex; gap: 40px; flex-wrap: wrap; }
-        .proof-item { display: flex; align-items: center; gap: 10px; }
-        .proof-icon { width: 36px; height: 36px; background: var(--blue-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
-        .proof-text { font-size: 0.82rem; color: var(--muted); }
-        .proof-text strong { color: var(--text); display: block; font-size: 0.9rem; }
-
-        /* SECTIONS */
-        section { padding: 80px 0; }
-        .section-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; color: var(--blue); text-transform: uppercase; margin-bottom: 12px; }
-        .section-title { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 900; letter-spacing: -1px; margin-bottom: 16px; line-height: 1.1; }
-        .section-desc { color: var(--muted); font-size: 1rem; max-width: 520px; margin-bottom: 48px; }
-
-        /* SERVICES GRID */
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
-        .service-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 32px 28px; transition: all 0.25s; }
-        .service-card:hover { border-color: var(--blue); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.06); }
-        .service-icon { font-size: 1.6rem; margin-bottom: 16px; }
-        .service-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
-        .service-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
-
-        /* CASE STUDY */
-        .case-study { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
-        .case-badge { display: inline-block; background: #ecfdf5; color: var(--green); font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 4px; letter-spacing: 1px; margin-bottom: 16px; }
-        .case-study h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.5px; }
-        .case-study .case-desc { color: var(--muted); font-size: 0.95rem; margin-bottom: 24px; }
-        .case-metrics { display: flex; gap: 32px; }
-        .case-metric strong { font-size: 1.4rem; font-weight: 900; display: block; }
-        .case-metric span { font-size: 0.75rem; color: var(--muted); }
-        .case-visual { background: var(--card); border-radius: 12px; padding: 32px; border: 1px solid var(--border); }
-        .case-feature { padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 0.88rem; display: flex; align-items: center; gap: 10px; }
-        .case-feature:last-child { border-bottom: none; }
-        .check { color: var(--green); font-weight: 700; }
-
-        /* AUDIT CALCULATOR */
-        .audit-box { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
-        .audit-box h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.5px; }
-        .audit-box .desc { color: var(--muted); margin-bottom: 32px; font-size: 0.92rem; }
-        .field { margin-bottom: 18px; }
-        .field label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--muted); margin-bottom: 6px; }
-        .field input, .field select { width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.95rem; font-family: 'Inter', sans-serif; background: var(--bg); transition: border-color 0.2s; }
-        .field input:focus, .field select:focus { outline: none; border-color: var(--blue); }
-        .btn-calc { width: 100%; background: var(--accent); color: #fff; border: none; padding: 14px; border-radius: 10px; font-size: 0.9rem; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s; margin-top: 4px; }
-        .btn-calc:hover { background: var(--blue); }
-        .results-panel { background: var(--card); border-radius: 12px; padding: 36px; border: 1px solid var(--border); opacity: 0.5; transition: all 0.4s; }
-        .results-panel.active { opacity: 1; border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-light); }
-        .metric { margin-bottom: 28px; }
-        .metric-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 4px; }
-        .metric-value { font-size: 2.2rem; font-weight: 900; color: var(--blue); }
-        .metric-unit { font-size: 0.8rem; color: var(--muted); }
-        .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
-
-        /* PROCESS */
-        .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-        .process-step { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 32px 24px; }
-        .step-num { font-size: 0.7rem; font-weight: 800; color: var(--blue); background: var(--blue-light); width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
-        .process-step h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
-        .process-step p { font-size: 0.84rem; color: var(--muted); }
-
-        /* CTA */
-        .cta-section { padding: 80px 0; }
-        .cta-box { background: var(--accent); color: #fff; border-radius: 16px; padding: 64px; text-align: center; }
-        .cta-box h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900; margin-bottom: 16px; letter-spacing: -1px; }
-        .cta-box p { color: #999; margin-bottom: 32px; font-size: 1rem; }
-        .btn-white { background: #fff; color: var(--accent); padding: 14px 32px; border-radius: 10px; font-weight: 700; text-decoration: none; font-size: 0.9rem; transition: all 0.2s; }
-        .btn-white:hover { background: var(--blue); color: #fff; }
-
-        /* FOOTER */
-        footer { border-top: 1px solid var(--border); padding: 48px 0; }
-        .footer-inner { display: flex; justify-content: space-between; align-items: center; }
-        .footer-sub { color: var(--muted); font-size: 0.8rem; margin-top: 4px; }
-        footer .copy { color: var(--muted); font-size: 0.78rem; }
-
-        @media (max-width: 768px) {
-            .case-study, .audit-box { grid-template-columns: 1fr; }
-            .process-grid { grid-template-columns: 1fr 1fr; }
-            .proof-grid { flex-direction: column; gap: 20px; }
-            .case-metrics { flex-direction: column; gap: 16px; }
-            .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
-        }
-    </style>
+    <title>AGENTCY ENTERPRISE | Modernisez la gestion de votre école</title>
+    <meta name="description" content="Solutions SaaS et automatisation sur-mesure pour établissements scolaires et entreprises en croissance en RDC.">
+    <link rel="stylesheet" href="styles.css?v=3.0">
+    <!-- Firebase SDKs (Config in agent_organizer.js) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
     <nav>
         <div class="container nav-inner">
-            <div class="logo" style="display: flex; align-items: center; gap: 12px;">
-                <div class="logo-icon" style="width: 32px; height: 32px; border: 2px solid var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 900; transition: var(--transition);">A</div>
-                <div>AGENTCY <span>ENTERPRISE</span></div>
-            </div>
-            <div id="nexus-pulse" style="display: flex; align-items: center; gap: 8px; font-size: 0.65rem; font-weight: 700; color: var(--green); background: #ecfdf5; padding: 4px 10px; border-radius: 100px; border: 1px solid #d1fae5;">
-                <span style="width: 6px; height: 6px; background: var(--green); border-radius: 50%; display: inline-block; animation: pulse 2s infinite;"></span>
-                INFRASTRUCTURE : OPTIMAL
-            </div>
+            <a href="#" class="logo">AGENTCY <span>ENTERPRISE</span></a>
             <div class="nav-links">
-                <a href="#services">Services</a>
-                <a href="#case">Réalisations</a>
-                <a href="#audit">Audit</a>
-                <a href="https://wa.me/message/ARWYGVW5TELAF1" class="btn-cta">Consultation Gratuite</a>
+                <a href="#problems">Problèmes</a>
+                <a href="#solutions">Solutions</a>
+                <a href="#audit">Audit Opérationnel</a>
+                <a href="https://wa.me/message/ARWYGVW5TELAF1" class="btn btn-nav">Parler à un expert</a>
             </div>
         </div>
     </nav>
 
     <!-- HERO -->
-    <section class="hero container">
-        <div class="hero-label">CONSULTING DIGITAL • SAAS • AUTOMATISATION</div>
-        <h1>Modernisez la gestion de votre école ou entreprise.</h1>
-        <p>Nous remplaçons vos opérations manuelles par des systèmes SaaS modernes et automatisés. Moins de paperasse, plus de contrôle.</p>
+    <header class="container hero">
+        <span class="badge">CONSULTING & SAAS STUDIO</span>
+        <h1>Modernisez la gestion de votre école.</h1>
+        <p>Nous concevons des systèmes SaaS et des automatisations sur-mesure pour éliminer le chaos administratif et maximiser votre rentabilité.</p>
         <div class="hero-btns">
-            <a href="#audit" class="btn-primary">Évaluer mes pertes →</a>
-            <a href="https://wa.me/message/ARWYGVW5TELAF1" class="btn-ghost">Parler à un consultant</a>
+            <a href="#audit" class="btn btn-primary">Réaliser un audit gratuit</a>
+            <a href="#case" class="btn btn-outline">Voir nos réalisations</a>
+        </div>
+    </header>
+
+    <!-- PROBLEMS -->
+    <section id="problems" class="container">
+        <div class="section-header">
+            <span class="section-label">LES DÉFIS DU TERRAIN</span>
+            <h2 class="section-title">La paperasse freine votre croissance.</h2>
+            <p>Le travail manuel n'est pas seulement lent, il est coûteux. Identifiez les frictions qui ralentissent votre établissement.</p>
+        </div>
+        <div class="grid-cards">
+            <div class="card">
+                <div class="card-icon">📉</div>
+                <h3>Pertes d'inscriptions</h3>
+                <p>Un suivi manuel des prospects mène inévitablement à l'oubli de futurs élèves et à une perte de revenus annuelle massive.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">⏳</div>
+                <h3>Lenteur Administrative</h3>
+                <p>Vos équipes passent 70% de leur temps sur des tâches répétitives qui pourraient être automatisées en quelques clics.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">📱</div>
+                <h3>Communication Fragmentée</h3>
+                <p>Le suivi des parents via WhatsApp manuel crée de la confusion, des retards de paiement et une baisse de confiance.</p>
+            </div>
         </div>
     </section>
 
-    <!-- PROOF -->
-    <section class="proof container">
-        <div class="proof-grid">
-            <div class="proof-item">
-                <div class="proof-icon">🏫</div>
-                <div class="proof-text"><strong>ITI KAMO</strong>Plateforme scolaire en déploiement</div>
-            </div>
-            <div class="proof-item">
-                <div class="proof-icon">📋</div>
-                <div class="proof-text"><strong>Contrat 3 ans</strong>En cours de négociation</div>
-            </div>
-            <div class="proof-item">
-                <div class="proof-icon">⚡</div>
-                <div class="proof-text"><strong>Site + App</strong>Déjà livrés et fonctionnels</div>
-            </div>
-        </div>
-    </section>
+    <!-- AUDIT / SIMULATOR -->
+    <section id="audit" class="container">
+        <div class="simulator">
+            <div class="sim-container">
+                <div class="sim-inputs">
+                    <div class="section-header" style="margin-bottom: 32px;">
+                        <span class="section-label">OUTIL D'AIDE À LA DÉCISION</span>
+                        <h2 class="section-title">Audit de Pertes Opérationnelles</h2>
+                        <p>Calculez l'impact financier réel des processus manuels sur votre budget annuel.</p>
+                    </div>
 
-    <!-- SERVICES -->
-    <section id="services" class="container">
-        <div class="section-label">CE QUE NOUS CONSTRUISONS</div>
-        <h2 class="section-title">Des systèmes qui remplacent le papier.</h2>
-        <p class="section-desc">Nous concevons des outils concrets qui résolvent vos problèmes opérationnels quotidiens.</p>
-        <div class="services-grid">
-            <div class="service-card">
-                <div class="service-icon">🏫</div>
-                <h3>Gestion Scolaire SaaS</h3>
-                <p>Inscriptions, bulletins, paiements et communication parents — tout dans un seul système.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">⚡</div>
-                <h3>Automatisation</h3>
-                <p>Notifications WhatsApp automatiques, rappels de paiement, rapports générés sans intervention.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">📊</div>
-                <h3>Tableaux de Bord</h3>
-                <p>Visualisez vos revenus, effectifs et performances en temps réel depuis votre téléphone.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">💳</div>
-                <h3>Paiements Mobile Money</h3>
-                <p>Intégration M-Pesa et Orange Money pour collecter les frais scolaires ou paiements clients.</p>
+                    <!-- MODULE 1: INSCRIPTIONS -->
+                    <div class="sim-module">
+                        <h4>📊 Module 1 : Perte d'Inscriptions</h4>
+                        <div class="form-group">
+                            <label>Élèves potentiels non-inscrits / mois</label>
+                            <input type="number" id="lost-students" value="5" oninput="calculateROI()">
+                        </div>
+                        <div class="form-group">
+                            <label>Frais de scolarité moyens ($ / an)</label>
+                            <input type="number" id="annual-fees" value="250" oninput="calculateROI()">
+                        </div>
+                    </div>
+
+                    <!-- MODULE 2: ADMIN -->
+                    <div class="sim-module">
+                        <h4>⏳ Module 2 : Temps Administratif</h4>
+                        <div class="form-group">
+                            <label>Nombre d'employés administratifs</label>
+                            <input type="number" id="staff-count" value="3" oninput="calculateROI()">
+                        </div>
+                        <div class="form-group">
+                            <label>Heures perdues par jour / employé</label>
+                            <input type="number" id="lost-hours-day" value="2" oninput="calculateROI()">
+                        </div>
+                        <div class="form-group">
+                            <label>Salaire moyen mensuel ($)</label>
+                            <input type="number" id="avg-salary" value="150" oninput="calculateROI()">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sim-results">
+                    <div class="res-header">Perte Annuelle Estimée</div>
+                    <div class="total-loss" id="total-loss">$0</div>
+                    <p class="loss-desc">Ce montant représente l'opportunité financière que votre établissement manque chaque année à cause des processus manuels.</p>
+                    
+                    <div class="sub-metrics">
+                        <div class="sub-metric">
+                            <label>Manque à gagner (Inscriptions)</label>
+                            <span id="res-enrollment">$0</span>
+                        </div>
+                        <div class="sub-metric">
+                            <label>Coût du temps gaspillé</label>
+                            <span id="res-admin">$0</span>
+                        </div>
+                    </div>
+
+                    <div class="recommendation">
+                        <h5>Recommandation Stratégique</h5>
+                        <p id="rec-text">Déployez un système automatisé pour sécuriser vos inscriptions et libérer vos équipes.</p>
+                    </div>
+
+                    <a href="https://wa.me/message/ARWYGVW5TELAF1" class="btn btn-primary btn-block" style="background: var(--primary); margin-top: 32px; display: block; text-align: center;">Stopper ces pertes maintenant</a>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- CASE STUDY -->
     <section id="case" class="container">
-        <div class="section-label">PROJET EN COURS</div>
-        <h2 class="section-title">Étude de cas réelle.</h2>
-        <p class="section-desc">Ce n'est pas un concept. C'est un projet déployé, avec un client réel.</p>
+        <div class="section-header">
+            <span class="section-label">RÉALISATIONS</span>
+            <h2 class="section-title">Cas concret : ITI KAMO</h2>
+            <p>Déploiement d'une infrastructure complète de gestion scolaire à Kinshasa.</p>
+        </div>
         <div class="case-study">
+            <div class="case-image">
+                ITI KAMO MOCKUP
+            </div>
             <div>
-                <div class="case-badge">✦ EN DÉPLOIEMENT</div>
-                <h3>ITI KAMO</h3>
-                <p class="case-desc">Institut Technique Industriel — Plateforme complète de gestion scolaire moderne : site web institutionnel + application mobile de gestion.</p>
-                <div class="case-metrics">
-                    <div class="case-metric"><strong>3 ans</strong><span>Durée du contrat</span></div>
-                    <div class="case-metric"><strong>100$/mois</strong><span>Abonnement SaaS</span></div>
-                    <div class="case-metric"><strong>2 produits</strong><span>Site + Application</span></div>
-                </div>
-            </div>
-            <div class="case-visual">
-                <div class="case-feature"><span class="check">✓</span> Site web institutionnel</div>
-                <div class="case-feature"><span class="check">✓</span> Application mobile de gestion</div>
-                <div class="case-feature"><span class="check">✓</span> Système de communication interne</div>
-                <div class="case-feature"><span class="check">✓</span> Dashboard administratif</div>
-                <div class="case-feature"><span class="check">✓</span> Notifications automatisées</div>
-                <div class="case-feature"><span class="check">✓</span> Compatible Mobile Money</div>
+                <h3>School Management Platform</h3>
+                <p style="margin-bottom: 24px;">Nous avons conçu pour l'Institut Technique Industriel KAMO un système intégrant site web, application mobile et dashboard de gestion pour 1500+ élèves.</p>
+                <ul style="list-style: none; display: grid; gap: 12px; font-size: 0.9rem;">
+                    <li>✅ Digitalisation des bulletins et inscriptions</li>
+                    <li>✅ Système de notification parents via WhatsApp</li>
+                    <li>✅ Gestion des frais via Mobile Money</li>
+                    <li>✅ Support et maintenance 24/7</li>
+                </ul>
             </div>
         </div>
     </section>
 
-    <!-- AUDIT CALCULATOR -->
-    <section id="audit" class="container">
-        <div class="section-label">AUDIT GRATUIT</div>
-        <h2 class="section-title">Combien vous coûte la gestion manuelle ?</h2>
-        <p class="section-desc">Calculez en 30 secondes les heures et l'argent que vous perdez chaque mois avec la paperasse.</p>
-        <div class="audit-box">
-            <div>
-                <h3>Simulateur de pertes</h3>
-                <p class="desc">Remplissez ces 3 champs pour estimer l'impact d'une modernisation sur vos opérations.</p>
-                <div class="field">
-                    <label>SECTEUR D'ACTIVITÉ</label>
-                    <select id="sector">
-                        <option value="school">École / Institut</option>
-                        <option value="logistics">Logistique / Transport</option>
-                        <option value="health">Santé / Clinique</option>
-                        <option value="services">Services / Agence</option>
-                    </select>
-                </div>
-                <div class="field">
-                    <label>NOMBRE D'EMPLOYÉS</label>
-                    <input type="number" id="staff" value="8" min="1">
-                </div>
-                <div class="field">
-                    <label>HEURES DE PAPERASSE PAR SEMAINE (estimé)</label>
-                    <input type="number" id="hours" value="6" min="1">
-                </div>
-                <button class="btn-calc" onclick="runAudit()">Calculer mes pertes →</button>
-            </div>
-            <div class="results-panel" id="results">
-                <div class="metric">
-                    <div class="metric-label">HEURES PERDUES / MOIS</div>
-                    <div class="metric-value" id="lost-hours">—</div>
-                    <div class="metric-unit">en opérations manuelles évitables</div>
-                </div>
-                <hr class="divider">
-                <div class="metric">
-                    <div class="metric-label">COÛT ESTIMÉ / MOIS</div>
-                    <div class="metric-value" id="lost-cost">—</div>
-                    <div class="metric-unit">en productivité gaspillée</div>
-                </div>
-                <hr class="divider">
-                <div class="metric">
-                    <div class="metric-label">RÉCUPÉRABLE AVEC UN SYSTÈME SAAS</div>
-                    <div class="metric-value" id="recoverable">—</div>
-                    <div class="metric-unit">de ces pertes sont automatisables</div>
-                </div>
-                <a href="https://wa.me/message/ARWYGVW5TELAF1" class="btn-primary" style="display:block;text-align:center;margin-top:24px;">Stopper ces pertes →</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- PROCESS -->
-    <section class="container">
-        <div class="section-label">COMMENT ÇA MARCHE</div>
-        <h2 class="section-title">Du premier appel au système opérationnel.</h2>
-        <p class="section-desc">Un processus simple, rapide, sans jargon technique.</p>
-        <div class="process-grid">
-            <div class="process-step">
-                <div class="step-num">01</div>
-                <h4>Diagnostic</h4>
-                <p>On analyse vos opérations actuelles et on identifie les points de friction.</p>
-            </div>
-            <div class="process-step">
-                <div class="step-num">02</div>
-                <h4>Conception</h4>
-                <p>On conçoit votre système sur-mesure : site, app, dashboard, automatisations.</p>
-            </div>
-            <div class="process-step">
-                <div class="step-num">03</div>
-                <h4>Déploiement</h4>
-                <p>Mise en place rapide sans interrompre vos activités. Formation incluse.</p>
-            </div>
-            <div class="process-step">
-                <div class="step-num">04</div>
-                <h4>Support continu</h4>
-                <p>Maintenance, mises à jour et optimisation permanente de votre système.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="cta-section container">
-        <div class="cta-box">
-            <h2>Prêt à moderniser votre gestion ?</h2>
-            <p>Consultation gratuite de 15 minutes. On identifie vos pertes et on propose une solution concrète.</p>
-            <a href="https://wa.me/message/ARWYGVW5TELAF1" class="btn-white">Réserver ma consultation gratuite →</a>
-        </div>
-    </section>
-
+    <!-- FOOTER -->
     <footer>
         <div class="container footer-inner">
-            <div>
-                <div class="logo">AGENTCY <span>ENTERPRISE</span></div>
-                <p class="footer-sub">Digital Consulting • SaaS Systems • Automation</p>
-            </div>
-            <p class="copy">© 2026 AGENTCY ENTERPRISE. Kinshasa, RDC.</p>
+            <div class="logo">AGENTCY <span>ENTERPRISE</span></div>
+            <p class="copy">© 2026 AGENTCY ENTERPRISE. Solutions professionnelles pour le Congo.</p>
         </div>
     </footer>
 
-    <script>
-        function runAudit() {
-            const staff = parseFloat(document.getElementById('staff').value) || 1;
-            const hours = parseFloat(document.getElementById('hours').value) || 1;
-            const sector = document.getElementById('sector').value;
-            const rates = { school: 3, logistics: 5, health: 6, services: 4 };
-            const rate = rates[sector] || 4;
-            const monthlyHours = Math.round(hours * staff * 4.3);
-            const monthlyCost = Math.round(monthlyHours * rate);
-            const recoverable = Math.min(75, Math.round(55 + (staff * 2)));
-            
-            // Animation de scan
-            const results = document.getElementById('results');
-            results.style.opacity = '0.3';
-            setTimeout(() => {
-                document.getElementById('lost-hours').innerText = monthlyHours + 'h';
-                document.getElementById('lost-cost').innerText = '$' + monthlyCost;
-                document.getElementById('recoverable').innerText = recoverable + '%';
-                results.classList.add('active');
-                results.style.opacity = '1';
-                AgentOrganizer.saveAudit({ sector, staff, hours, monthlyCost });
-            }, 800);
-        }
-
-        // Effet de révélation au défilement
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('reveal-active');
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('section, .card, .audit-box').forEach(el => {
-            el.classList.add('reveal');
-            observer.observe(el);
-        });
-    </script>
+    <script src="main.js"></script>
+    <script src="agent_organizer.js"></script>
 </body>
 </html>

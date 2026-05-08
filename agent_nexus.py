@@ -20,18 +20,18 @@ class AgentNexus:
         """
         payload = {
             "title": f"[{priority}] {title}",
-            "message": f"AGENTCY INTELLIGENCE REPORT\n---\n{message}\n---\nOrchestré par NEXUS Core.",
-            "source": "NEXUS"
+            "message": f"AGENTCY STRATEGIC REPORT\n---\n{message}\n---\nSecured by Agentcy Automation Infrastructure.",
+            "source": "AGENTCY"
         }
         
         try:
             response = requests.post(self.webhook_url, json=payload)
             if response.status_code == 200:
-                print(f"[NEXUS] Intelligence diffusée : {title}")
+                print(f"[AGENTCY] Report broadcasted : {title}")
                 self._log_activity(title, "SUCCESS")
                 return True
         except Exception as e:
-            print(f"[NEXUS] Erreur de diffusion : {e}")
+            print(f"[AGENTCY] Broadcast error : {e}")
             self._log_activity(title, "FAILED")
             return False
 
@@ -39,14 +39,14 @@ class AgentNexus:
         """
         Vérifie l'état de santé de toute l'infrastructure et diffuse un rapport d'état.
         """
-        print("[NEXUS] Lancement du signal de vie (Pulse)...")
-        status_report = "SANTÉ INFRASTRUCTURE : OPTIMAL\n"
-        status_report += f"- Cœur : {self.brand} Core\n"
-        status_report += "- Connectivité Google Apps : ÉTABLIE\n"
-        status_report += "- Archivage PDF : ACTIF\n"
-        status_report += f"- Dernier cycle : {datetime.now().strftime('%H:%M:%S')}"
+        print("[AGENTCY] System Health Check...")
+        status_report = "INFRASTRUCTURE STATUS : OPTIMAL\n"
+        status_report += f"- Core Engine : {self.brand} Private Server\n"
+        status_report += "- Google Cloud Bridge : CONNECTED\n"
+        status_report += "- Automated PDF Archiving : ENABLED\n"
+        status_report += f"- Last sync : {datetime.now().strftime('%H:%M:%S')}"
         
-        return self.broadcast_intelligence("PULSE : Infrastructure Opérationnelle", status_report, "INFO")
+        return self.broadcast_intelligence("Infrastructure Health Status", status_report, "INFO")
 
     def _log_activity(self, task, status):
         log_entry = {
@@ -67,4 +67,4 @@ class AgentNexus:
 if __name__ == "__main__":
     nexus = AgentNexus()
     nexus.nexus_pulse()
-    nexus.broadcast_intelligence("Système NEXUS Activé", "L'infrastructure AGENTCY ENTERPRISE est désormais sous le contrôle de NEXUS Core. Tous les agents sont synchronisés.", "HIGH")
+    nexus.broadcast_intelligence("Infrastructure Activation", "The Agentcy Enterprise infrastructure is operational. All automation systems are synchronized.", "HIGH")

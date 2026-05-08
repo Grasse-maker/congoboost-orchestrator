@@ -16,22 +16,23 @@ class AgentAtlas:
         Génère le briefing stratégique matinal pour l'Architecte.
         """
         now = datetime.datetime.now()
-        briefing = f"""RAPPORT STRATÉGIQUE ATLAS - {now.strftime('%d/%m/%Y')}
+        briefing = f"""STRATEGIC ADVISORY REPORT - {now.strftime('%d/%m/%Y')}
 ---
-ÉTAT DE L'INFRASTRUCTURE : OPTIMAL
-NOMBRE D'AGENTS ACTIFS : 5 (Nexus, Sentinel, Atlas, Pulse, Forge)
+OPERATIONAL STATUS: OPTIMAL
+ACTIVE SYSTEMS: 5 Modules (Core, Intelligence, Strategy, Automation, UX)
 
-ANALYSE DU MARCHÉ :
-- Forte demande identifiée pour l'automatisation WhatsApp en Afrique Centrale.
-- Les systèmes d'IA autonomes deviennent la norme pour la réduction des pertes opérationnelles.
+MARKET ANALYSIS (KINSHASA):
+- High demand for educational SaaS automation confirmed (Project ITI KAMO).
+- ROI Simulator identifying annual losses between $5k and $15k for medium-sized institutions.
+- Strategic differentiator: Real-time parental communication via WhatsApp.
 
-RECOMMANDATIONS AGENTCY :
-1. Déployer le module de calcul de ROI pour les clients du secteur Éducation.
-2. Activer la surveillance Sentinel sur les nouveaux SaaS d'automatisation bancaire.
+RECOMMANDATIONS :
+1. Finalize deployment of the enrollment tracking module for ITI KAMO.
+2. Scale the ROI Simulator to the healthcare and logistics sectors.
 
-L'excellence n'est pas une option, c'est notre infrastructure.
+Excellence is not a luxury, it is our infrastructure.
 """
-        return self.nexus.broadcast_intelligence("Briefing Exécutif ATLAS", briefing, "HIGH")
+        return self.nexus.broadcast_intelligence("Executive Strategic Briefing", briefing, "HIGH")
 
 if __name__ == "__main__":
     atlas = AgentAtlas()
