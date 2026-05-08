@@ -3,108 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AGENTCY | Espace Contrôle Absolu</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>AGENTCY | Analytics</title>
+    <!-- Vercel Geist Font -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/geist-sans@5.0.1/index.css">
+    <!-- Chart.js for Vercel-like graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --bg-admin: #0a0f1d;
-            --surface-admin: #161c2d;
-            --border-admin: #2d3748;
+            --geist-bg: #000;
+            --geist-fg: #ededed;
+            --geist-surface: #0a0a0a;
+            --geist-border: #333;
+            --geist-acc: #0070f3;
+            --geist-muted: #888;
         }
-        body { background: var(--bg-admin); color: #fff; }
-        .admin-layout { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
-        .admin-sidebar { 
-            background: var(--surface-admin); 
-            border-right: 1px solid var(--border-admin);
-            padding: 40px 24px;
+        body { 
+            background: var(--geist-bg); 
+            color: var(--geist-fg); 
+            font-family: 'Geist Sans', sans-serif;
+            margin: 0; padding: 0;
+            -webkit-font-smoothing: antialiased;
         }
-        .admin-main { padding: 40px; overflow-y: auto; }
-        .admin-nav-item {
-            padding: 12px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-bottom: 8px;
-            transition: var(--transition);
-            color: var(--text-muted);
-            font-weight: 600;
+        .admin-nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 16px 32px; border-bottom: 1px solid var(--geist-border);
+            background: var(--geist-bg);
+            position: sticky; top: 0; z-index: 100;
         }
-        .admin-nav-item.active { background: var(--primary); color: #fff; }
-        .admin-nav-item:hover:not(.active) { background: rgba(255,255,255,0.05); color: #fff; }
-
-        .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-bottom: 40px; }
-        .stat-card { background: var(--surface-admin); padding: 24px; border-radius: 16px; border: 1px solid var(--border-admin); }
-        .stat-card h4 { font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
-        .stat-card .value { font-size: 1.8rem; font-weight: 800; }
-
-        table { width: 100%; border-collapse: collapse; background: var(--surface-admin); border-radius: 16px; overflow: hidden; }
-        th, td { padding: 16px 24px; text-align: left; border-bottom: 1px solid var(--border-admin); }
-        th { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); }
-        tr:hover { background: rgba(255,255,255,0.02); }
-
-        .badge-status { padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; }
-        .badge-new { background: #10b981; color: #fff; }
+        .admin-nav .logo { font-weight: 700; font-size: 1.2rem; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px;}
+        .admin-nav .logo span { background: #fff; color: #000; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; letter-spacing: 0; }
+        .admin-nav .nav-links { display: flex; gap: 24px; }
+        .admin-nav .nav-links a { color: var(--geist-muted); text-decoration: none; font-size: 0.9rem; cursor: pointer; transition: 0.2s; padding-bottom: 16px; margin-bottom: -17px; border-bottom: 2px solid transparent; }
+        .admin-nav .nav-links a.active { color: var(--geist-fg); border-bottom-color: var(--geist-fg); }
+        .admin-nav .nav-links a:hover:not(.active) { color: var(--geist-fg); }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 32px; }
+        
+        .metrics-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-bottom: 40px;
+        }
+        .metric-card {
+            background: var(--geist-surface); padding: 24px; border: 1px solid var(--geist-border); border-radius: 8px;
+        }
+        .metric-card h3 { margin: 0 0 8px 0; font-size: 0.85rem; color: var(--geist-muted); font-weight: 500; }
+        .metric-card .value { font-size: 2rem; font-weight: 700; letter-spacing: -0.04em; margin-bottom: 4px; }
+        .metric-card .trend { font-size: 0.85rem; color: #10b981; display: flex; align-items: center; gap: 4px; }
+        
+        .chart-container {
+            background: var(--geist-surface); padding: 24px; border: 1px solid var(--geist-border); border-radius: 8px; margin-bottom: 40px;
+            height: 400px; position: relative;
+        }
+        
+        .section-title { font-size: 1.2rem; margin-bottom: 24px; font-weight: 600; letter-spacing: -0.02em; }
+        
+        table { width: 100%; border-collapse: collapse; background: var(--geist-bg); border: 1px solid var(--geist-border); border-radius: 8px; overflow: hidden; margin-bottom: 40px;}
+        th, td { padding: 16px 24px; text-align: left; border-bottom: 1px solid var(--geist-border); font-size: 0.9rem; }
+        th { color: var(--geist-muted); font-weight: 500; font-size: 0.85rem; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background: rgba(255,255,255,0.03); }
+        
+        .badge { padding: 4px 8px; border-radius: 99px; font-size: 0.75rem; font-weight: 600; }
+        .badge-green { background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); }
         
         .login-overlay {
-            position: fixed; inset: 0; background: var(--bg-admin); z-index: 10000;
+            position: fixed; inset: 0; background: var(--geist-bg); z-index: 10000;
             display: flex; align-items: center; justify-content: center;
         }
+        .btn {
+            background: var(--geist-fg); color: var(--geist-bg); border: none; padding: 12px 24px; border-radius: 6px; font-weight: 600; cursor: pointer; transition: 0.2s;
+        }
+        .btn:hover { background: #fff; transform: scale(1.02); }
+        .btn-outline { background: transparent; color: var(--geist-fg); border: 1px solid var(--geist-border); }
+        .btn-outline:hover { background: var(--geist-surface); }
+        input {
+            width: 100%; padding: 12px 16px; background: var(--geist-bg); border: 1px solid var(--geist-border); color: var(--geist-fg); border-radius: 6px; margin-bottom: 16px; box-sizing: border-box; font-family: inherit; outline: none; transition: border-color 0.2s;
+        }
+        input:focus { border-color: var(--geist-muted); }
     </style>
 </head>
 <body>
     <div id="login-screen" class="login-overlay">
-        <div style="text-align: center; width: 100%; max-width: 400px; padding: 40px;">
-            <h2 style="margin-bottom: 24px;">Contrôle Absolu</h2>
-            <input type="password" id="admin-pass" placeholder="Clé d'accès Agentcy" 
-                   style="width: 100%; padding: 16px; background: var(--surface-admin); border: 1px solid var(--border-admin); color: #fff; border-radius: 8px; margin-bottom: 16px;">
-            <button onclick="checkAccess()" class="btn btn-primary" style="width: 100%; justify-content: center;">Entrer</button>
+        <div style="text-align: center; width: 100%; max-width: 360px; padding: 40px;">
+            <div style="font-size: 2rem; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.04em;">Agentcy.</div>
+            <p style="color: var(--geist-muted); margin-bottom: 32px; font-size: 0.9rem;">Sign in to Analytics</p>
+            
+            <p id="login-error" style="color: #ef4444; font-size: 0.85rem; margin-bottom: 16px; display: none;"></p>
+            <input type="email" id="admin-email" placeholder="Email Address">
+            <input type="password" id="admin-pass" placeholder="Password">
+            <button id="login-btn" onclick="checkAccess()" class="btn" style="width: 100%; margin-top: 8px;">Continue with Email</button>
         </div>
     </div>
 
-    <div class="admin-layout" id="admin-content" style="display: none;">
-        <aside class="admin-sidebar">
-            <div class="logo" style="margin-bottom: 40px;">
-                <div class="brand-logo" style="--text-main: #fff;">
-                    <span class="agentcy" style="font-size: 1.4rem;">Agentcy.</span>
-                    <span class="entreprise" style="font-size: 0.6rem;">Enterprise</span>
+    <div id="admin-content" style="display: none;">
+        <nav class="admin-nav">
+            <div class="logo">
+                Agentcy <span>Analytics</span>
+            </div>
+            <div class="nav-links">
+                <a class="active" onclick="switchTab('overview', this)">Overview</a>
+                <a onclick="switchTab('leads', this)">Leads</a>
+                <a onclick="switchTab('audits', this)">Audits</a>
+            </div>
+            <div style="display: flex; gap: 16px; align-items: center;">
+                <button class="btn btn-outline" style="padding: 6px 12px; font-size: 0.8rem;" onclick="location.href='index.html'">View Site</button>
+                <button class="btn btn-outline" style="padding: 6px 12px; font-size: 0.8rem; color: #ef4444; border-color: rgba(239, 68, 68, 0.3);" onclick="logoutAdmin()">Logout</button>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div id="tab-overview">
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <h3>Total Visitors</h3>
+                        <div class="value" id="metric-visitors">-</div>
+                        <div class="trend">↑ Active tracking</div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Leads Generated</h3>
+                        <div class="value" id="metric-leads">-</div>
+                        <div class="trend" id="trend-leads">Fetching...</div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Value at Risk Detected</h3>
+                        <div class="value" id="metric-risk" style="color: #ef4444;">$0</div>
+                        <div class="trend" style="color: var(--geist-muted)">Across all audits</div>
+                    </div>
+                </div>
+
+                <div class="section-title">Site Activity (Page Views & Clicks)</div>
+                <div class="chart-container">
+                    <canvas id="trafficChart"></canvas>
                 </div>
             </div>
-            <div class="admin-nav-item active" onclick="showTab('leads')">Flux de Leads</div>
-            <div class="admin-nav-item" onclick="showTab('audits')">Diagnostics Scolaires</div>
-            <div class="admin-nav-item" onclick="showTab('reports')">Rapports d'Agents</div>
-            <hr style="border: 0; border-top: 1px solid var(--border-admin); margin: 20px 0;">
-            <div class="admin-nav-item" onclick="location.href='index.html'">Retour au Site</div>
-        </aside>
 
-        <main class="admin-main">
-            <div id="leads-section">
-                <header style="margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center;">
-                    <h2>Flux de Leads (WhatsApp)</h2>
-                    <button class="btn btn-outline" onclick="fetchLeads()">Rafraîchir</button>
-                </header>
-                <div class="stat-grid">
-                    <div class="stat-card"><h4>Total Leads</h4><div class="value" id="total-leads">-</div></div>
-                    <div class="stat-card"><h4>Nouveaux (24h)</h4><div class="value" id="new-leads">-</div></div>
-                </div>
+            <div id="tab-leads" style="display: none;">
+                <div class="section-title">Recent Leads (WhatsApp)</div>
                 <table id="leads-table">
-                    <thead><tr><th>Date</th><th>Message / Action</th><th>Statut</th></tr></thead>
-                    <tbody><tr><td colspan="3" style="text-align: center;">Chargement...</td></tr></tbody>
+                    <thead><tr><th>Date</th><th>Action</th><th>Status</th></tr></thead>
+                    <tbody><tr><td colspan="3" style="text-align: center; color: var(--geist-muted);">Loading data...</td></tr></tbody>
                 </table>
             </div>
 
-            <div id="audits-section" style="display: none;">
-                <header style="margin-bottom: 40px;">
-                    <h2>Derniers Diagnostics</h2>
-                </header>
+            <div id="tab-audits" style="display: none;">
+                <div class="section-title">Recent Intelligence Audits</div>
                 <table id="audits-table">
-                    <thead><tr><th>Date</th><th>Perte Est.</th><th>Établissement</th><th>Score Réput.</th></tr></thead>
-                    <tbody><tr><td colspan="4" style="text-align: center;">Chargement...</td></tr></tbody>
+                    <thead><tr><th>Date</th><th>Target</th><th>Est. Loss</th><th>Reputation</th></tr></thead>
+                    <tbody><tr><td colspan="4" style="text-align: center; color: var(--geist-muted);">Loading data...</td></tr></tbody>
                 </table>
             </div>
-        </main>
+        </div>
     </div>
 
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
     
     <script>
@@ -118,60 +170,174 @@
         };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
+        const auth = firebase.auth();
 
-        function checkAccess() {
-            const pass = document.getElementById('admin-pass').value;
-            if (pass === 'kamo2026') { // Mot de passe temporaire
+        let leadsUnsubscribe = null;
+        let auditsUnsubscribe = null;
+        let trafficUnsubscribe = null;
+        let chartInstance = null;
+
+        auth.onAuthStateChanged(user => {
+            if (user) {
                 document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('admin-content').style.display = 'grid';
-                fetchLeads();
-                fetchAudits();
+                document.getElementById('admin-content').style.display = 'block';
+                initDashboard();
             } else {
-                alert('Accès refusé. Clé incorrecte.');
+                document.getElementById('login-screen').style.display = 'flex';
+                document.getElementById('admin-content').style.display = 'none';
+                if (leadsUnsubscribe) leadsUnsubscribe();
+                if (auditsUnsubscribe) auditsUnsubscribe();
+                if (trafficUnsubscribe) trafficUnsubscribe();
+            }
+        });
+
+        async function checkAccess() {
+            const email = document.getElementById('admin-email').value;
+            const pass = document.getElementById('admin-pass').value;
+            const errorText = document.getElementById('login-error');
+            const btn = document.getElementById('login-btn');
+            
+            if (!email || !pass) return;
+
+            btn.innerText = "Authenticating...";
+            try {
+                await auth.signInWithEmailAndPassword(email, pass);
+                errorText.style.display = 'none';
+            } catch (error) {
+                errorText.innerText = "Invalid credentials.";
+                errorText.style.display = 'block';
+            } finally {
+                btn.innerText = "Continue with Email";
             }
         }
 
-        function showTab(tab) {
-            document.getElementById('leads-section').style.display = tab === 'leads' ? 'block' : 'none';
-            document.getElementById('audits-section').style.display = tab === 'audits' ? 'block' : 'none';
-            document.querySelectorAll('.admin-nav-item').forEach(el => {
-                el.classList.remove('active');
-                if(el.innerText.toLowerCase().includes(tab.slice(0,-1))) el.classList.add('active');
+        function logoutAdmin() { auth.signOut(); }
+
+        function switchTab(tabId, el) {
+            document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+            el.classList.add('active');
+            document.getElementById('tab-overview').style.display = 'none';
+            document.getElementById('tab-leads').style.display = 'none';
+            document.getElementById('tab-audits').style.display = 'none';
+            document.getElementById('tab-' + tabId).style.display = 'block';
+        }
+
+        function initDashboard() {
+            initChart();
+            fetchTraffic();
+            fetchLeads();
+            fetchAudits();
+        }
+
+        function initChart() {
+            const ctx = document.getElementById('trafficChart').getContext('2d');
+            Chart.defaults.color = '#888';
+            Chart.defaults.font.family = "'Geist Sans', sans-serif";
+            
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [], // Will be filled dynamically
+                    datasets: [{
+                        label: 'Interactions / Vues',
+                        data: [],
+                        borderColor: '#ededed',
+                        backgroundColor: 'rgba(237, 237, 237, 0.1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true,
+                        pointRadius: 0,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false, backgroundColor: '#111', titleColor: '#fff', bodyColor: '#aaa', borderColor: '#333', borderWidth: 1 } },
+                    scales: {
+                        x: { grid: { display: false, drawBorder: false } },
+                        y: { grid: { color: '#222', drawBorder: false }, beginAtZero: true, ticks: { precision: 0 } }
+                    },
+                    interaction: { mode: 'nearest', axis: 'x', intersect: false }
+                }
             });
         }
 
-        async function fetchLeads() {
-            const snap = await db.collection('agentcy_leads').orderBy('timestamp', 'desc').limit(20).get();
-            const tbody = document.querySelector('#leads-table tbody');
-            tbody.innerHTML = '';
-            document.getElementById('total-leads').innerText = snap.size;
-            
-            snap.forEach(doc => {
-                const data = doc.data();
-                const date = data.timestamp ? data.timestamp.toDate().toLocaleString() : 'Instantané';
-                tbody.innerHTML += `<tr>
-                    <td>${date}</td>
-                    <td>${data.message}</td>
-                    <td><span class="badge-status badge-new">${data.status || 'New'}</span></td>
-                </tr>`;
-            });
+        function fetchTraffic() {
+            // Group traffic by day
+            trafficUnsubscribe = db.collection('agentcy_traffic')
+                .orderBy('timestamp', 'asc')
+                .onSnapshot(snap => {
+                    document.getElementById('metric-visitors').innerText = snap.size;
+                    
+                    const countsByDay = {};
+                    snap.forEach(doc => {
+                        const data = doc.data();
+                        if(data.timestamp) {
+                            const dateStr = data.timestamp.toDate().toLocaleDateString('fr-FR', {month: 'short', day: 'numeric'});
+                            countsByDay[dateStr] = (countsByDay[dateStr] || 0) + 1;
+                        }
+                    });
+
+                    // Update Chart
+                    if (chartInstance) {
+                        chartInstance.data.labels = Object.keys(countsByDay);
+                        chartInstance.data.datasets[0].data = Object.values(countsByDay);
+                        chartInstance.update();
+                    }
+                }, err => console.log("Traffic err (Ignored if rules not set yet)", err));
         }
 
-        async function fetchAudits() {
-            const snap = await db.collection('agentcy_diagnostics').orderBy('timestamp', 'desc').limit(20).get();
-            const tbody = document.querySelector('#audits-table tbody');
-            tbody.innerHTML = '';
-            
-            snap.forEach(doc => {
-                const data = doc.data();
-                const date = data.timestamp ? data.timestamp.toDate().toLocaleString() : 'Instantané';
-                tbody.innerHTML += `<tr>
-                    <td>${date}</td>
-                    <td>$${data.yearlyLoss || 0}</td>
-                    <td>École de ${data.size || '-'} élèves</td>
-                    <td>${data.reputation || '-'}</td>
-                </tr>`;
-            });
+        function fetchLeads() {
+            leadsUnsubscribe = db.collection('agentcy_leads')
+                .orderBy('timestamp', 'desc')
+                .limit(50)
+                .onSnapshot(snap => {
+                    document.getElementById('metric-leads').innerText = snap.size;
+                    const tbody = document.querySelector('#leads-table tbody');
+                    if (snap.empty) return tbody.innerHTML = '<tr><td colspan="3">No leads yet.</td></tr>';
+                    
+                    tbody.innerHTML = '';
+                    let newCount = 0;
+                    snap.forEach(doc => {
+                        const data = doc.data();
+                        const date = data.timestamp ? data.timestamp.toDate().toLocaleString() : 'Just now';
+                        if (data.status === 'New' || !data.status) newCount++;
+                        tbody.innerHTML += `<tr>
+                            <td>${date}</td>
+                            <td>${data.message || 'Interaction'}</td>
+                            <td><span class="badge badge-green">${data.status || 'New'}</span></td>
+                        </tr>`;
+                    });
+                    document.getElementById('trend-leads').innerHTML = `↑ ${newCount} recent`;
+                });
+        }
+
+        function fetchAudits() {
+            auditsUnsubscribe = db.collection('agentcy_diagnostics')
+                .orderBy('timestamp', 'desc')
+                .limit(50)
+                .onSnapshot(snap => {
+                    const tbody = document.querySelector('#audits-table tbody');
+                    if (snap.empty) return tbody.innerHTML = '<tr><td colspan="4">No audits yet.</td></tr>';
+                    
+                    tbody.innerHTML = '';
+                    let totalLoss = 0;
+                    snap.forEach(doc => {
+                        const data = doc.data();
+                        const date = data.timestamp ? data.timestamp.toDate().toLocaleString() : 'Just now';
+                        const loss = data.yearlyLoss || data.financial_impact?.annual_loss_usd || 0;
+                        totalLoss += parseFloat(loss);
+                        
+                        tbody.innerHTML += `<tr>
+                            <td>${date}</td>
+                            <td>${data.business_url || 'N/A'}</td>
+                            <td style="color: #ef4444; font-weight: 500;">$${loss.toLocaleString()}</td>
+                            <td>${data.reputation || data.financial_impact?.recovery_potential || '-'}</td>
+                        </tr>`;
+                    });
+                    document.getElementById('metric-risk').innerText = `$${totalLoss.toLocaleString()}`;
+                });
         }
     </script>
 </body>

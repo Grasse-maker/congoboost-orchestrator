@@ -26,8 +26,25 @@ const PROJECT_ID = "agentcy"; // Préfixe pour éviter les collisions dans KinCo
 const AgentOrganizer = {
     init() {
         console.log(`🤖 Agent Organisateur [${PROJECT_ID}] : Initialisation sur Firestore...`);
+        this.logActivity("page_view", { url: window.location.pathname, referrer: document.referrer });
         this.setupFormHandlers();
         this.syncState();
+    },
+
+    // Sauvegarde des activités globales du site (Analytics)
+    async logActivity(type, data = {}) {
+        if (!db) return;
+        try {
+            const collectionName = `${PROJECT_ID}_traffic`;
+            await db.collection(collectionName).add({
+                type: type,
+                data: data,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                userAgent: navigator.userAgent
+            });
+        } catch (error) {
+            console.error("Erreur Firestore Traffic : ", error);
+        }
     },
 
     // Sauvegarde des diagnostics dans Firestore (Collection: agentcy_diagnostics)
@@ -71,7 +88,16 @@ const AgentOrganizer = {
         contactBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 this.logContact("Clic sur bouton de contact WhatsApp");
+                this.logActivity("click_whatsapp", { button_text: btn.innerText });
             });
+        });
+
+        // Tous les autres clics (boutons principaux)
+        document.body.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON' || e.target.classList.contains('btn')) {
+                const text = e.target.innerText || e.target.id || "Bouton Inconnu";
+                this.logActivity("button_click", { button_name: text });
+            }
         });
     },
 
