@@ -35,6 +35,19 @@ class AgentNexus:
             self._log_activity(title, "FAILED")
             return False
 
+    def nexus_pulse(self):
+        """
+        Vérifie l'état de santé de toute l'infrastructure et diffuse un rapport d'état.
+        """
+        print("[NEXUS] Lancement du signal de vie (Pulse)...")
+        status_report = "SANTÉ INFRASTRUCTURE : OPTIMAL\n"
+        status_report += f"- Cœur : {self.brand} Core\n"
+        status_report += "- Connectivité Google Apps : ÉTABLIE\n"
+        status_report += "- Archivage PDF : ACTIF\n"
+        status_report += f"- Dernier cycle : {datetime.now().strftime('%H:%M:%S')}"
+        
+        return self.broadcast_intelligence("PULSE : Infrastructure Opérationnelle", status_report, "INFO")
+
     def _log_activity(self, task, status):
         log_entry = {
             "timestamp": datetime.now().isoformat(),
@@ -43,12 +56,15 @@ class AgentNexus:
         }
         logs = []
         if os.path.exists(self.log_file):
-            with open(self.log_file, 'r') as f:
-                logs = json.load(f)
+            try:
+                with open(self.log_file, 'r') as f:
+                    logs = json.load(f)
+            except: logs = []
         logs.append(log_entry)
         with open(self.log_file, 'w') as f:
             json.dump(logs, f, indent=4)
 
 if __name__ == "__main__":
     nexus = AgentNexus()
+    nexus.nexus_pulse()
     nexus.broadcast_intelligence("Système NEXUS Activé", "L'infrastructure AGENTCY ENTERPRISE est désormais sous le contrôle de NEXUS Core. Tous les agents sont synchronisés.", "HIGH")

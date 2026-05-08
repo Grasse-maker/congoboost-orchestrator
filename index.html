@@ -131,7 +131,14 @@
 <body>
     <nav>
         <div class="container nav-inner">
-            <div class="logo">AGENTCY <span>ENTERPRISE</span></div>
+            <div class="logo" style="display: flex; align-items: center; gap: 12px;">
+                <div class="logo-icon" style="width: 32px; height: 32px; border: 2px solid var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 900; transition: var(--transition);">A</div>
+                <div>AGENTCY <span>ENTERPRISE</span></div>
+            </div>
+            <div id="nexus-pulse" style="display: flex; align-items: center; gap: 8px; font-size: 0.65rem; font-weight: 700; color: var(--green); background: #ecfdf5; padding: 4px 10px; border-radius: 100px; border: 1px solid #d1fae5;">
+                <span style="width: 6px; height: 6px; background: var(--green); border-radius: 50%; display: inline-block; animation: pulse 2s infinite;"></span>
+                INFRASTRUCTURE : OPTIMAL
+            </div>
             <div class="nav-links">
                 <a href="#services">Services</a>
                 <a href="#case">Réalisations</a>
@@ -335,11 +342,31 @@
             const monthlyHours = Math.round(hours * staff * 4.3);
             const monthlyCost = Math.round(monthlyHours * rate);
             const recoverable = Math.min(75, Math.round(55 + (staff * 2)));
-            document.getElementById('lost-hours').innerText = monthlyHours + 'h';
-            document.getElementById('lost-cost').innerText = '$' + monthlyCost;
-            document.getElementById('recoverable').innerText = recoverable + '%';
-            document.getElementById('results').classList.add('active');
+            
+            // Animation de scan
+            const results = document.getElementById('results');
+            results.style.opacity = '0.3';
+            setTimeout(() => {
+                document.getElementById('lost-hours').innerText = monthlyHours + 'h';
+                document.getElementById('lost-cost').innerText = '$' + monthlyCost;
+                document.getElementById('recoverable').innerText = recoverable + '%';
+                results.classList.add('active');
+                results.style.opacity = '1';
+                AgentOrganizer.saveAudit({ sector, staff, hours, monthlyCost });
+            }, 800);
         }
+
+        // Effet de révélation au défilement
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('reveal-active');
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section, .card, .audit-box').forEach(el => {
+            el.classList.add('reveal');
+            observer.observe(el);
+        });
     </script>
 </body>
 </html>

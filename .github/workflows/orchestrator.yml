@@ -19,8 +19,18 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
+      - name: Run SENTINEL Market Audit
+        run: python agent_sentinel.py
+        env:
+          WEBHOOK_URL: "https://script.google.com/macros/s/AKfycbyuISpIUfYCRElys3ZxvENsFQDsh1O7yP239QSyGm1k9LUSxZQakv8kq-VzAwPO0Ho/exec"
+
       - name: Run ATLAS Strategic Briefing
         run: python agent_atlas.py
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+          WEBHOOK_URL: "https://script.google.com/macros/s/AKfycbyuISpIUfYCRElys3ZxvENsFQDsh1O7yP239QSyGm1k9LUSxZQakv8kq-VzAwPO0Ho/exec"
+
+      - name: Run NEXUS Final Synchronization
+        run: python agent_nexus.py
+        env:
           WEBHOOK_URL: "https://script.google.com/macros/s/AKfycbyuISpIUfYCRElys3ZxvENsFQDsh1O7yP239QSyGm1k9LUSxZQakv8kq-VzAwPO0Ho/exec"

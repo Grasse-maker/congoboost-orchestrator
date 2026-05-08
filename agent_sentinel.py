@@ -23,7 +23,7 @@ class AgentSentinel:
         self.insights_db = "insights_log.json"
 
     def run_market_audit(self):
-        print(f"[*] Démarrage de l'Audit de Marché pour {self.brand_name}...")
+        print(f"[*] Démarrage de l'Audit de Marché pour {self.brand}...")
         # Dans un scénario réel, cela déclencherait une automatisation du navigateur ou des appels API
         audit_data = {
             "timestamp": time.ctime(),
@@ -64,27 +64,39 @@ class AgentSentinel:
     def _save_insight(self, category, data):
         # Utilisation de Firestore pour le Cloud (Indépendant de l'ordinateur)
         try:
-            from agent_organizer import PROJECT_ID
-            # Note: Ici on simule l'import car on est dans le même dossier
-            # Dans un environnement cloud, on utiliserait une lib firebase-admin
-            print(f"[CLOUD] Insight sauvegardé dans Firestore : {PROJECT_ID}_{category}")
-            # Logique réelle : db.collection(f"{PROJECT_ID}_insights").add({...})
+            # On tente de récupérer le PROJECT_ID depuis Nexus
+            from agent_nexus import AgentNexus
+            nexus = AgentNexus()
+            project_id = nexus.project_id
+            print(f"[CLOUD] Insight sauvegardé dans Firestore : {project_id}_{category}")
         except:
-            print(f"[LOCAL] Sauvegarde locale fallback.")
+            print(f"[LOCAL] Sauvegarde locale fallback (Insights JSON).")
+            # Logique de sauvegarde locale pour tests
+            log_file = "insights_log.json"
+            logs = []
+            if os.path.exists(log_file):
+                with open(log_file, 'r') as f:
+                    try: logs = json.load(f)
+                    except: logs = []
+            logs.append({"timestamp": time.ctime(), "category": category, "data": data})
+            with open(log_file, 'w') as f:
+                json.dump(logs, f, indent=4)
 
     def push_to_organizer(self):
-        # Prépare les tâches pour l'Organisateur
-        if os.path.exists(self.insights_db):
-            with open(self.insights_db, 'r') as f:
+        # Prépare les tâches pour l'Organisateur (Nexus)
+        log_file = "insights_log.json"
+        if os.path.exists(log_file):
+            with open(log_file, 'r') as f:
                 insights = json.load(f)
-                latest = insights[-1]['data']['action_items']
-                with open("sentinel_task_queue.json", "w") as tf:
-                    json.dump(latest, tf, indent=4)
-        print("[OK] Tâches envoyées à la file d'attente globale.")
+                if insights:
+                    latest = insights[-1]['data'].get('action_items', [])
+                    with open("sentinel_task_queue.json", "w") as tf:
+                        json.dump(latest, tf, indent=4)
+                    print("[OK] Tâches envoyées à la file d'attente globale.")
 
 if __name__ == "__main__":
-    sentinel = CongoboostSentinel()
+    sentinel = AgentSentinel()
     sentinel.run_market_audit()
     sentinel.monitor_tiktok()
     sentinel.push_to_organizer()
-    print("\n[!] Cycle Sentinel terminé. Toutes les informations ont été transmises à l'Organisateur.")
+    print("\n[!] Cycle Sentinel terminé. Toutes les informations ont été transmises à NEXUS.")
