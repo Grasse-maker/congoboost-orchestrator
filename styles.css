@@ -20,12 +20,15 @@
     box-sizing: border-box;
 }
 
-body {
+html, body {
     background-color: var(--bg);
     color: var(--text-main);
     font-family: 'Plus Jakarta Sans', sans-serif;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
 }
 
 .container {
@@ -451,64 +454,63 @@ footer {
 
 /* MOBILE RESPONSIVE OPTIMIZATION */
 @media (max-width: 900px) {
-    section { padding: 60px 0; }
+    section { padding: 40px 0; overflow: hidden; }
     
-    .hero { padding: 80px 0 40px; }
-    .hero h1 { font-size: 2.8rem; letter-spacing: -1px; }
-    .hero p { font-size: 1.1rem; }
+    .container { padding: 0 20px; width: 100%; }
 
-    .sim-container, .case-study { grid-template-columns: 1fr; }
-    .sim-container { gap: 30px; }
-    .sim-module { padding: 20px; }
+    .hero { padding: 60px 0 40px; }
+    .hero h1 { font-size: 2.2rem; letter-spacing: -1px; line-height: 1.2; }
+    .hero p { font-size: 1rem; padding: 0 10px; }
+
+    .sim-container, .case-study { 
+        grid-template-columns: 1fr; 
+        gap: 20px;
+        width: 100%;
+        overflow: hidden;
+    }
+    
+    .simulator { padding: 20px 15px; border-radius: 16px; margin: 0; }
+    .sim-module { padding: 20px 15px; }
     
     .sim-results { 
         position: static; 
         margin-top: 20px; 
-        padding: 30px 24px;
-        border-radius: 20px;
+        padding: 30px 20px;
+        border-radius: 16px;
+        width: 100%;
     }
     
-    .total-loss { font-size: 2.5rem; }
+    .total-loss { font-size: 2.2rem; }
 
-    .case-study { padding: 30px 20px; gap: 30px; }
-    .case-gallery { gap: 10px; }
+    .case-study { padding: 20px 15px; gap: 24px; border-radius: 16px; }
+    .case-gallery { 
+        display: flex; 
+        flex-direction: column; 
+        gap: 12px; 
+        width: 100%;
+    }
+    .case-gallery img { width: 100% !important; height: auto; }
     
-    .nav-links { display: none; } /* Simplified for now, will add toggle in JS */
+    .nav-links { display: none; }
 }
 
-/* TABLET & SMALL DESKTOP */
-@media (min-width: 901px) and (max-width: 1100px) {
-    .container { max-width: 90%; }
-    .hero h1 { font-size: 3.5rem; }
-}
-
-/* UTILITIES */
-.btn-block { width: 100%; display: flex; justify-content: center; }
-
-/* HAMBURGER MENU (CSS PART) */
-.nav-toggle {
-    display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-}
-
+/* HAMBURGER MENU (MOBILE FIX) */
 @media (max-width: 900px) {
     .nav-toggle { display: block; }
-    .nav-inner { position: relative; }
+    .nav-inner { width: 100%; display: flex; justify-content: space-between; }
     .nav-links.active {
         display: flex;
         flex-direction: column;
-        position: absolute;
-        top: 100%;
+        position: fixed; /* Fixed to avoid container constraints */
+        top: 72px; /* Navbar height */
         left: 0;
         right: 0;
+        bottom: 0;
         background: #fff;
-        padding: 20px;
-        border-bottom: 1px solid var(--border);
-        box-shadow: var(--shadow-md);
-        gap: 16px;
+        padding: 40px 24px;
+        z-index: 2000;
+        gap: 24px;
+        overflow-y: auto;
     }
-    .nav-links.active a { width: 100%; text-align: left; padding: 10px 0; border-bottom: 1px solid var(--surface); }
+    .nav-links.active a { font-size: 1.2rem; border-bottom: 1px solid var(--surface); padding-bottom: 12px; }
 }
