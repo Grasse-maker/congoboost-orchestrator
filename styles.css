@@ -1,17 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap');
 
 :root {
-    --bg: #000000;
-    --surface: #0a0a0a;
-    --text-main: #ffffff;
-    --text-muted: #a1a1aa;
-    --primary: #ffffff;
-    --primary-soft: rgba(255, 255, 255, 0.05);
-    --border: #27272a;
-    --accent-gold: #e5e5e5; /* The logo's off-white */
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
-    --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.8);
+    --bg: #ffffff;
+    --surface: #f8fafc;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --primary: #2563eb;
+    --primary-soft: #eff6ff;
+    --border: #e2e8f0;
+    --accent-gold: #b59410;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.04);
     --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="dark"] {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --primary: #3b82f6;
+    --primary-soft: rgba(59, 130, 246, 0.1);
+    --border: #334155;
+    --accent-gold: #fbbf24;
 }
 
 * {
@@ -29,6 +40,30 @@ html, body {
     overflow-x: hidden;
     width: 100%;
     position: relative;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* CSS BRAND LOGO */
+.brand-logo {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    text-decoration: none;
+    color: var(--text-main);
+}
+
+.brand-logo .agentcy {
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: -1.5px;
+    text-transform: uppercase;
+.brand-logo .entreprise {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: -4px;
+    align-self: flex-end;
 }
 
 .container {
@@ -39,7 +74,7 @@ html, body {
 
 /* NAVBAR */
 nav {
-    background: rgba(0, 0, 0, 0.8);
+    background: var(--bg);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
     padding: 16px 0;
@@ -52,25 +87,6 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.logo img {
-    height: 32px;
-    width: auto;
-}
-
-.logo-text {
-    font-size: 1.1rem;
-    font-weight: 800;
-    letter-spacing: -0.5px;
-    color: var(--text-main);
-    text-decoration: none;
 }
 
 .nav-links {
