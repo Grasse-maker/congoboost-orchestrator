@@ -358,22 +358,55 @@ input:focus { outline: none; border-color: var(--primary); }
     font-weight: 800;
 }
 
+/* BENEFIT LIST */
+.benefit-list {
+    list-style: none;
+    display: grid;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.benefit-list li {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
 /* FOOTER */
 footer {
     padding: 80px 0 40px;
     border-top: 1px solid var(--border);
+    background: var(--surface);
 }
 
 .footer-inner {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
 }
 
-.copy { color: var(--text-muted); font-size: 0.8rem; }
+.footer-links {
+    display: flex;
+    gap: 24px;
+}
+
+.footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.copy { color: var(--text-muted); font-size: 0.8rem; width: 100%; text-align: center; margin-top: 40px; }
 
 @media (max-width: 900px) {
     .sim-container, .case-study { grid-template-columns: 1fr; }
-    .hero h1 { font-size: 3rem; }
-    .sim-results { position: static; }
+    .hero h1 { font-size: 2.8rem; }
+    .sim-results { position: static; margin-top: 40px; }
+    .footer-inner { flex-direction: column; text-align: center; }
 }

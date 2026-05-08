@@ -1,58 +1,81 @@
 /* 
-    AGENTCY ENTERPRISE - Logiciel de Simulation de ROI
-    Positionnement : Premium Consulting & SaaS Studio
+    AGENTCY ENTERPRISE - Diagnostic de Modernisation Scolaire
+    Focus : Langage Directeur d'École (Argent, Réputation, Organisation)
 */
 
-function calculateROI() {
-    // --- MODULE 1 : INSCRIPTIONS ---
-    const lostStudents = parseFloat(document.getElementById('lost-students').value) || 0;
-    const annualFees = parseFloat(document.getElementById('annual-fees').value) || 0;
-    const enrollmentLoss = lostStudents * annualFees * 12;
+function runDiagnostic() {
+    // --- INPUTS ---
+    const students = parseFloat(document.getElementById('current-students').value) || 0;
+    const lostStudents = parseFloat(document.getElementById('lost-range').value) || 0;
+    const fees = parseFloat(document.getElementById('avg-fees').value) || 0;
+    const tools = document.getElementById('current-tools').value;
+    const communication = document.getElementById('parent-comm').value;
 
-    // --- MODULE 2 : ADMINISTRATION ---
-    const staffCount = parseFloat(document.getElementById('staff-count').value) || 0;
-    const lostHoursDay = parseFloat(document.getElementById('lost-hours-day').value) || 0;
-    const avgSalary = parseFloat(document.getElementById('avg-salary').value) || 0;
-
-    // Calcul du coût horaire approximatif (base 160h/mois)
-    const hourlyRate = avgSalary / 160;
-    const adminLossMonth = staffCount * lostHoursDay * 22 * hourlyRate; // 22 jours ouvrables
-    const adminLossYear = adminLossMonth * 12;
-
-    // --- TOTAL ---
-    const totalLossYear = Math.round(enrollmentLoss + adminLossYear);
+    // --- CALCULS FINANCIERS ---
+    // Perte brute d'inscriptions
+    const financialLoss = lostStudents * fees;
+    
+    // Coût caché de la désorganisation (estimé à 10% des revenus pour le papier, 5% pour Excel)
+    let frictionFactor = 0;
+    if (tools === 'paper') frictionFactor = 0.12;
+    else if (tools === 'excel') frictionFactor = 0.05;
+    else if (tools === 'whatsapp') frictionFactor = 0.08;
+    
+    const operationalLoss = (students * fees) * frictionFactor;
+    const totalYearlyLoss = Math.round(financialLoss + operationalLoss);
 
     // --- MISE À JOUR UI ---
-    animateValue('total-loss', totalLossYear, "$");
-    document.getElementById('res-enrollment').innerText = `$${Math.round(enrollmentLoss).toLocaleString()}`;
-    document.getElementById('res-admin').innerText = `$${Math.round(adminLossYear).toLocaleString()}`;
+    animateDiagnosticValue('diag-loss', totalYearlyLoss, "$");
 
-    // --- RECOMMANDATION DYNAMIQUE ---
-    const recText = document.getElementById('rec-text');
-    if (totalLossYear > 10000) {
-        recText.innerText = "Priorité Critique : Votre établissement subit une hémorragie financière. Un système d'automatisation est indispensable pour stopper ces pertes avant la prochaine rentrée.";
-    } else if (totalLossYear > 5000) {
-        recText.innerText = "Recommandation : Une optimisation de vos processus administratifs permettrait de réinjecter plus de $5,000 dans vos projets de développement.";
+    // --- ANALYSE RÉPUTATION & EFFICACITÉ ---
+    const reputationSpan = document.getElementById('reputation-impact');
+    const efficiencySpan = document.getElementById('admin-efficiency');
+    const recText = document.getElementById('diag-rec');
+
+    if (communication === 'no') {
+        reputationSpan.innerText = "Critique";
+        reputationSpan.style.color = "#ef4444";
     } else {
-        recText.innerText = "Analyse : Même pour une petite structure, l'automatisation sécurise vos revenus et garantit une croissance pérenne.";
+        reputationSpan.innerText = "Stable";
+        reputationSpan.style.color = "#10b981";
     }
 
-    // Sauvegarde silencieuse via l'Organisateur
+    if (tools === 'paper') {
+        efficiencySpan.innerText = "Très Faible";
+        efficiencySpan.style.color = "#ef4444";
+    } else if (tools === 'modern') {
+        efficiencySpan.innerText = "Optimale";
+        efficiencySpan.style.color = "#10b981";
+    } else {
+        efficiencySpan.innerText = "Moyenne";
+        efficiencySpan.style.color = "#f59e0b";
+    }
+
+    // --- RECOMMANDATION ÉMOTIONNELLE & CONCRÈTE ---
+    if (totalYearlyLoss > 15000) {
+        recText.innerText = `Votre établissement pourrait perdre environ $${totalYearlyLoss.toLocaleString()}/an à cause des processus manuels et des pertes d'inscriptions. Recommandation : Déployer en urgence un système de gestion moderne pour sécuriser votre avenir financier.`;
+    } else if (reputationSpan.innerText === "Critique") {
+        recText.innerText = "Le retard de communication avec les parents menace la réputation de votre école. Un système de notifications automatiques restaurera la confiance et l'image de votre institution.";
+    } else {
+        recText.innerText = "La modernisation de vos outils administratifs permettra de libérer vos équipes du papier et de vous concentrer sur l'excellence pédagogique.";
+    }
+
+    // Sauvegarde pour le rapport matinal de l'Architecte
     if (typeof AgentOrganizer !== 'undefined' && typeof AgentOrganizer.saveAudit === 'function') {
         AgentOrganizer.saveAudit({
-            type: "Strategic Audit",
-            totalLoss: totalLossYear,
-            enrollmentLoss,
-            adminLossYear,
-            inputs: { lostStudents, annualFees, staffCount, lostHoursDay, avgSalary }
+            type: "School Diagnostic",
+            totalLoss: totalYearlyLoss,
+            reputation: reputationSpan.innerText,
+            tools: tools,
+            inputs: { students, lostStudents, fees, tools, communication }
         });
     }
 }
 
-function animateValue(id, value, prefix = "") {
+function animateDiagnosticValue(id, value, prefix = "") {
     const obj = document.getElementById(id);
     const start = parseInt(obj.innerText.replace(/[^0-9]/g, '')) || 0;
-    const duration = 800;
+    const duration = 1000;
     let startTimestamp = null;
     
     const step = (timestamp) => {
@@ -69,5 +92,5 @@ function animateValue(id, value, prefix = "") {
 
 // Initialisation
 document.addEventListener('DOMContentLoaded', () => {
-    calculateROI();
+    runDiagnostic();
 });
