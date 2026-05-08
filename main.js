@@ -1,6 +1,6 @@
 /* 
-    AGENTCY ENTERPRISE - Diagnostic de Modernisation Scolaire
-    Focus : Langage Directeur d'École (Argent, Réputation, Organisation)
+    AGENTCY ENTERPRISE - Diagnostic de Modernisation Scolaire v2.0
+    Focus : ROI (Retour sur Investissement), Souveraineté Digitale & Prestige
 */
 
 function runDiagnostic() {
@@ -11,71 +11,92 @@ function runDiagnostic() {
     const tools = document.getElementById('current-tools').value;
     const communication = document.getElementById('parent-comm').value;
 
-    // --- CALCULS FINANCIERS ---
-    // Perte brute d'inscriptions
+    // --- CALCULS COMPLEXES ---
+    
+    // 1. Perte de Chiffre d'Affaires (Directe)
     const financialLoss = lostStudents * fees;
     
-    // Coût caché de la désorganisation (estimé à 10% des revenus pour le papier, 5% pour Excel)
-    let frictionFactor = 0;
-    if (tools === 'paper') frictionFactor = 0.12;
-    else if (tools === 'excel') frictionFactor = 0.05;
-    else if (tools === 'whatsapp') frictionFactor = 0.08;
+    // 2. Coût d'Inefficacité Opérationnelle (Friction factor)
+    // Papier : 15%, Excel : 7%, Manuel : 10%
+    let frictionFactor = 0.02; // Base friction for modern systems
+    if (tools === 'paper') frictionFactor = 0.15;
+    else if (tools === 'excel') frictionFactor = 0.07;
+    else if (tools === 'whatsapp') frictionFactor = 0.10;
     
-    const operationalLoss = (students * fees) * frictionFactor;
-    const totalYearlyLoss = Math.round(financialLoss + operationalLoss);
+    const operationalCost = (students * fees) * frictionFactor;
+    
+    // 3. Score de Satisfaction Parents (0-100)
+    let satisfaction = 85; // Base
+    if (communication === 'no') satisfaction -= 40;
+    if (tools === 'paper') satisfaction -= 15;
+    if (tools === 'whatsapp') satisfaction -= 5;
+    
+    // 4. ROI Potentiel (Estimation de gain sur 12 mois)
+    const totalYearlyLoss = Math.round(financialLoss + operationalCost);
+    const potentialROI = Math.round(totalYearlyLoss * 0.85); // On estime récupérer 85% des pertes
 
     // --- MISE À JOUR UI ---
-    animateDiagnosticValue('diag-loss', totalYearlyLoss, "$");
-
-    // --- ANALYSE RÉPUTATION & EFFICACITÉ ---
+    animateValue('diag-loss', totalYearlyLoss, "$");
+    
+    // Mise à jour des indicateurs visuels
     const reputationSpan = document.getElementById('reputation-impact');
     const efficiencySpan = document.getElementById('admin-efficiency');
     const recText = document.getElementById('diag-rec');
 
-    if (communication === 'no') {
+    // Logique de couleur et texte pour Réputation
+    if (satisfaction < 50) {
         reputationSpan.innerText = "Critique";
         reputationSpan.style.color = "#ef4444";
+    } else if (satisfaction < 75) {
+        reputationSpan.innerText = "Risqué";
+        reputationSpan.style.color = "#f59e0b";
     } else {
-        reputationSpan.innerText = "Stable";
+        reputationSpan.innerText = "Excellent";
         reputationSpan.style.color = "#10b981";
     }
 
-    if (tools === 'paper') {
-        efficiencySpan.innerText = "Très Faible";
+    // Logique pour Efficacité
+    const efficiency = (1 - frictionFactor) * 100;
+    if (efficiency < 86) {
+        efficiencySpan.innerText = "Faible";
         efficiencySpan.style.color = "#ef4444";
-    } else if (tools === 'modern') {
-        efficiencySpan.innerText = "Optimale";
-        efficiencySpan.style.color = "#10b981";
-    } else {
+    } else if (efficiency < 94) {
         efficiencySpan.innerText = "Moyenne";
         efficiencySpan.style.color = "#f59e0b";
-    }
-
-    // --- RECOMMANDATION ÉMOTIONNELLE & CONCRÈTE ---
-    if (totalYearlyLoss > 15000) {
-        recText.innerText = `Votre établissement pourrait perdre environ $${totalYearlyLoss.toLocaleString()}/an à cause des processus manuels et des pertes d'inscriptions. Recommandation : Déployer en urgence un système de gestion moderne pour sécuriser votre avenir financier.`;
-    } else if (reputationSpan.innerText === "Critique") {
-        recText.innerText = "Le retard de communication avec les parents menace la réputation de votre école. Un système de notifications automatiques restaurera la confiance et l'image de votre institution.";
     } else {
-        recText.innerText = "La modernisation de vos outils administratifs permettra de libérer vos équipes du papier et de vous concentrer sur l'excellence pédagogique.";
+        efficiencySpan.innerText = "Optimale";
+        efficiencySpan.style.color = "#10b981";
     }
 
-    // Sauvegarde pour le rapport matinal de l'Architecte
-    if (typeof AgentOrganizer !== 'undefined' && typeof AgentOrganizer.saveAudit === 'function') {
-        AgentOrganizer.saveAudit({
-            type: "School Diagnostic",
+    // --- RECOMMANDATION STRATÉGIQUE ---
+    let advice = "";
+    if (totalYearlyLoss > 20000) {
+        advice = `Urgence Absolue : Votre établissement subit une hémorragie financière de $${totalYearlyLoss.toLocaleString()}/an. La mise en place d'Agentcy Enterprise générera un ROI estimé à $${potentialROI.toLocaleString()} dès la première année.`;
+    } else if (satisfaction < 60) {
+        advice = "Alerte Fidélisation : Le manque de communication digitale nuit gravement à votre image. Les parents modernes attendent des notifications instantanées et des bulletins sécurisés.";
+    } else {
+        advice = "Optimisation : Vous disposez d'une base solide. Passer à l'infrastructure Enterprise vous permettra de scaler vos inscriptions et de réduire vos coûts administratifs de 30%.";
+    }
+    recText.innerText = advice;
+
+    // Sauvegarde Firestore via Agentcy Infrastructure
+    if (window.AgentOrganizer) {
+        window.AgentOrganizer.saveAudit({
+            brand: "Agentcy Enterprise",
+            type: "Elite Diagnostic",
             totalLoss: totalYearlyLoss,
-            reputation: reputationSpan.innerText,
-            tools: tools,
+            satisfaction: satisfaction,
+            efficiency: Math.round(efficiency),
+            potentialROI: potentialROI,
             inputs: { students, lostStudents, fees, tools, communication }
         });
     }
 }
 
-function animateDiagnosticValue(id, value, prefix = "") {
+function animateValue(id, value, prefix = "") {
     const obj = document.getElementById(id);
     const start = parseInt(obj.innerText.replace(/[^0-9]/g, '')) || 0;
-    const duration = 1000;
+    const duration = 800;
     let startTimestamp = null;
     
     const step = (timestamp) => {
@@ -90,42 +111,34 @@ function animateDiagnosticValue(id, value, prefix = "") {
     window.requestAnimationFrame(step);
 }
 
-// Mobile Menu Toggle
+// Initialization
 document.addEventListener('DOMContentLoaded', () => {
-    const navToggle = document.getElementById('nav-toggle');
-    const navLinks = document.getElementById('nav-links');
-
-    if (navToggle && navLinks) {
-        navToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-
-        // Close menu on link click
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-            });
-        });
-    }
-    // --- Theme Toggle Logic ---
+    // Theme Toggle Logic
     const themeToggle = document.getElementById('theme-toggle');
     const htmlElement = document.documentElement;
 
     if (themeToggle) {
-        // Check for saved theme preference
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            htmlElement.setAttribute('data-theme', savedTheme);
-        }
+        if (savedTheme) htmlElement.setAttribute('data-theme', savedTheme);
 
         themeToggle.addEventListener('click', () => {
             const currentTheme = htmlElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
             htmlElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
         });
     }
+
+    // Mobile Menu
+    const navToggle = document.getElementById('nav-toggle');
+    const navLinks = document.getElementById('nav-links');
+    if (navToggle && navLinks) {
+        navToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => navLinks.classList.remove('active'));
+        });
+    }
     
+    // Initial run
     runDiagnostic();
 });
