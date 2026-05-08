@@ -15,6 +15,21 @@ const firebaseConfig = {
     measurementId: "G-W1HBV0190F"
 };
 
+// Global Debugging : Log toutes les erreurs vers Firestore pour aider au déploiement mobile
+window.onerror = function(msg, url, lineNo, columnNo, error) {
+    if (typeof db !== 'undefined') {
+        db.collection('agentcy_traffic').add({
+            type: "js_error",
+            message: msg,
+            url: url,
+            line: lineNo,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            device: navigator.userAgent
+        });
+    }
+    return false;
+};
+
 // Initialisation Firebase (Mode Compatibilité v9)
 if (typeof firebase !== 'undefined') {
     firebase.initializeApp(firebaseConfig);
