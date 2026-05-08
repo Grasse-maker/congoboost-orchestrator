@@ -3,747 +3,343 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AGENTCY ENTERPRISE | Building Autonomous Business Systems</title>
-    <meta name="description" content="AGENTCY ENTERPRISE construit des agents IA, systèmes intelligents et infrastructures d'automatisation pour les entreprises africaines modernes.">
-    <meta name="keywords" content="AGENTCY, AI Agents, Automatisation, Business Intelligence, Afrique, IA, SaaS">
-    <meta property="og:title" content="AGENTCY ENTERPRISE | Autonomous Business Systems">
-    <meta property="og:description" content="AI Agents • Automation • Intelligent Systems for Modern African Businesses.">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <title>AGENTCY ENTERPRISE | SaaS & Automation pour Écoles et PME</title>
+    <meta name="description" content="AGENTCY ENTERPRISE : Consulting digital, systèmes SaaS et automatisation pour écoles et petites entreprises africaines.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #050505;
-            --surface: #0f0f0f;
-            --card: #141414;
-            --border: rgba(255,255,255,0.08);
-            --blue: #00c2ff;
-            --blue-glow: rgba(0,194,255,0.15);
-            --text: #f0f0f0;
-            --muted: #666;
+            --bg: #fafafa;
+            --surface: #ffffff;
+            --card: #f5f5f5;
+            --border: #e5e5e5;
+            --accent: #1a1a1a;
+            --blue: #2563eb;
+            --blue-light: #eff6ff;
+            --text: #1a1a1a;
+            --muted: #6b7280;
+            --green: #059669;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1180px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.7; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
 
         /* NAV */
-        nav {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 100;
-            background: rgba(5,5,5,0.85);
-            backdrop-filter: blur(24px);
-            border-bottom: 1px solid var(--border);
-            padding: 18px 0;
-        }
-
-        .nav-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.25rem;
-            font-weight: 900;
-            letter-spacing: -0.5px;
-        }
-
-        .logo span { color: var(--blue); font-weight: 300; }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 32px;
-        }
-
-        .nav-links a {
-            color: var(--muted);
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
+        nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 16px 0; position: sticky; top: 0; z-index: 50; }
+        .nav-inner { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.5px; }
+        .logo span { color: var(--blue); }
+        .nav-links { display: flex; align-items: center; gap: 28px; }
+        .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; }
         .nav-links a:hover { color: var(--text); }
-
-        .btn-nav {
-            background: var(--blue);
-            color: #000 !important;
-            padding: 10px 22px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 0.82rem;
-            letter-spacing: 0.5px;
-            transition: box-shadow 0.3s, transform 0.2s;
-        }
-
-        .btn-nav:hover {
-            box-shadow: 0 0 24px var(--blue-glow);
-            transform: translateY(-1px);
-        }
+        .btn-cta { background: var(--blue); color: #fff !important; padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 0.82rem; transition: all 0.2s; }
+        .btn-cta:hover { opacity: 0.9; transform: translateY(-1px); }
 
         /* HERO */
-        .hero {
-            padding: 160px 0 80px;
-            text-align: center;
-        }
+        .hero { padding: 100px 0 80px; max-width: 720px; }
+        .hero-label { display: inline-block; background: var(--blue-light); color: var(--blue); font-size: 0.75rem; font-weight: 700; padding: 6px 14px; border-radius: 6px; margin-bottom: 24px; letter-spacing: 0.5px; }
+        .hero h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 900; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 20px; }
+        .hero p { font-size: 1.1rem; color: var(--muted); max-width: 560px; margin-bottom: 36px; }
+        .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+        .btn-primary { background: var(--accent); color: #fff; padding: 14px 28px; border-radius: 10px; font-weight: 700; text-decoration: none; font-size: 0.9rem; transition: all 0.2s; }
+        .btn-primary:hover { background: var(--blue); }
+        .btn-ghost { background: transparent; color: var(--text); padding: 14px 28px; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 0.9rem; border: 1px solid var(--border); transition: all 0.2s; }
+        .btn-ghost:hover { border-color: var(--blue); color: var(--blue); }
 
-        .badge {
-            display: inline-block;
-            border: 1px solid var(--border);
-            color: var(--blue);
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 3px;
-            padding: 8px 20px;
-            border-radius: 50px;
-            margin-bottom: 32px;
-            background: var(--blue-glow);
-        }
+        /* PROOF BAR */
+        .proof { padding: 0 0 80px; }
+        .proof-grid { display: flex; gap: 40px; flex-wrap: wrap; }
+        .proof-item { display: flex; align-items: center; gap: 10px; }
+        .proof-icon { width: 36px; height: 36px; background: var(--blue-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+        .proof-text { font-size: 0.82rem; color: var(--muted); }
+        .proof-text strong { color: var(--text); display: block; font-size: 0.9rem; }
 
-        .hero h1 {
-            font-size: clamp(2.8rem, 7vw, 5.5rem);
-            font-weight: 900;
-            line-height: 1.0;
-            letter-spacing: -2px;
-            margin-bottom: 28px;
-        }
+        /* SECTIONS */
+        section { padding: 80px 0; }
+        .section-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; color: var(--blue); text-transform: uppercase; margin-bottom: 12px; }
+        .section-title { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 900; letter-spacing: -1px; margin-bottom: 16px; line-height: 1.1; }
+        .section-desc { color: var(--muted); font-size: 1rem; max-width: 520px; margin-bottom: 48px; }
 
-        .hero h1 .highlight {
-            background: linear-gradient(90deg, var(--blue), #a78bfa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        /* SERVICES GRID */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+        .service-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 32px 28px; transition: all 0.25s; }
+        .service-card:hover { border-color: var(--blue); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.06); }
+        .service-icon { font-size: 1.6rem; margin-bottom: 16px; }
+        .service-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+        .service-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
 
-        .hero p {
-            font-size: 1.15rem;
-            color: var(--muted);
-            max-width: 640px;
-            margin: 0 auto 48px;
-            line-height: 1.8;
-        }
+        /* CASE STUDY */
+        .case-study { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+        .case-badge { display: inline-block; background: #ecfdf5; color: var(--green); font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 4px; letter-spacing: 1px; margin-bottom: 16px; }
+        .case-study h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.5px; }
+        .case-study .case-desc { color: var(--muted); font-size: 0.95rem; margin-bottom: 24px; }
+        .case-metrics { display: flex; gap: 32px; }
+        .case-metric strong { font-size: 1.4rem; font-weight: 900; display: block; }
+        .case-metric span { font-size: 0.75rem; color: var(--muted); }
+        .case-visual { background: var(--card); border-radius: 12px; padding: 32px; border: 1px solid var(--border); }
+        .case-feature { padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 0.88rem; display: flex; align-items: center; gap: 10px; }
+        .case-feature:last-child { border-bottom: none; }
+        .check { color: var(--green); font-weight: 700; }
 
-        .hero-actions {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
+        /* AUDIT CALCULATOR */
+        .audit-box { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+        .audit-box h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.5px; }
+        .audit-box .desc { color: var(--muted); margin-bottom: 32px; font-size: 0.92rem; }
+        .field { margin-bottom: 18px; }
+        .field label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--muted); margin-bottom: 6px; }
+        .field input, .field select { width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.95rem; font-family: 'Inter', sans-serif; background: var(--bg); transition: border-color 0.2s; }
+        .field input:focus, .field select:focus { outline: none; border-color: var(--blue); }
+        .btn-calc { width: 100%; background: var(--accent); color: #fff; border: none; padding: 14px; border-radius: 10px; font-size: 0.9rem; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s; margin-top: 4px; }
+        .btn-calc:hover { background: var(--blue); }
+        .results-panel { background: var(--card); border-radius: 12px; padding: 36px; border: 1px solid var(--border); opacity: 0.5; transition: all 0.4s; }
+        .results-panel.active { opacity: 1; border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-light); }
+        .metric { margin-bottom: 28px; }
+        .metric-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 4px; }
+        .metric-value { font-size: 2.2rem; font-weight: 900; color: var(--blue); }
+        .metric-unit { font-size: 0.8rem; color: var(--muted); }
+        .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
 
-        .btn-primary {
-            background: #fff;
-            color: #000;
-            padding: 14px 32px;
-            border-radius: 10px;
-            font-weight: 700;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-        }
-
-        .btn-primary:hover {
-            background: var(--blue);
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text);
-            padding: 14px 32px;
-            border-radius: 10px;
-            font-weight: 600;
-            text-decoration: none;
-            font-size: 0.9rem;
-            border: 1px solid var(--border);
-            transition: all 0.3s;
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--blue);
-            color: var(--blue);
-        }
-
-        /* NEXUS DASHBOARD */
-        .nexus-dashboard {
-            margin: 80px auto 0;
-            max-width: 900px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 60px 120px rgba(0,0,0,0.6), 0 0 80px var(--blue-glow);
-        }
-
-        .dash-titlebar {
-            background: var(--card);
-            border-bottom: 1px solid var(--border);
-            padding: 14px 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .dot { width: 11px; height: 11px; border-radius: 50%; }
-        .dot-r { background: #ff5f57; }
-        .dot-y { background: #febc2e; }
-        .dot-g { background: #28c840; }
-
-        .dash-label {
-            margin-left: 12px;
-            font-size: 0.65rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: var(--muted);
-        }
-
-        .dash-body { padding: 40px; }
-
-        .dash-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        .dash-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 24px;
-        }
-
-        .dash-card-label {
-            font-size: 0.62rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: var(--muted);
-            margin-bottom: 12px;
-        }
-
-        .dash-card-value {
-            font-size: 1.1rem;
-            font-weight: 800;
-            color: var(--blue);
-            margin-bottom: 16px;
-        }
-
-        .prog-bar {
-            height: 3px;
-            background: var(--border);
-            border-radius: 2px;
-        }
-
-        .prog-fill {
-            height: 100%;
-            background: var(--blue);
-            border-radius: 2px;
-            box-shadow: 0 0 8px var(--blue);
-            animation: fillBar 2s ease forwards;
-        }
-
-        @keyframes fillBar {
-            from { width: 0; }
-        }
-
-        /* PILLARS */
-        .pillars { padding: 120px 0; }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 64px;
-        }
-
-        .section-sub {
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 3px;
-            color: var(--blue);
-            margin-bottom: 16px;
-            display: block;
-        }
-
-        .section-header h2 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 900;
-            letter-spacing: -1px;
-        }
-
-        .section-header p {
-            color: var(--muted);
-            margin-top: 16px;
-            font-size: 1.05rem;
-        }
-
-        .pillars-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
-        }
-
-        .pillar {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 40px 32px;
-            transition: border-color 0.3s, transform 0.3s;
-        }
-
-        .pillar:hover {
-            border-color: var(--blue);
-            transform: translateY(-4px);
-        }
-
-        .pillar-icon {
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-
-        .pillar h3 {
-            font-size: 0.8rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-            color: var(--blue);
-            margin-bottom: 12px;
-        }
-
-        .pillar p { color: var(--muted); font-size: 0.9rem; }
-
-        /* AUDIT */
-        .audit { padding: 0 0 120px; }
-
-        .audit-box {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 80px;
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 80px;
-            align-items: start;
-        }
-
-        .audit-box h2 {
-            font-size: 2.2rem;
-            font-weight: 900;
-            letter-spacing: -1px;
-            margin-bottom: 16px;
-            line-height: 1.1;
-        }
-
-        .audit-box h2 span { color: var(--blue); }
-
-        .audit-box .desc {
-            color: var(--muted);
-            margin-bottom: 40px;
-            font-size: 0.95rem;
-        }
-
-        .input-group { margin-bottom: 20px; }
-
-        .input-group label {
-            display: block;
-            font-size: 0.78rem;
-            font-weight: 600;
-            color: var(--muted);
-            margin-bottom: 8px;
-            letter-spacing: 0.5px;
-        }
-
-        .input-group input {
-            width: 100%;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 14px 16px;
-            color: var(--text);
-            font-size: 1rem;
-            font-family: 'Inter', sans-serif;
-            transition: border-color 0.2s;
-        }
-
-        .input-group input:focus {
-            outline: none;
-            border-color: var(--blue);
-        }
-
-        .btn-audit {
-            width: 100%;
-            background: var(--blue);
-            color: #000;
-            border: none;
-            border-radius: 10px;
-            padding: 16px;
-            font-size: 0.9rem;
-            font-weight: 800;
-            cursor: pointer;
-            font-family: 'Inter', sans-serif;
-            letter-spacing: 0.5px;
-            transition: box-shadow 0.3s, transform 0.2s;
-            margin-top: 8px;
-        }
-
-        .btn-audit:hover {
-            box-shadow: 0 0 30px var(--blue-glow);
-            transform: translateY(-2px);
-        }
-
-        .results-panel {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 40px;
-            opacity: 0.4;
-            transition: opacity 0.5s, border-color 0.5s;
-        }
-
-        .results-panel.active {
-            opacity: 1;
-            border-color: var(--blue);
-            box-shadow: 0 0 40px var(--blue-glow);
-        }
-
-        .result-metric { margin-bottom: 32px; }
-
-        .metric-label {
-            font-size: 0.65rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: var(--muted);
-            margin-bottom: 8px;
-        }
-
-        .metric-value {
-            font-size: 3rem;
-            font-weight: 900;
-            color: var(--blue);
-            line-height: 1;
-        }
-
-        .metric-unit {
-            font-size: 0.85rem;
-            color: var(--muted);
-            margin-top: 6px;
-        }
-
-        .divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
-
-        /* THE LAB */
-        .lab { padding: 0 0 120px; }
-
-        .lab-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-top: 60px;
-        }
-
-        .lab-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 40px 32px;
-            transition: all 0.3s;
-        }
-
-        .lab-card:hover {
-            border-color: var(--blue);
-            background: #0a1a20;
-        }
-
-        .lab-card h4 {
-            color: var(--blue);
-            font-size: 1rem;
-            font-weight: 800;
-            margin-bottom: 12px;
-            letter-spacing: -0.3px;
-        }
-
-        .lab-card p { color: var(--muted); font-size: 0.88rem; }
-
-        .lab-tag {
-            display: inline-block;
-            background: var(--blue-glow);
-            color: var(--blue);
-            font-size: 0.62rem;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            padding: 4px 10px;
-            border-radius: 4px;
-            margin-bottom: 16px;
-        }
+        /* PROCESS */
+        .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        .process-step { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 32px 24px; }
+        .step-num { font-size: 0.7rem; font-weight: 800; color: var(--blue); background: var(--blue-light); width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+        .process-step h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+        .process-step p { font-size: 0.84rem; color: var(--muted); }
 
         /* CTA */
-        .cta {
-            padding: 0 0 120px;
-            text-align: center;
-        }
-
-        .cta-box {
-            background: linear-gradient(135deg, #0a1a20, var(--surface));
-            border: 1px solid var(--blue);
-            border-radius: 24px;
-            padding: 100px 60px;
-            box-shadow: 0 0 80px var(--blue-glow);
-        }
-
-        .cta-box h2 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 900;
-            letter-spacing: -1px;
-            margin-bottom: 20px;
-        }
-
-        .cta-box h2 span { color: var(--blue); }
-
-        .cta-box p {
-            color: var(--muted);
-            margin-bottom: 48px;
-            font-size: 1.05rem;
-        }
+        .cta-section { padding: 80px 0; }
+        .cta-box { background: var(--accent); color: #fff; border-radius: 16px; padding: 64px; text-align: center; }
+        .cta-box h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900; margin-bottom: 16px; letter-spacing: -1px; }
+        .cta-box p { color: #999; margin-bottom: 32px; font-size: 1rem; }
+        .btn-white { background: #fff; color: var(--accent); padding: 14px 32px; border-radius: 10px; font-weight: 700; text-decoration: none; font-size: 0.9rem; transition: all 0.2s; }
+        .btn-white:hover { background: var(--blue); color: #fff; }
 
         /* FOOTER */
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 60px 0;
-        }
+        footer { border-top: 1px solid var(--border); padding: 48px 0; }
+        .footer-inner { display: flex; justify-content: space-between; align-items: center; }
+        .footer-sub { color: var(--muted); font-size: 0.8rem; margin-top: 4px; }
+        footer .copy { color: var(--muted); font-size: 0.78rem; }
 
-        .footer-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .footer-sub {
-            color: var(--muted);
-            font-size: 0.8rem;
-            margin-top: 6px;
-        }
-
-        footer .copy {
-            color: var(--muted);
-            font-size: 0.78rem;
-        }
-
-        /* RESPONSIVE */
         @media (max-width: 768px) {
-            .nav-links a:not(.btn-nav) { display: none; }
-            .dash-grid, .lab-grid { grid-template-columns: 1fr; }
-            .audit-box { grid-template-columns: 1fr; padding: 40px 28px; gap: 40px; }
-            .hero h1 { letter-spacing: -1px; }
-            .pillars-grid { grid-template-columns: 1fr 1fr; }
+            .case-study, .audit-box { grid-template-columns: 1fr; }
+            .process-grid { grid-template-columns: 1fr 1fr; }
+            .proof-grid { flex-direction: column; gap: 20px; }
+            .case-metrics { flex-direction: column; gap: 16px; }
+            .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
         }
     </style>
 </head>
 <body>
-
     <nav>
         <div class="container nav-inner">
             <div class="logo">AGENTCY <span>ENTERPRISE</span></div>
             <div class="nav-links">
-                <a href="#pillars">Systèmes</a>
-                <a href="#lab">The Lab</a>
-                <a href="#audit">Audit IA</a>
-                <a href="https://wa.me/message/ARWYGVW5TELAF1" class="btn-nav">Audit Stratégique</a>
+                <a href="#services">Services</a>
+                <a href="#case">Réalisations</a>
+                <a href="#audit">Audit</a>
+                <a href="https://wa.me/message/ARWYGVW5TELAF1" class="btn-cta">Consultation Gratuite</a>
             </div>
         </div>
     </nav>
 
-    <!-- ═══════════════ HERO ═══════════════ -->
+    <!-- HERO -->
     <section class="hero container">
-        <div class="badge">AI AGENTS &nbsp;•&nbsp; AUTOMATION &nbsp;•&nbsp; INTELLIGENT SYSTEMS</div>
-        <h1>Building <span class="highlight">Autonomous</span><br>Business Systems.</h1>
-        <p>Nous transformons les opérations manuelles en infrastructures autonomes pilotées par des agents IA. Précision totale. Croissance accélérée.</p>
-        <div class="hero-actions">
-            <a href="#audit" class="btn-primary">Simuler mon Impact IA</a>
-            <a href="https://wa.me/message/ARWYGVW5TELAF1" class="btn-secondary">Parler à un Architecte →</a>
+        <div class="hero-label">CONSULTING DIGITAL • SAAS • AUTOMATISATION</div>
+        <h1>Modernisez la gestion de votre école ou entreprise.</h1>
+        <p>Nous remplaçons vos opérations manuelles par des systèmes SaaS modernes et automatisés. Moins de paperasse, plus de contrôle.</p>
+        <div class="hero-btns">
+            <a href="#audit" class="btn-primary">Évaluer mes pertes →</a>
+            <a href="https://wa.me/message/ARWYGVW5TELAF1" class="btn-ghost">Parler à un consultant</a>
         </div>
+    </section>
 
-        <!-- NEXUS DASHBOARD -->
-        <div class="nexus-dashboard">
-            <div class="dash-titlebar">
-                <div class="dot dot-r"></div>
-                <div class="dot dot-y"></div>
-                <div class="dot dot-g"></div>
-                <span class="dash-label">AGENTCY NEXUS CORE — LIVE MONITORING</span>
+    <!-- PROOF -->
+    <section class="proof container">
+        <div class="proof-grid">
+            <div class="proof-item">
+                <div class="proof-icon">🏫</div>
+                <div class="proof-text"><strong>ITI KAMO</strong>Plateforme scolaire en déploiement</div>
             </div>
-            <div class="dash-body">
-                <div class="dash-grid">
-                    <div class="dash-card">
-                        <div class="dash-card-label">SENTINEL-X MODULE</div>
-                        <div class="dash-card-value">⬤ ACTIVE</div>
-                        <div class="prog-bar"><div class="prog-fill" style="width:88%"></div></div>
-                    </div>
-                    <div class="dash-card">
-                        <div class="dash-card-label">ATLAS INTELLIGENCE</div>
-                        <div class="dash-card-value">↻ ANALYSING</div>
-                        <div class="prog-bar"><div class="prog-fill" style="width:63%"></div></div>
-                    </div>
-                    <div class="dash-card">
-                        <div class="dash-card-label">ROI OPTIMIZATION</div>
-                        <div class="dash-card-value">+24.8%</div>
-                        <div class="prog-bar"><div class="prog-fill" style="width:95%"></div></div>
-                    </div>
+            <div class="proof-item">
+                <div class="proof-icon">📋</div>
+                <div class="proof-text"><strong>Contrat 3 ans</strong>En cours de négociation</div>
+            </div>
+            <div class="proof-item">
+                <div class="proof-icon">⚡</div>
+                <div class="proof-text"><strong>Site + App</strong>Déjà livrés et fonctionnels</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="container">
+        <div class="section-label">CE QUE NOUS CONSTRUISONS</div>
+        <h2 class="section-title">Des systèmes qui remplacent le papier.</h2>
+        <p class="section-desc">Nous concevons des outils concrets qui résolvent vos problèmes opérationnels quotidiens.</p>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🏫</div>
+                <h3>Gestion Scolaire SaaS</h3>
+                <p>Inscriptions, bulletins, paiements et communication parents — tout dans un seul système.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">⚡</div>
+                <h3>Automatisation</h3>
+                <p>Notifications WhatsApp automatiques, rappels de paiement, rapports générés sans intervention.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📊</div>
+                <h3>Tableaux de Bord</h3>
+                <p>Visualisez vos revenus, effectifs et performances en temps réel depuis votre téléphone.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">💳</div>
+                <h3>Paiements Mobile Money</h3>
+                <p>Intégration M-Pesa et Orange Money pour collecter les frais scolaires ou paiements clients.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CASE STUDY -->
+    <section id="case" class="container">
+        <div class="section-label">PROJET EN COURS</div>
+        <h2 class="section-title">Étude de cas réelle.</h2>
+        <p class="section-desc">Ce n'est pas un concept. C'est un projet déployé, avec un client réel.</p>
+        <div class="case-study">
+            <div>
+                <div class="case-badge">✦ EN DÉPLOIEMENT</div>
+                <h3>ITI KAMO</h3>
+                <p class="case-desc">Institut Technique Industriel — Plateforme complète de gestion scolaire moderne : site web institutionnel + application mobile de gestion.</p>
+                <div class="case-metrics">
+                    <div class="case-metric"><strong>3 ans</strong><span>Durée du contrat</span></div>
+                    <div class="case-metric"><strong>100$/mois</strong><span>Abonnement SaaS</span></div>
+                    <div class="case-metric"><strong>2 produits</strong><span>Site + Application</span></div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- ═══════════════ PILLARS ═══════════════ -->
-    <section class="pillars container" id="pillars">
-        <div class="section-header">
-            <span class="section-sub">NOTRE ARCHITECTURE</span>
-            <h2>L'Écosystème AGENTCY</h2>
-            <p>Quitter le manuel. Embrasser le systémique.</p>
-        </div>
-        <div class="pillars-grid">
-            <div class="pillar">
-                <div class="pillar-icon">🤖</div>
-                <h3>AI AGENTS</h3>
-                <p>Déploiement d'agents autonomes (Sentinel-X, Atlas) pour la veille stratégique, l'analyse et l'exécution des tâches critiques 24/7.</p>
-            </div>
-            <div class="pillar">
-                <div class="pillar-icon">⚡</div>
-                <h3>AUTOMATION</h3>
-                <p>Élimination des frictions opérationnelles par l'automatisation intégrale de vos workflows : rapports, notifications, suivi commercial.</p>
-            </div>
-            <div class="pillar">
-                <div class="pillar-icon">📊</div>
-                <h3>INTELLIGENT SYSTEMS</h3>
-                <p>Création de dashboards SaaS et infrastructures cloud offrant une visibilité temps réel sur chaque dimension de votre business.</p>
-            </div>
-            <div class="pillar">
-                <div class="pillar-icon">🎯</div>
-                <h3>STRATEGIC INTELLIGENCE</h3>
-                <p>Veille concurrentielle, analyse prédictive et briefings exécutifs automatisés pour anticiper les opportunités de marché.</p>
+            <div class="case-visual">
+                <div class="case-feature"><span class="check">✓</span> Site web institutionnel</div>
+                <div class="case-feature"><span class="check">✓</span> Application mobile de gestion</div>
+                <div class="case-feature"><span class="check">✓</span> Système de communication interne</div>
+                <div class="case-feature"><span class="check">✓</span> Dashboard administratif</div>
+                <div class="case-feature"><span class="check">✓</span> Notifications automatisées</div>
+                <div class="case-feature"><span class="check">✓</span> Compatible Mobile Money</div>
             </div>
         </div>
     </section>
 
-    <!-- ═══════════════ AUDIT IA ═══════════════ -->
-    <section class="audit container" id="audit">
+    <!-- AUDIT CALCULATOR -->
+    <section id="audit" class="container">
+        <div class="section-label">AUDIT GRATUIT</div>
+        <h2 class="section-title">Combien vous coûte la gestion manuelle ?</h2>
+        <p class="section-desc">Calculez en 30 secondes les heures et l'argent que vous perdez chaque mois avec la paperasse.</p>
         <div class="audit-box">
-            <div class="audit-left">
-                <span class="section-sub">AUDIT STRATÉGIQUE</span>
-                <h2>Combien d'heures perdez-vous en <span>opérations manuelles</span> ?</h2>
-                <p class="desc">L'inefficacité opérationnelle est la première cause de stagnation. Nos agents calculent vos fuites de performance et les ressources récupérables.</p>
-                <div class="input-group">
-                    <label>TÂCHES ADMINISTRATIVES / JOUR</label>
-                    <input type="number" id="tasks" value="15" min="1">
+            <div>
+                <h3>Simulateur de pertes</h3>
+                <p class="desc">Remplissez ces 3 champs pour estimer l'impact d'une modernisation sur vos opérations.</p>
+                <div class="field">
+                    <label>SECTEUR D'ACTIVITÉ</label>
+                    <select id="sector">
+                        <option value="school">École / Institut</option>
+                        <option value="logistics">Logistique / Transport</option>
+                        <option value="health">Santé / Clinique</option>
+                        <option value="services">Services / Agence</option>
+                    </select>
                 </div>
-                <div class="input-group">
-                    <label>NOMBRE DE COLLABORATEURS</label>
-                    <input type="number" id="staff" value="5" min="1">
+                <div class="field">
+                    <label>NOMBRE D'EMPLOYÉS</label>
+                    <input type="number" id="staff" value="8" min="1">
                 </div>
-                <div class="input-group">
-                    <label>MINUTES PAR TÂCHE (EN MOYENNE)</label>
-                    <input type="number" id="mins" value="30" min="5">
+                <div class="field">
+                    <label>HEURES DE PAPERASSE PAR SEMAINE (estimé)</label>
+                    <input type="number" id="hours" value="6" min="1">
                 </div>
-                <button class="btn-audit" onclick="runAudit()">⚡ Lancer l'Analyse AGENTCY</button>
+                <button class="btn-calc" onclick="runAudit()">Calculer mes pertes →</button>
             </div>
             <div class="results-panel" id="results">
-                <div class="result-metric">
+                <div class="metric">
                     <div class="metric-label">HEURES PERDUES / MOIS</div>
-                    <div class="metric-value" id="hours-lost">0</div>
-                    <div class="metric-unit">heures consommées par les frictions</div>
+                    <div class="metric-value" id="lost-hours">—</div>
+                    <div class="metric-unit">en opérations manuelles évitables</div>
                 </div>
                 <hr class="divider">
-                <div class="result-metric">
-                    <div class="metric-label">RÉCUPÉRABLES VIA AGENTCY</div>
-                    <div class="metric-value" id="hours-saved">0</div>
-                    <div class="metric-unit">heures remises à votre disposition</div>
+                <div class="metric">
+                    <div class="metric-label">COÛT ESTIMÉ / MOIS</div>
+                    <div class="metric-value" id="lost-cost">—</div>
+                    <div class="metric-unit">en productivité gaspillée</div>
                 </div>
                 <hr class="divider">
-                <div class="result-metric">
-                    <div class="metric-label">INDICE D'AUTONOMIE POTENTIEL</div>
-                    <div class="metric-value" id="autonomy">0%</div>
-                    <div class="metric-unit">de vos opérations automatisables</div>
+                <div class="metric">
+                    <div class="metric-label">RÉCUPÉRABLE AVEC UN SYSTÈME SAAS</div>
+                    <div class="metric-value" id="recoverable">—</div>
+                    <div class="metric-unit">de ces pertes sont automatisables</div>
                 </div>
-                <a href="https://wa.me/message/ARWYGVW5TELAF1" class="btn-primary" style="display:block; text-align:center; margin-top:28px;">Activer l'Automatisation →</a>
+                <a href="https://wa.me/message/ARWYGVW5TELAF1" class="btn-primary" style="display:block;text-align:center;margin-top:24px;">Stopper ces pertes →</a>
             </div>
         </div>
     </section>
 
-    <!-- ═══════════════ THE LAB ═══════════════ -->
-    <section class="lab container" id="lab">
-        <div class="section-header">
-            <span class="section-sub">THE AGENTCY LAB</span>
-            <h2>Technologie de Demain,<br>Déployée Aujourd'hui.</h2>
-            <p>Nos modules propriétaires qui orchestrent votre transformation.</p>
-        </div>
-        <div class="lab-grid">
-            <div class="lab-card">
-                <div class="lab-tag">ORCHESTRATION</div>
-                <h4>Nexus Core</h4>
-                <p>L'orchestrateur central qui connecte et synchronise tous vos systèmes intelligents en temps réel. Le cerveau de votre infrastructure.</p>
+    <!-- PROCESS -->
+    <section class="container">
+        <div class="section-label">COMMENT ÇA MARCHE</div>
+        <h2 class="section-title">Du premier appel au système opérationnel.</h2>
+        <p class="section-desc">Un processus simple, rapide, sans jargon technique.</p>
+        <div class="process-grid">
+            <div class="process-step">
+                <div class="step-num">01</div>
+                <h4>Diagnostic</h4>
+                <p>On analyse vos opérations actuelles et on identifie les points de friction.</p>
             </div>
-            <div class="lab-card">
-                <div class="lab-tag">SURVEILLANCE</div>
-                <h4>Sentinel-X</h4>
-                <p>Module de veille autonome surveillant les flux de données, les tendances de marché et les signaux d'opportunité 24h/24.</p>
+            <div class="process-step">
+                <div class="step-num">02</div>
+                <h4>Conception</h4>
+                <p>On conçoit votre système sur-mesure : site, app, dashboard, automatisations.</p>
             </div>
-            <div class="lab-card">
-                <div class="lab-tag">STRATÉGIE</div>
-                <h4>Atlas Intelligence</h4>
-                <p>Synthèse stratégique en temps réel générant des rapports exécutifs et des recommandations business chaque matin à 7h00.</p>
+            <div class="process-step">
+                <div class="step-num">03</div>
+                <h4>Déploiement</h4>
+                <p>Mise en place rapide sans interrompre vos activités. Formation incluse.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">04</div>
+                <h4>Support continu</h4>
+                <p>Maintenance, mises à jour et optimisation permanente de votre système.</p>
             </div>
         </div>
     </section>
 
-    <!-- ═══════════════ CTA FINAL ═══════════════ -->
-    <section class="cta container">
+    <!-- CTA -->
+    <section class="cta-section container">
         <div class="cta-box">
-            <h2>Prêt à passer à<br>l'<span>entreprise autonome</span> ?</h2>
-            <p>Prenez rendez-vous pour un audit stratégique. Nos agents analysent votre structure et conçoivent votre infrastructure en 48h.</p>
-            <a href="https://wa.me/message/ARWYGVW5TELAF1" class="btn-primary">Réserver mon Audit Stratégique →</a>
+            <h2>Prêt à moderniser votre gestion ?</h2>
+            <p>Consultation gratuite de 15 minutes. On identifie vos pertes et on propose une solution concrète.</p>
+            <a href="https://wa.me/message/ARWYGVW5TELAF1" class="btn-white">Réserver ma consultation gratuite →</a>
         </div>
     </section>
 
-    <!-- ═══════════════ FOOTER ═══════════════ -->
     <footer>
         <div class="container footer-inner">
             <div>
                 <div class="logo">AGENTCY <span>ENTERPRISE</span></div>
-                <p class="footer-sub">AI Agents • Automation • Intelligent Systems</p>
+                <p class="footer-sub">Digital Consulting • SaaS Systems • Automation</p>
             </div>
-            <p class="copy">© 2026 AGENTCY ENTERPRISE. Building the Future of African Business.</p>
+            <p class="copy">© 2026 AGENTCY ENTERPRISE. Kinshasa, RDC.</p>
         </div>
     </footer>
 
     <script>
         function runAudit() {
-            const tasks = parseFloat(document.getElementById('tasks').value) || 0;
-            const staff = parseFloat(document.getElementById('staff').value) || 0;
-            const mins = parseFloat(document.getElementById('mins').value) || 0;
-
-            const hoursPerMonth = (tasks * staff * mins / 60) * 22;
-            const saved = hoursPerMonth * 0.75;
-            const autonomy = Math.min(85, Math.round((saved / (staff * 160)) * 100));
-
-            document.getElementById('hours-lost').innerText = Math.round(hoursPerMonth);
-            document.getElementById('hours-saved').innerText = Math.round(saved);
-            document.getElementById('autonomy').innerText = autonomy + '%';
+            const staff = parseFloat(document.getElementById('staff').value) || 1;
+            const hours = parseFloat(document.getElementById('hours').value) || 1;
+            const sector = document.getElementById('sector').value;
+            const rates = { school: 3, logistics: 5, health: 6, services: 4 };
+            const rate = rates[sector] || 4;
+            const monthlyHours = Math.round(hours * staff * 4.3);
+            const monthlyCost = Math.round(monthlyHours * rate);
+            const recoverable = Math.min(75, Math.round(55 + (staff * 2)));
+            document.getElementById('lost-hours').innerText = monthlyHours + 'h';
+            document.getElementById('lost-cost').innerText = '$' + monthlyCost;
+            document.getElementById('recoverable').innerText = recoverable + '%';
             document.getElementById('results').classList.add('active');
         }
-
-        // Animate progress bars on load
-        window.addEventListener('load', () => {
-            document.querySelectorAll('.prog-fill').forEach(bar => {
-                const width = bar.style.width;
-                bar.style.width = '0';
-                setTimeout(() => { bar.style.width = width; }, 500);
-            });
-        });
     </script>
 </body>
 </html>
