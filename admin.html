@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGENTCY | Espace Contrôle Absolu</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --bg-admin: #0a0f1d;
+            --surface-admin: #161c2d;
+            --border-admin: #2d3748;
+        }
+        body { background: var(--bg-admin); color: #fff; }
+        .admin-layout { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
+        .admin-sidebar { 
+            background: var(--surface-admin); 
+            border-right: 1px solid var(--border-admin);
+            padding: 40px 24px;
+        }
+        .admin-main { padding: 40px; overflow-y: auto; }
+        .admin-nav-item {
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 8px;
+            transition: var(--transition);
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+        .admin-nav-item.active { background: var(--primary); color: #fff; }
+        .admin-nav-item:hover:not(.active) { background: rgba(255,255,255,0.05); color: #fff; }
+
+        .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-bottom: 40px; }
+        .stat-card { background: var(--surface-admin); padding: 24px; border-radius: 16px; border: 1px solid var(--border-admin); }
+        .stat-card h4 { font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+        .stat-card .value { font-size: 1.8rem; font-weight: 800; }
+
+        table { width: 100%; border-collapse: collapse; background: var(--surface-admin); border-radius: 16px; overflow: hidden; }
+        th, td { padding: 16px 24px; text-align: left; border-bottom: 1px solid var(--border-admin); }
+        th { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); }
+        tr:hover { background: rgba(255,255,255,0.02); }
+
+        .badge-status { padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; }
+        .badge-new { background: #10b981; color: #fff; }
+        
+        .login-overlay {
+            position: fixed; inset: 0; background: var(--bg-admin); z-index: 10000;
+            display: flex; align-items: center; justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="login-screen" class="login-overlay">
+        <div style="text-align: center; width: 100%; max-width: 400px; padding: 40px;">
+            <h2 style="margin-bottom: 24px;">Contrôle Absolu</h2>
+            <input type="password" id="admin-pass" placeholder="Clé d'accès Agentcy" 
+                   style="width: 100%; padding: 16px; background: var(--surface-admin); border: 1px solid var(--border-admin); color: #fff; border-radius: 8px; margin-bottom: 16px;">
+            <button onclick="checkAccess()" class="btn btn-primary" style="width: 100%; justify-content: center;">Entrer</button>
+        </div>
+    </div>
+
+    <div class="admin-layout" id="admin-content" style="display: none;">
+        <aside class="admin-sidebar">
+            <div class="logo" style="margin-bottom: 40px;">AGENTCY <span>ADMIN</span></div>
+            <div class="admin-nav-item active" onclick="showTab('leads')">Flux de Leads</div>
+            <div class="admin-nav-item" onclick="showTab('audits')">Diagnostics Scolaires</div>
+            <div class="admin-nav-item" onclick="showTab('reports')">Rapports d'Agents</div>
+            <hr style="border: 0; border-top: 1px solid var(--border-admin); margin: 20px 0;">
+            <div class="admin-nav-item" onclick="location.href='index.html'">Retour au Site</div>
+        </aside>
+
+        <main class="admin-main">
+            <div id="leads-section">
+                <header style="margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center;">
+                    <h2>Flux de Leads (WhatsApp)</h2>
+                    <button class="btn btn-outline" onclick="fetchLeads()">Rafraîchir</button>
+                </header>
+                <div class="stat-grid">
+                    <div class="stat-card"><h4>Total Leads</h4><div class="value" id="total-leads">-</div></div>
+                    <div class="stat-card"><h4>Nouveaux (24h)</h4><div class="value" id="new-leads">-</div></div>
+                </div>
+                <table id="leads-table">
+                    <thead><tr><th>Date</th><th>Message / Action</th><th>Statut</th></tr></thead>
+                    <tbody><tr><td colspan="3" style="text-align: center;">Chargement...</td></tr></tbody>
+                </table>
+            </div>
+
+            <div id="audits-section" style="display: none;">
+                <header style="margin-bottom: 40px;">
+                    <h2>Derniers Diagnostics</h2>
+                </header>
+                <table id="audits-table">
+                    <thead><tr><th>Date</th><th>Perte Est.</th><th>Établissement</th><th>Score Réput.</th></tr></thead>
+                    <tbody><tr><td colspan="4" style="text-align: center;">Chargement...</td></tr></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDpNESCaG7rsfEJgZGX3YksobfrBsx6r0E",
+            authDomain: "kincommerce.firebaseapp.com",
+            projectId: "kincommerce",
+            storageBucket: "kincommerce.firebasestorage.app",
+            messagingSenderId: "966041309497",
+            appId: "1:966041309497:web:352b7466019c5a122ed8e8"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        function checkAccess() {
+            const pass = document.getElementById('admin-pass').value;
+            if (pass === 'kamo2026') { // Mot de passe temporaire
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('admin-content').style.display = 'grid';
+                fetchLeads();
+                fetchAudits();
+            } else {
+                alert('Accès refusé. Clé incorrecte.');
+            }
+        }
+
+        function showTab(tab) {
+            document.getElementById('leads-section').style.display = tab === 'leads' ? 'block' : 'none';
+            document.getElementById('audits-section').style.display = tab === 'audits' ? 'block' : 'none';
+            document.querySelectorAll('.admin-nav-item').forEach(el => {
+                el.classList.remove('active');
+                if(el.innerText.toLowerCase().includes(tab.slice(0,-1))) el.classList.add('active');
+            });
+        }
+
+        async function fetchLeads() {
+            const snap = await db.collection('agentcy_leads').orderBy('timestamp', 'desc').limit(20).get();
+            const tbody = document.querySelector('#leads-table tbody');
+            tbody.innerHTML = '';
+            document.getElementById('total-leads').innerText = snap.size;
+            
+            snap.forEach(doc => {
+                const data = doc.data();
+                const date = data.timestamp ? data.timestamp.toDate().toLocaleString() : 'Instantané';
+                tbody.innerHTML += `<tr>
+                    <td>${date}</td>
+                    <td>${data.message}</td>
+                    <td><span class="badge-status badge-new">${data.status || 'New'}</span></td>
+                </tr>`;
+            });
+        }
+
+        async function fetchAudits() {
+            const snap = await db.collection('agentcy_diagnostics').orderBy('timestamp', 'desc').limit(20).get();
+            const tbody = document.querySelector('#audits-table tbody');
+            tbody.innerHTML = '';
+            
+            snap.forEach(doc => {
+                const data = doc.data();
+                const date = data.timestamp ? data.timestamp.toDate().toLocaleString() : 'Instantané';
+                tbody.innerHTML += `<tr>
+                    <td>${date}</td>
+                    <td>$${data.yearlyLoss || 0}</td>
+                    <td>École de ${data.size || '-'} élèves</td>
+                    <td>${data.reputation || '-'}</td>
+                </tr>`;
+            });
+        }
+    </script>
+</body>
+</html>
