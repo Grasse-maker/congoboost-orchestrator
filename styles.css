@@ -1,16 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap');
 
 :root {
-    --bg: #ffffff;
-    --surface: #f8fafc;
-    --text-main: #0f172a;
-    --text-muted: #64748b;
-    --primary: #2563eb;
-    --primary-soft: #eff6ff;
-    --border: #e2e8f0;
-    --accent-gold: #b59410;
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.04);
+    --bg: #000000;
+    --surface: #0a0a0a;
+    --text-main: #ffffff;
+    --text-muted: #a1a1aa;
+    --primary: #ffffff;
+    --primary-soft: rgba(255, 255, 255, 0.05);
+    --border: #27272a;
+    --accent-gold: #e5e5e5; /* The logo's off-white */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.8);
     --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -39,7 +39,7 @@ html, body {
 
 /* NAVBAR */
 nav {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
     padding: 16px 0;
@@ -55,13 +55,22 @@ nav {
 }
 
 .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo img {
+    height: 32px;
+    width: auto;
+}
+
+.logo-text {
     font-size: 1.1rem;
     font-weight: 800;
     letter-spacing: -0.5px;
-}
-
-.logo span {
-    color: var(--primary);
+    color: var(--text-main);
+    text-decoration: none;
 }
 
 .nav-links {
