@@ -4,575 +4,746 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AGENTCY ENTERPRISE | Building Autonomous Business Systems</title>
-    <meta name="description" content="AGENTCY ENTERPRISE : AI Agents, Automation and Intelligent Systems for Modern Businesses.">
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+    <meta name="description" content="AGENTCY ENTERPRISE construit des agents IA, systèmes intelligents et infrastructures d'automatisation pour les entreprises africaines modernes.">
+    <meta name="keywords" content="AGENTCY, AI Agents, Automatisation, Business Intelligence, Afrique, IA, SaaS">
+    <meta property="og:title" content="AGENTCY ENTERPRISE | Autonomous Business Systems">
+    <meta property="og:description" content="AI Agents • Automation • Intelligent Systems for Modern African Businesses.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050505;
+            --surface: #0f0f0f;
+            --card: #141414;
+            --border: rgba(255,255,255,0.08);
+            --blue: #00c2ff;
+            --blue-glow: rgba(0,194,255,0.15);
+            --text: #f0f0f0;
+            --muted: #666;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(5,5,5,0.85);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+            padding: 18px 0;
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span { color: var(--blue); font-weight: 300; }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--text); }
+
+        .btn-nav {
+            background: var(--blue);
+            color: #000 !important;
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.82rem;
+            letter-spacing: 0.5px;
+            transition: box-shadow 0.3s, transform 0.2s;
+        }
+
+        .btn-nav:hover {
+            box-shadow: 0 0 24px var(--blue-glow);
+            transform: translateY(-1px);
+        }
+
+        /* HERO */
+        .hero {
+            padding: 160px 0 80px;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            border: 1px solid var(--border);
+            color: var(--blue);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            padding: 8px 20px;
+            border-radius: 50px;
+            margin-bottom: 32px;
+            background: var(--blue-glow);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.0;
+            letter-spacing: -2px;
+            margin-bottom: 28px;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(90deg, var(--blue), #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--muted);
+            max-width: 640px;
+            margin: 0 auto 48px;
+            line-height: 1.8;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: #fff;
+            color: #000;
+            padding: 14px 32px;
+            border-radius: 10px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: var(--blue);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            padding: 14px 32px;
+            border-radius: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 0.9rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--blue);
+            color: var(--blue);
+        }
+
+        /* NEXUS DASHBOARD */
+        .nexus-dashboard {
+            margin: 80px auto 0;
+            max-width: 900px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 60px 120px rgba(0,0,0,0.6), 0 0 80px var(--blue-glow);
+        }
+
+        .dash-titlebar {
+            background: var(--card);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dot { width: 11px; height: 11px; border-radius: 50%; }
+        .dot-r { background: #ff5f57; }
+        .dot-y { background: #febc2e; }
+        .dot-g { background: #28c840; }
+
+        .dash-label {
+            margin-left: 12px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--muted);
+        }
+
+        .dash-body { padding: 40px; }
+
+        .dash-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .dash-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .dash-card-label {
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--muted);
+            margin-bottom: 12px;
+        }
+
+        .dash-card-value {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--blue);
+            margin-bottom: 16px;
+        }
+
+        .prog-bar {
+            height: 3px;
+            background: var(--border);
+            border-radius: 2px;
+        }
+
+        .prog-fill {
+            height: 100%;
+            background: var(--blue);
+            border-radius: 2px;
+            box-shadow: 0 0 8px var(--blue);
+            animation: fillBar 2s ease forwards;
+        }
+
+        @keyframes fillBar {
+            from { width: 0; }
+        }
+
+        /* PILLARS */
+        .pillars { padding: 120px 0; }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-sub {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: var(--blue);
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .section-header p {
+            color: var(--muted);
+            margin-top: 16px;
+            font-size: 1.05rem;
+        }
+
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .pillar {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px 32px;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .pillar:hover {
+            border-color: var(--blue);
+            transform: translateY(-4px);
+        }
+
+        .pillar-icon {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .pillar h3 {
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--blue);
+            margin-bottom: 12px;
+        }
+
+        .pillar p { color: var(--muted); font-size: 0.9rem; }
+
+        /* AUDIT */
+        .audit { padding: 0 0 120px; }
+
+        .audit-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 80px;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .audit-box h2 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+            line-height: 1.1;
+        }
+
+        .audit-box h2 span { color: var(--blue); }
+
+        .audit-box .desc {
+            color: var(--muted);
+            margin-bottom: 40px;
+            font-size: 0.95rem;
+        }
+
+        .input-group { margin-bottom: 20px; }
+
+        .input-group label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--muted);
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 16px;
+            color: var(--text);
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.2s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--blue);
+        }
+
+        .btn-audit {
+            width: 100%;
+            background: var(--blue);
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            padding: 16px;
+            font-size: 0.9rem;
+            font-weight: 800;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.5px;
+            transition: box-shadow 0.3s, transform 0.2s;
+            margin-top: 8px;
+        }
+
+        .btn-audit:hover {
+            box-shadow: 0 0 30px var(--blue-glow);
+            transform: translateY(-2px);
+        }
+
+        .results-panel {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+            opacity: 0.4;
+            transition: opacity 0.5s, border-color 0.5s;
+        }
+
+        .results-panel.active {
+            opacity: 1;
+            border-color: var(--blue);
+            box-shadow: 0 0 40px var(--blue-glow);
+        }
+
+        .result-metric { margin-bottom: 32px; }
+
+        .metric-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--blue);
+            line-height: 1;
+        }
+
+        .metric-unit {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 6px;
+        }
+
+        .divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+
+        /* THE LAB */
+        .lab { padding: 0 0 120px; }
+
+        .lab-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 60px;
+        }
+
+        .lab-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px 32px;
+            transition: all 0.3s;
+        }
+
+        .lab-card:hover {
+            border-color: var(--blue);
+            background: #0a1a20;
+        }
+
+        .lab-card h4 {
+            color: var(--blue);
+            font-size: 1rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -0.3px;
+        }
+
+        .lab-card p { color: var(--muted); font-size: 0.88rem; }
+
+        .lab-tag {
+            display: inline-block;
+            background: var(--blue-glow);
+            color: var(--blue);
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: 16px;
+        }
+
+        /* CTA */
+        .cta {
+            padding: 0 0 120px;
+            text-align: center;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #0a1a20, var(--surface));
+            border: 1px solid var(--blue);
+            border-radius: 24px;
+            padding: 100px 60px;
+            box-shadow: 0 0 80px var(--blue-glow);
+        }
+
+        .cta-box h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+        }
+
+        .cta-box h2 span { color: var(--blue); }
+
+        .cta-box p {
+            color: var(--muted);
+            margin-bottom: 48px;
+            font-size: 1.05rem;
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 60px 0;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-sub {
+            color: var(--muted);
+            font-size: 0.8rem;
+            margin-top: 6px;
+        }
+
+        footer .copy {
+            color: var(--muted);
+            font-size: 0.78rem;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .nav-links a:not(.btn-nav) { display: none; }
+            .dash-grid, .lab-grid { grid-template-columns: 1fr; }
+            .audit-box { grid-template-columns: 1fr; padding: 40px 28px; gap: 40px; }
+            .hero h1 { letter-spacing: -1px; }
+            .pillars-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
 </head>
-<body class="dark-theme">
-    <nav class="glass-nav">
-        <div class="container nav-content">
+<body>
+
+    <nav>
+        <div class="container nav-inner">
             <div class="logo">AGENTCY <span>ENTERPRISE</span></div>
             <div class="nav-links">
-                <a href="#vision">Vision</a>
-                <a href="#systems">Systèmes</a>
+                <a href="#pillars">Systèmes</a>
                 <a href="#lab">The Lab</a>
-                <a href="https://wa.me/message/ARWYGVW5TELAF1" class="btn btn-electric">Audit Stratégique</a>
+                <a href="#audit">Audit IA</a>
+                <a href="https://wa.me/message/ARWYGVW5TELAF1" class="btn-nav">Audit Stratégique</a>
             </div>
         </div>
     </nav>
 
-    <main>
-                            <p id="sentinel-status" style="font-size: 0.9rem;">Scan & Amélioration H24</p>
-                        </div>
+    <!-- ═══════════════ HERO ═══════════════ -->
+    <section class="hero container">
+        <div class="badge">AI AGENTS &nbsp;•&nbsp; AUTOMATION &nbsp;•&nbsp; INTELLIGENT SYSTEMS</div>
+        <h1>Building <span class="highlight">Autonomous</span><br>Business Systems.</h1>
+        <p>Nous transformons les opérations manuelles en infrastructures autonomes pilotées par des agents IA. Précision totale. Croissance accélérée.</p>
+        <div class="hero-actions">
+            <a href="#audit" class="btn-primary">Simuler mon Impact IA</a>
+            <a href="https://wa.me/message/ARWYGVW5TELAF1" class="btn-secondary">Parler à un Architecte →</a>
+        </div>
+
+        <!-- NEXUS DASHBOARD -->
+        <div class="nexus-dashboard">
+            <div class="dash-titlebar">
+                <div class="dot dot-r"></div>
+                <div class="dot dot-y"></div>
+                <div class="dot dot-g"></div>
+                <span class="dash-label">AGENTCY NEXUS CORE — LIVE MONITORING</span>
+            </div>
+            <div class="dash-body">
+                <div class="dash-grid">
+                    <div class="dash-card">
+                        <div class="dash-card-label">SENTINEL-X MODULE</div>
+                        <div class="dash-card-value">⬤ ACTIVE</div>
+                        <div class="prog-bar"><div class="prog-fill" style="width:88%"></div></div>
+                    </div>
+                    <div class="dash-card">
+                        <div class="dash-card-label">ATLAS INTELLIGENCE</div>
+                        <div class="dash-card-value">↻ ANALYSING</div>
+                        <div class="prog-bar"><div class="prog-fill" style="width:63%"></div></div>
+                    </div>
+                    <div class="dash-card">
+                        <div class="dash-card-label">ROI OPTIMIZATION</div>
+                        <div class="dash-card-value">+24.8%</div>
+                        <div class="prog-bar"><div class="prog-fill" style="width:95%"></div></div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- SOLUTIONS SECTION -->
-        <section id="solutions" class="container" style="background: var(--bg-soft); border-radius: 60px; margin: 40px auto; padding: 60px 1.5rem;">
-            <div style="text-align: center; margin-bottom: 60px;">
-                <h2 class="gradient-text">Nos Solutions de Modernisation</h2>
-                <p>Élevez votre institution au rang des meilleures structures digitales.</p>
+    <!-- ═══════════════ PILLARS ═══════════════ -->
+    <section class="pillars container" id="pillars">
+        <div class="section-header">
+            <span class="section-sub">NOTRE ARCHITECTURE</span>
+            <h2>L'Écosystème AGENTCY</h2>
+            <p>Quitter le manuel. Embrasser le systémique.</p>
+        </div>
+        <div class="pillars-grid">
+            <div class="pillar">
+                <div class="pillar-icon">🤖</div>
+                <h3>AI AGENTS</h3>
+                <p>Déploiement d'agents autonomes (Sentinel-X, Atlas) pour la veille stratégique, l'analyse et l'exécution des tâches critiques 24/7.</p>
             </div>
-
-            <div class="card-grid">
-                <!-- AUDIT STRATEGIQUE -->
-                <div class="card">
-                    <div class="card-icon">📊</div>
-                    <h3>Audit & Stratégie</h3>
-                    <p>Analyse complète de votre infrastructure numérique et élaboration d'une feuille de route pour une croissance automatisée.</p>
-                </div>
-
-                <!-- ORCHESTRATION SAAS -->
-                <div class="card">
-                    <div class="card-icon">⚙️</div>
-                    <h3>Orchestration SaaS</h3>
-                    <p>Développement et déploiement de solutions logicielles sur-mesure (ERP, CRM, LMS) parfaitement intégrées à vos flux opérationnels.</p>
-                </div>
-
-                <!-- SAAS ECOLE -->
-                <div class="card">
-                    <div class="card-icon">🏫</div>
-                    <h3>SaaS Scolaire 2.0</h3>
-                    <p>Digitalisation complète des institutions d'enseignement : gestion académique, administrative et communication parents.</p>
-                </div>
+            <div class="pillar">
+                <div class="pillar-icon">⚡</div>
+                <h3>AUTOMATION</h3>
+                <p>Élimination des frictions opérationnelles par l'automatisation intégrale de vos workflows : rapports, notifications, suivi commercial.</p>
             </div>
-        </section>
-
-        <!-- AGENT ADGENIUS STUDIO -->
-        <section id="adgenius" class="container" style="background: #0f172a; color: white; border-radius: 60px; margin: 40px auto; padding: 80px 2rem;">
-            <div style="text-align: center; margin-bottom: 60px;">
-                <span class="badge" style="background: rgba(255,200,0,0.15); color: #e2a81d; border-color: rgba(226,168,29,0.3);">🤖 Agent AdGenius Pro</span>
-                <h2 style="color: white; margin-top: 15px;">Studio Publicité <span>Premium</span></h2>
-                <p style="color: rgba(255,255,255,0.6);">Entrez le lien de votre business. L'agent génère instantanément un visuel de pub prêt à poster sur Facebook, TikTok et WhatsApp.</p>
+            <div class="pillar">
+                <div class="pillar-icon">📊</div>
+                <h3>INTELLIGENT SYSTEMS</h3>
+                <p>Création de dashboards SaaS et infrastructures cloud offrant une visibilité temps réel sur chaque dimension de votre business.</p>
             </div>
-
-            <div style="display: grid; grid-template-columns: minmax(280px, 1fr) minmax(0, 2fr); gap: 40px; align-items: start;">
-                <!-- ── Config Panel ── -->
-                <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 30px; display: flex; flex-direction: column; gap: 20px;">
-                    <h4 style="color: #e2a81d; font-size: 1rem; margin-bottom: 5px;">⚙️ Configuration</h4>
-
-                    <div>
-                        <label style="font-size: 0.75rem; opacity: 0.6; display: block; margin-bottom: 6px;">Lien du business *</label>
-                        <input type="text" id="ad-url" placeholder="facebook.com/votrepage" style="width: 100%; padding: 14px 16px; border-radius: 12px; background: #1e293b; color: white; border: 1px solid rgba(255,255,255,0.15); font-size: 0.9rem; box-sizing: border-box;">
-                    </div>
-
-                    <div>
-                        <label style="font-size: 0.75rem; opacity: 0.6; display: block; margin-bottom: 6px;">Service / Offre phare</label>
-                        <input type="text" id="ad-offer" placeholder="Ex: Site Web Pro, SaaS Scolaire..." style="width: 100%; padding: 14px 16px; border-radius: 12px; background: #1e293b; color: white; border: 1px solid rgba(255,255,255,0.15); font-size: 0.9rem; box-sizing: border-box;">
-                    </div>
-
-                    <div>
-                        <label style="font-size: 0.75rem; opacity: 0.6; display: block; margin-bottom: 6px;">Style de publicité</label>
-                        <select id="ad-style" style="width: 100%; padding: 14px 16px; border-radius: 12px; background: #1e293b; color: white; border: 1px solid rgba(255,255,255,0.15); font-size: 0.9rem; box-sizing: border-box;">
-                            <option value="orange">Énergie (Orange Gradient)</option>
-                            <option value="dark">Élite Tech (Sombre)</option>
-                            <option value="gold">Prestige (Or & Noir)</option>
-                            <option value="blue">Autorité (Bleu Profond)</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label style="font-size: 0.75rem; opacity: 0.6; display: block; margin-bottom: 6px;">Prix / Offre (optionnel)</label>
-                        <input type="text" id="ad-price" placeholder="Ex: À partir de 49$" style="width: 100%; padding: 14px 16px; border-radius: 12px; background: #1e293b; color: white; border: 1px solid rgba(255,255,255,0.15); font-size: 0.9rem; box-sizing: border-box;">
-                    </div>
-
-                    <button onclick="generateVisualAd()" style="background: linear-gradient(135deg, #e2a81d, #f59e0b); color: #000; font-weight: 800; border: none; padding: 18px; border-radius: 14px; font-size: 1rem; cursor: pointer; letter-spacing: 0.5px; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
-                        ⚡ Générer la Publicité
-                    </button>
-                </div>
-
-                <!-- ── Output: Ad Visual + Texts ── -->
-                <div>
-                    <!-- LOADING STATE -->
-                    <div id="ad-loading" style="display:none; text-align:center; padding: 60px 0;">
-                        <div style="font-size: 3rem; animation: pulse 1s infinite;">🤖</div>
-                        <p id="ad-loading-text" style="margin-top: 15px; opacity: 0.7; font-size: 0.9rem;">Analyse du business en cours...</p>
-                        <div style="width: 200px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; margin: 20px auto; overflow: hidden;">
-                            <div id="ad-progress-bar" style="height:100%; width:0%; background: #e2a81d; border-radius: 2px; transition: width 0.4s;"></div>
-                        </div>
-                    </div>
-
-                    <!-- AD VISUAL PREVIEW -->
-                    <div id="ad-results-container" style="display: none;">
-                        <!-- The ad visual itself -->
-                        <div id="visual-mockup" style="width:100%; aspect-ratio:9/10; border-radius: 24px; position: relative; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.6); margin-bottom: 30px; display: flex; flex-direction: column; justify-content: space-between; padding: 30px;">
-                            <!-- BACKGROUND OVERLAY -->
-                            <div id="ad-bg-overlay" style="position:absolute;inset:0;background:linear-gradient(135deg, #ea580c 0%, #dc2626 50%, #9a3412 100%);z-index:0;"></div>
-                            <!-- DECORATIVE SHAPE -->
-                            <div style="position:absolute; top:0; right:0; width:55%; height:100%; background: rgba(0,0,0,0.15); clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%); z-index:1;"></div>
-
-                            <!-- TOP SECTION -->
-                            <div style="position:relative; z-index:2;">
-                                <div id="ad-brand-badge" style="display:inline-block; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3); border-radius: 50px; padding: 6px 16px; font-size: 0.75rem; font-weight: 700; color: white; margin-bottom: 20px;">
-                                    AGENT-CY ENTERPRISE
-                                </div>
-                                <h1 id="ad-headline" style="font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 900; color: white; line-height: 1.1; margin-bottom: 15px; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">
-                                    VOTRE SITE WEB<br>PROFESSIONNEL
-                                </h1>
-                                <!-- Service Badges -->
-                                <div id="ad-badges" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;">
-                                    <span style="background: rgba(255,255,255,0.2); color: white; padding: 5px 12px; border-radius: 6px; font-size: 0.7rem; font-weight: 700;">SITE WEB</span>
-                                    <span style="background: rgba(255,255,255,0.2); color: white; padding: 5px 12px; border-radius: 6px; font-size: 0.7rem; font-weight: 700;">SaaS</span>
-                                    <span style="background: rgba(255,255,255,0.2); color: white; padding: 5px 12px; border-radius: 6px; font-size: 0.7rem; font-weight: 700;">WHATSAPP BOT</span>
-                                    <span style="background: rgba(255,255,255,0.2); color: white; padding: 5px 12px; border-radius: 6px; font-size: 0.7rem; font-weight: 700;">MOBILE MONEY</span>
-                                </div>
-                            </div>
-
-                            <!-- PHONE MOCKUP (CSS) -->
-                            <div style="position:absolute; right:-10px; bottom: 80px; z-index:3; transform: rotate(5deg);">
-                                <div style="width: 110px; height: 220px; background: #1a1a1a; border-radius: 18px; border: 3px solid #333; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
-                                    <!-- Phone status bar -->
-                                    <div style="background: #000; height: 20px; display:flex; align-items:center; justify-content: flex-end; padding: 0 8px; font-size: 0.4rem; color: white;">9:41 ●●●</div>
-                                    <!-- Phone content (dashboard) -->
-                                    <div style="background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%); height: 100%; padding: 8px;">
-                                        <div style="background: rgba(226,168,29,0.3); border-radius: 6px; padding: 6px; margin-bottom: 6px;">
-                                            <div style="font-size: 0.35rem; color: #e2a81d; font-weight: 800;" id="phone-biz-name">AGENT-CY</div>
-                                            <div style="font-size: 0.3rem; color: rgba(255,255,255,0.5); margin-top: 2px;">Dashboard Pro</div>
-                                        </div>
-                                        <div style="background:rgba(255,255,255,0.05); border-radius:4px; height: 20px; margin-bottom: 4px;"></div>
-                                        <div style="background:rgba(255,255,255,0.05); border-radius:4px; height: 14px; margin-bottom: 4px; width: 70%;"></div>
-                                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; margin-top:8px;">
-                                            <div style="background:rgba(226,168,29,0.2); border-radius:4px; height:30px;"></div>
-                                            <div style="background:rgba(59,130,246,0.2); border-radius:4px; height:30px;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- BOTTOM SECTION -->
-                            <div style="position:relative; z-index:2;">
-                                <!-- Price Badge -->
-                                <div id="ad-price-badge" style="display: inline-flex; align-items: center; gap: 12px; background: rgba(0,0,0,0.4); backdrop-filter: blur(10px); border: 2px solid rgba(255,255,255,0.2); border-radius: 14px; padding: 12px 20px; margin-bottom: 15px;">
-                                    <div style="text-align: center;">
-                                        <div id="ad-price-display" style="font-size: 1.5rem; font-weight: 900; color: #e2a81d;">AUDIT<br>GRATUIT</div>
-                                    </div>
-                                    <div style="font-size: 0.65rem; color: rgba(255,255,255,0.7); line-height: 1.4;" id="ad-price-sub">Diagnostic complet<br>de votre business</div>
-                                </div>
-                                <!-- Brand info row -->
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <div style="display: flex; align-items: center; gap: 10px;">
-                                        <div style="width: 36px; height: 36px; background: #e2a81d; border-radius: 50%; display:flex; align-items:center; justify-content:center; font-size: 1rem;">⚡</div>
-                                        <div>
-                                            <div id="ad-brand-name" style="font-size: 0.8rem; font-weight: 800; color: white;">AGENT-CY ENTERPRISE</div>
-                                            <div id="ad-brand-sub" style="font-size: 0.65rem; color: rgba(255,255,255,0.6);">congoboost-digital.vercel.app</div>
-                                        </div>
-                                    </div>
-                                    <!-- WA CTA -->
-                                    <div style="background: #25d366; color: white; padding: 8px 14px; border-radius: 10px; font-size: 0.7rem; font-weight: 700; display: flex; align-items: center; gap: 6px;">
-                                        💬 WhatsApp
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Download hint -->
-                        <p style="text-align:center; font-size: 0.75rem; opacity:0.5; margin-bottom:20px;">📸 Faites une capture d'écran du visuel pour le poster sur vos réseaux.</p>
-
-                        <!-- Campaign Texts -->
-                        <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 24px;">
-                            <h4 style="color: #e2a81d; font-size: 0.9rem; margin-bottom: 16px;">📋 Textes de Campagne Prêts à Copier</h4>
-                            <div id="ad-text-output" style="font-size: 0.85rem; line-height: 1.7; color: rgba(255,255,255,0.85);"></div>
-                        </div>
-                    </div>
-                </div>
+            <div class="pillar">
+                <div class="pillar-icon">🎯</div>
+                <h3>STRATEGIC INTELLIGENCE</h3>
+                <p>Veille concurrentielle, analyse prédictive et briefings exécutifs automatisés pour anticiper les opportunités de marché.</p>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- PRODUCT SHOWCASE (Inspired by EduPulse) -->
-        <section class="container" style="padding-top: 0;">
-            <div class="glass" style="padding: 30px 1rem; border-radius: 40px; overflow: hidden;">
-                <div style="text-align: center; margin-bottom: 50px;">
-                    <span class="badge">Aperçu SaaS</span>
-                    <h2>L'Excellence Opérationnelle en Action</h2>
-                    <p>Découvrez l'interface de gestion que nous avons conçue pour les institutions de prestige.</p>
+    <!-- ═══════════════ AUDIT IA ═══════════════ -->
+    <section class="audit container" id="audit">
+        <div class="audit-box">
+            <div class="audit-left">
+                <span class="section-sub">AUDIT STRATÉGIQUE</span>
+                <h2>Combien d'heures perdez-vous en <span>opérations manuelles</span> ?</h2>
+                <p class="desc">L'inefficacité opérationnelle est la première cause de stagnation. Nos agents calculent vos fuites de performance et les ressources récupérables.</p>
+                <div class="input-group">
+                    <label>TÂCHES ADMINISTRATIVES / JOUR</label>
+                    <input type="number" id="tasks" value="15" min="1">
                 </div>
-                
-                <!-- Mockup Dashboard Style (Responsive) -->
-                <div class="dashboard-mockup" style="background: #fff; border-radius: 20px; border: 1px solid var(--border); box-shadow: var(--shadow-md); display: grid; min-height: 500px;">
-                    <!-- Sidebar Mockup (Hidden on small screens via CSS) -->
-                    <div class="mockup-sidebar" style="border-right: 1px solid var(--border); padding: 30px; background: var(--bg-soft);">
-                        <div style="font-weight: 800; margin-bottom: 40px; color: var(--accent-blue);">EduPulse</div>
-                        <div style="display: flex; flex-direction: column; gap: 20px; color: var(--text-secondary); font-size: 0.9rem;">
-                            <div style="color: var(--text-primary); font-weight: 600;">Dashboard</div>
-                            <div>Étudiants</div>
-                            <div>Classes</div>
-                            <div>Analytique</div>
-                            <div>Rapports</div>
-                        </div>
-                    </div>
-                    <!-- Content Mockup -->
-                    <div style="padding: 20px;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 30px;">
-                            <h3>Vue d'ensemble Académique</h3>
-                            <span class="badge" style="margin: 0;">Derniers 30 jours</span>
-                        </div>
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
-                            <div class="card" style="padding: 20px;">
-                                <p style="font-size: 0.8rem;">Total Étudiants</p>
-                                <h4 style="font-size: 1.5rem;">1,450</h4>
-                                <div style="height: 30px; background: linear-gradient(90deg, transparent, rgba(2, 132, 199, 0.1)); border-radius: 5px; margin-top: 10px;"></div>
-                            </div>
-                            <div class="card" style="padding: 20px;">
-                                <p style="font-size: 0.8rem;">Moyenne GPA</p>
-                                <h4 style="font-size: 1.5rem;">3.65</h4>
-                                <div style="height: 30px; background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1)); border-radius: 5px; margin-top: 10px;"></div>
-                            </div>
-                            <div class="card" style="padding: 20px;">
-                                <p style="font-size: 0.8rem;">Taux de Présence</p>
-                                <h4 style="font-size: 1.5rem;">94.2%</h4>
-                                <div style="height: 30px; background: linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.1)); border-radius: 5px; margin-top: 10px;"></div>
-                            </div>
-                        </div>
-                        
-                        <!-- Radar Chart Mockup -->
-                        <div style="margin-top: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
-                            <div class="card" style="padding: 30px; text-align: center;">
-                                <p style="margin-bottom: 15px; font-weight: 600;">Radar de Performance</p>
-                                <div style="width: 200px; height: 200px; margin: 0 auto; border: 2px dashed var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative;">
-                                    <div style="width: 140px; height: 140px; background: rgba(2, 132, 199, 0.1); clip-path: polygon(50% 0%, 100% 38%, 81% 91%, 19% 91%, 0% 38%);"></div>
-                                    <span style="position: absolute; top: -20px; font-size: 0.7rem;">Maths</span>
-                                    <span style="position: absolute; right: -30px; font-size: 0.7rem;">Science</span>
-                                    <span style="position: absolute; bottom: -20px; font-size: 0.7rem;">Histoire</span>
-                                    <span style="position: absolute; left: -30px; font-size: 0.7rem;">Art</span>
-                                </div>
-                            </div>
-                            <div class="card" style="padding: 30px;">
-                                <p style="margin-bottom: 15px; font-weight: 600;">Activités Récentes</p>
-                                <div style="display: flex; flex-direction: column; gap: 15px; font-size: 0.85rem;">
-                                    <div style="border-left: 3px solid var(--accent-blue); padding-left: 15px;">
-                                        <strong>Bulletin généré</strong> - Classe de Terminale A
-                                    </div>
-                                    <div style="border-left: 3px solid var(--accent-gold); padding-left: 15px;">
-                                        <strong>Alerte WhatsApp</strong> - 5 retards signalés
-                                    </div>
-                                    <div style="border-left: 3px solid #22c55e; padding-left: 15px;">
-                                        <strong>Paiement reçu</strong> - Frais d'inscription (M. Kabongo)
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="input-group">
+                    <label>NOMBRE DE COLLABORATEURS</label>
+                    <input type="number" id="staff" value="5" min="1">
                 </div>
+                <div class="input-group">
+                    <label>MINUTES PAR TÂCHE (EN MOYENNE)</label>
+                    <input type="number" id="mins" value="30" min="5">
+                </div>
+                <button class="btn-audit" onclick="runAudit()">⚡ Lancer l'Analyse AGENTCY</button>
             </div>
-        </section>
-
-        <!-- THE LAB : AUDIT & DEMO GENERATOR -->
-        <section id="lab" class="container" style="padding: 100px 0;">
-            <div style="text-align: center; margin-bottom: 80px;">
-                <span class="badge" style="background: #EEF2FF; color: #4F46E5; border-color: #C7D2FE;">Innovation : Audit Autonome</span>
-                <h2>Générateur de <span>Transformation</span></h2>
-                <p>Entrez le lien de votre business et laissez nos agents concevoir votre avenir digital.</p>
+            <div class="results-panel" id="results">
+                <div class="result-metric">
+                    <div class="metric-label">HEURES PERDUES / MOIS</div>
+                    <div class="metric-value" id="hours-lost">0</div>
+                    <div class="metric-unit">heures consommées par les frictions</div>
+                </div>
+                <hr class="divider">
+                <div class="result-metric">
+                    <div class="metric-label">RÉCUPÉRABLES VIA AGENTCY</div>
+                    <div class="metric-value" id="hours-saved">0</div>
+                    <div class="metric-unit">heures remises à votre disposition</div>
+                </div>
+                <hr class="divider">
+                <div class="result-metric">
+                    <div class="metric-label">INDICE D'AUTONOMIE POTENTIEL</div>
+                    <div class="metric-value" id="autonomy">0%</div>
+                    <div class="metric-unit">de vos opérations automatisables</div>
+                </div>
+                <a href="https://wa.me/message/ARWYGVW5TELAF1" class="btn-primary" style="display:block; text-align:center; margin-top:28px;">Activer l'Automatisation →</a>
             </div>
+        </div>
+    </section>
 
-            <div class="glass card audit-container" style="padding: 40px 20px; max-width: 900px; width: 95%; margin: 0 auto; text-align: center; border-radius: 40px;">
-                <div id="audit-initial" style="width: 100%;">
-                    <!-- GUIDE D'UTILISATION (Mode d'emploi) -->
-                    <div style="background: var(--bg-soft); padding: 20px; border-radius: 15px; margin-bottom: 30px; display: inline-block; text-align: left; max-width: 500px; border: 1px solid var(--border);">
-                        <h4 style="font-size: 0.9rem; margin-bottom: 10px;">📖 Mode d'emploi :</h4>
-                        <ol style="font-size: 0.8rem; color: var(--text-secondary); padding-left: 20px;">
-                            <li>Collez le lien de votre business (Facebook, Site, WhatsApp).</li>
-                            <li>L'IA analyse vos forces et vos faiblesses en RDC.</li>
-                            <li>Découvrez vos pertes financières et votre démo premium.</li>
-                        </ol>
-                    </div>
-
-                    <div style="font-size: 4rem; margin-bottom: 20px;">🤖</div>
-                    <h3>Analysez tout type de Business</h3>
-                    <p style="margin-bottom: 40px; color: var(--text-secondary);">Commerce, École, Cabinet, Industrie : nos agents scannent n'importe quelle structure pour la propulser dans le digital.</p>
-                    <div style="display: flex; gap: 15px; max-width: 600px; margin: 0 auto; flex-wrap: wrap;">
-                        <input type="text" id="business-url" placeholder="Lien de votre activité (ex: facebook.com/votrepage)..." style="flex: 2; padding: 18px 25px; border-radius: 12px; border: 1px solid var(--border); font-family: inherit; min-width: 250px;">
-                        <button onclick="startAutonomousAudit()" class="btn btn-dark" style="flex: 1; padding: 18px 35px; white-space: nowrap;">Lancer l'Audit</button>
-                    </div>
-                </div>
-
-                <!-- LOADING STATE -->
-                <div id="audit-loading" style="display: none;">
-                    <div class="scan-container">
-                        <div class="scan-grid"></div>
-                        <div class="scan-line"></div>
-                        <div class="orb" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.5;"></div>
-                    </div>
-                    <h3 id="loading-status">L'Agent scanne votre structure...</h3>
-                    <p id="loading-detail" style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 10px;">Analyse multidimensionnelle en cours...</p>
-                    <div id="loading-progress" style="width: 100%; height: 6px; background: var(--bg-soft); border-radius: 3px; margin-top: 30px; overflow: hidden;">
-                        <div id="progress-bar" style="width: 0%; height: 100%; background: var(--accent-blue); transition: width 0.5s;"></div>
-                    </div>
-                </div>
-
-                <!-- RESULT STATE -->
-                <div id="audit-result" style="display: none; text-align: left;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                        <span class="badge" style="background: #f0fdf4; color: #15803d; border-color: #dcfce7;">Diagnostic Terminé</span>
-                        <div style="font-size: 0.8rem; color: var(--text-secondary);" id="audit-date"></div>
-                    </div>
-                    
-                    <div class="audit-grid-pro" style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 30px;">
-                        <!-- Diagnostic Technique -->
-                        <div>
-                            <h3 style="margin-bottom: 20px;">Architecture de Transformation</h3>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px;">
-                                <div class="card" style="background: #f0fdf4; border: none; padding: 20px;">
-                                    <h4 style="color: #15803d; margin-bottom: 10px; font-size: 0.9rem;">✅ Points Forts</h4>
-                                    <ul id="points-pos" style="font-size: 0.85rem; list-style: none; padding: 0; line-height: 1.6;"></ul>
-                                </div>
-                                <div class="card" style="background: #fff5f5; border: none; padding: 20px;">
-                                    <h4 style="color: #b91c1c; margin-bottom: 10px; font-size: 0.9rem;">⚠️ Frictions Critiques</h4>
-                                    <ul id="points-neg" style="font-size: 0.85rem; list-style: none; padding: 0; line-height: 1.6;"></ul>
-                                </div>
-                            </div>
-                            <div class="card" style="background: var(--bg-soft); border: 1px dashed var(--border);">
-                                <h4 style="margin-bottom: 10px; font-size: 0.9rem;">💡 Vision de l'Architecte</h4>
-                                <div id="strategic-questions" style="font-size: 0.85rem; color: var(--text-primary); line-height: 1.6;"></div>
-                            </div>
-                        </div>
-
-                        <!-- Impact Financier (ROI) -->
-                        <div>
-                            <div class="card" style="background: #0f172a; color: white; text-align: center; padding: 40px; border-radius: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.2);">
-                                <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.7;">Pertes Opérationnelles</span>
-                                <div id="roi-total" style="font-size: 3rem; font-weight: 800; color: #ef4444; margin: 15px 0;">$0</div>
-                                <p style="font-size: 0.8rem; opacity: 0.6; margin-bottom: 25px;">Chiffre annuel basé sur vos inefficacités administratives.</p>
-                                
-                                <div style="text-align: left; background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px;">
-                                    <label style="font-size: 0.7rem; opacity: 0.7;">Taille de structure</label>
-                                    <input type="range" id="roi-size" min="10" max="1000" value="200" style="width: 100%; margin: 5px 0;" oninput="updateROI()">
-                                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 15px;">
-                                        <span id="roi-size-val">200</span>
-                                        <label style="opacity: 0.7;">Clients/Employés</label>
-                                    </div>
-                                    
-                                    <label style="font-size: 0.7rem; opacity: 0.7;">Heures perdues / jour (admin)</label>
-                                    <input type="range" id="roi-hours" min="1" max="12" value="4" style="width: 100%; margin: 5px 0;" oninput="updateROI()">
-                                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
-                                        <span id="roi-hours-val">4h</span>
-                                        <label style="opacity: 0.7;">Heures/Jour</label>
-                                    </div>
-                                </div>
-                                <button class="btn btn-gold" style="width: 100%; margin-top: 25px; padding: 15px;" onclick="window.location.href='demo_template.html'">Activer mon Prototype →</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="margin-top: 40px; text-align: center;">
-                        <a href="https://wa.me/message/ARWYGVW5TELAF1" id="audit-wa-link" class="btn" style="border: 1px solid var(--border); padding: 18px 40px; text-decoration: none; color: var(--text-primary); font-weight: 600; display: inline-block;">Contacter l'Architecte pour Stopper ces Pertes</a>
-                    </div>
-                </div>
+    <!-- ═══════════════ THE LAB ═══════════════ -->
+    <section class="lab container" id="lab">
+        <div class="section-header">
+            <span class="section-sub">THE AGENTCY LAB</span>
+            <h2>Technologie de Demain,<br>Déployée Aujourd'hui.</h2>
+            <p>Nos modules propriétaires qui orchestrent votre transformation.</p>
+        </div>
+        <div class="lab-grid">
+            <div class="lab-card">
+                <div class="lab-tag">ORCHESTRATION</div>
+                <h4>Nexus Core</h4>
+                <p>L'orchestrateur central qui connecte et synchronise tous vos systèmes intelligents en temps réel. Le cerveau de votre infrastructure.</p>
             </div>
-        </section>
+            <div class="lab-card">
+                <div class="lab-tag">SURVEILLANCE</div>
+                <h4>Sentinel-X</h4>
+                <p>Module de veille autonome surveillant les flux de données, les tendances de marché et les signaux d'opportunité 24h/24.</p>
+            </div>
+            <div class="lab-card">
+                <div class="lab-tag">STRATÉGIE</div>
+                <h4>Atlas Intelligence</h4>
+                <p>Synthèse stratégique en temps réel générant des rapports exécutifs et des recommandations business chaque matin à 7h00.</p>
+            </div>
+        </div>
+    </section>
 
-        <!-- PROCESSUS DE TRANSFORMATION SECTION -->
-        <section id="process" class="container" style="padding: 100px 0;">
-            <div style="text-align: center; margin-bottom: 80px;">
-                <span class="badge">Méthodologie AGENT-CY</span>
-                <h2 class="gradient-text">Le Chemin vers l'Élite Digitale</h2>
-                <p>Nous ne construisons pas de simples sites, nous bâtissons des infrastructures de croissance.</p>
-            </div>
+    <!-- ═══════════════ CTA FINAL ═══════════════ -->
+    <section class="cta container">
+        <div class="cta-box">
+            <h2>Prêt à passer à<br>l'<span>entreprise autonome</span> ?</h2>
+            <p>Prenez rendez-vous pour un audit stratégique. Nos agents analysent votre structure et conçoivent votre infrastructure en 48h.</p>
+            <a href="https://wa.me/message/ARWYGVW5TELAF1" class="btn-primary">Réserver mon Audit Stratégique →</a>
+        </div>
+    </section>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px;">
-                <div class="card" style="text-align: center; padding: 50px 30px;">
-                    <div style="font-size: 3.5rem; font-weight: 800; color: var(--bg-soft); -webkit-text-stroke: 2px var(--border); margin-bottom: 20px;">01</div>
-                    <h3 style="margin-bottom: 15px;">Diagnostic & Lab</h3>
-                    <p style="font-size: 0.9rem; color: var(--text-secondary);">Analyse profonde de vos frictions opérationnelles et génération immédiate de votre prototype de modernisation sur-mesure.</p>
-                </div>
-                <div class="card" style="text-align: center; padding: 50px 30px; border-top: 4px solid var(--accent-blue);">
-                    <div style="font-size: 3.5rem; font-weight: 800; color: var(--bg-soft); -webkit-text-stroke: 2px var(--accent-blue); margin-bottom: 20px;">02</div>
-                    <h3 style="margin-bottom: 15px;">Orchestration SaaS</h3>
-                    <p style="font-size: 0.9rem; color: var(--text-secondary);">Déploiement de votre architecture digitale (Mobile Money, CRM, Automatisation WhatsApp) parfaitement intégrée à vos flux.</p>
-                </div>
-                <div class="card" style="text-align: center; padding: 50px 30px;">
-                    <div style="font-size: 3.5rem; font-weight: 800; color: var(--bg-soft); -webkit-text-stroke: 2px var(--border); margin-bottom: 20px;">03</div>
-                    <h3 style="margin-bottom: 15px;">Surveillance Sentinel</h3>
-                    <p style="font-size: 0.9rem; color: var(--text-secondary);">Garantie de performance H24 par nos agents de veille pour maintenir votre institution au sommet de l'efficacité et du prestige.</p>
-                </div>
+    <!-- ═══════════════ FOOTER ═══════════════ -->
+    <footer>
+        <div class="container footer-inner">
+            <div>
+                <div class="logo">AGENTCY <span>ENTERPRISE</span></div>
+                <p class="footer-sub">AI Agents • Automation • Intelligent Systems</p>
             </div>
-        </section>
+            <p class="copy">© 2026 AGENTCY ENTERPRISE. Building the Future of African Business.</p>
+        </div>
+    </footer>
 
-        <!-- IMPACT SECTION (Floating Stats) -->
-        <section id="impact" class="container">
-            <div class="impact-grid">
-                <div class="impact-card">
-                    <div class="impact-num" data-val="1200">1200</div>
-                    <p>Entrepreneurs Formés</p>
-                </div>
-                <div class="impact-card">
-                    <div class="impact-num" data-val="85">85%</div>
-                    <p>Taux de Succès Business</p>
-                </div>
-                <div class="impact-card">
-                    <div class="impact-num" data-val="50">50</div>
-                    <p>Institutions Digitalisées</p>
-                </div>
-                <div class="impact-card">
-                    <div class="impact-num" data-val="10">10</div>
-                    <p>Vues sur nos Contenus</p>
-                </div>
-            </div>
-        </section>
+    <script>
+        function runAudit() {
+            const tasks = parseFloat(document.getElementById('tasks').value) || 0;
+            const staff = parseFloat(document.getElementById('staff').value) || 0;
+            const mins = parseFloat(document.getElementById('mins').value) || 0;
 
-        <!-- BEFORE / AFTER SECTION -->
-        <section id="transformation" class="container" style="padding: 100px 0;">
-            <div style="text-align: center; margin-bottom: 60px;">
-                <span class="badge">Étude de Cas</span>
-                <h2>Votre transformation en <span>chiffres</span></h2>
-                <p>Voyez comment nous passons du désordre à l'efficacité totale.</p>
-            </div>
-            
-            <div class="comparison-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
-                <!-- AVANT -->
-                <div class="card" style="border-left: 5px solid #ef4444; background: #fff5f5;">
-                    <h3 style="color: #b91c1c; margin-bottom: 20px;">Avant Congoboost</h3>
-                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 15px;">
-                        <li>❌ Trop de paperasse et dossiers perdus.</li>
-                        <li>❌ Heures perdues en calculs manuels.</li>
-                        <li>❌ Manque de visibilité sur les finances.</li>
-                        <li>❌ Communication lente avec les parents/clients.</li>
-                    </ul>
-                </div>
-                <!-- APRES -->
-                <div class="card" style="border-left: 5px solid #22c55e; background: #f0fdf4;">
-                    <h3 style="color: #15803d; margin-bottom: 20px;">Avec Congoboost</h3>
-                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 15px;">
-                        <li>✅ Tout est archivé et sécurisé dans le Cloud.</li>
-                        <li>✅ Rapports générés en un seul clic.</li>
-                        <li>✅ Contrôle total des revenus en temps réel.</li>
-                        <li>✅ Alertes WhatsApp automatiques instantanées.</li>
-                    </ul>
-                </div>
-            </div>
-        <!-- TESTIMONIALS SECTION -->
-        <section id="testimonials" class="container" style="padding-bottom: 60px;">
-            <div style="text-align: center; margin-bottom: 60px;">
-                <span class="badge">Témoignages</span>
-                <h2>Ils nous font <span>confiance</span></h2>
-            </div>
-            <div class="testimonial-grid">
-                <div class="glass card testimonial">
-                    <p>"L'approche de Congoboost est révolutionnaire pour le marché congolais. Ils ne vendent pas juste du code, mais une véritable vision stratégique."</p>
-                    <div class="user-info">
-                        <div class="user-avatar" style="background: var(--accent-blue);">D</div>
-                        <div>
-                            <strong>Deo K.</strong>
-                            <span>Expert en Strategie Digitale</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="glass card testimonial">
-                    <p>"Grâce à leur e-book et leur formation, j'ai pu structurer ma boutique de mode à Kinshasa en moins de 3 mois. Une aide précieuse."</p>
-                    <div class="user-info">
-                        <div class="user-avatar" style="background: var(--accent-gold);">T</div>
-                        <div>
-                            <strong>Tracy M.</strong>
-                            <span>Entrepreneure Mode</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+            const hoursPerMonth = (tasks * staff * mins / 60) * 22;
+            const saved = hoursPerMonth * 0.75;
+            const autonomy = Math.min(85, Math.round((saved / (staff * 160)) * 100));
 
-        <!-- FAQ SECTION -->
-        <section id="faq" class="container" style="background: var(--bg-soft); border-radius: 60px; margin: 40px auto; padding: 60px 1.5rem;">
-            <div style="max-width: 800px; margin: 0 auto;">
-                <h2 style="text-align: center; margin-bottom: 50px;">Questions Fréquentes</h2>
-                <div class="faq-item">
-                    <details>
-                        <summary style="font-weight: 600; cursor: pointer; padding: 10px 0;">Comment fonctionne votre accompagnement stratégique ?</summary>
-                        <p style="padding: 15px 0; color: var(--text-primary);">Nous commençons par un audit complet de vos processus. Ensuite, nous concevons une architecture digitale qui automatise vos tâches répétitives et libère votre potentiel de croissance.</p>
-                    </details>
-                </div>
-                <div class="faq-item">
-                    <details>
-                        <summary style="font-weight: 600; cursor: pointer; padding: 10px 0;">Vos solutions SaaS sont-elles personnalisables ?</summary>
-                        <p style="padding: 15px 0; color: var(--text-primary);">Absolument. Contrairement aux solutions génériques, nos outils sont bâtis sur-mesure pour s'adapter à la réalité du terrain en RDC et aux besoins spécifiques de votre institution.</p>
-                    </details>
-                </div>
-                <div class="faq-item">
-                    <details>
-                        <summary style="font-weight: 600; cursor: pointer; padding: 10px 0;">Pouvez-vous digitaliser mon école ou mon entreprise ?</summary>
-                        <p style="padding: 15px 0; color: var(--text-primary);">Oui, c'est notre spécialité. Nous créons des solutions SaaS sur-mesure (gestion d'élèves, ERP, CRM) adaptées à vos besoins locaux.</p>
-                    </details>
-                </div>
-            </div>
-        </section>
+            document.getElementById('hours-lost').innerText = Math.round(hoursPerMonth);
+            document.getElementById('hours-saved').innerText = Math.round(saved);
+            document.getElementById('autonomy').innerText = autonomy + '%';
+            document.getElementById('results').classList.add('active');
+        }
 
-        <!-- VISION SECTION (Final CTA) -->
-        <section class="container" style="text-align: center; max-width: 900px; padding: 60px 1.5rem;">
-            <span class="badge" style="background: #FFFBEB; color: #D97706; border-color: #FEF3C7;">Prêt pour le boost ?</span>
-            <h2 style="margin-top: 20px;">Transformez votre Vision en <span>Réalité</span>.</h2>
-            <p style="margin-top: 30px; color: var(--text-primary);">
-                Rejoignez les entrepreneurs qui dominent déjà le marché digital en RDC avec les solutions Congoboost.
-            </p>
-            <div style="margin-top: 50px;">
-                <a href="https://wa.me/message/ARWYGVW5TELAF1" class="btn btn-dark" style="font-size: 1.1rem; padding: 18px 40px; width: 100%; max-width: 300px; display: inline-block;">Démarrer Maintenant</a>
-            </div>
-        </section>
-
-        <!-- FOOTER -->
-        <footer style="background: var(--bg-soft); border-top: 1px solid var(--border); margin-top: 100px; padding: 60px 0 30px 0;">
-            <div class="container footer-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px;">
-                <div class="footer-brand">
-                    <a href="#" class="logo" style="margin-bottom: 20px; display: flex; align-items: center;">
-                        <div class="logo-icon">
-                            <svg viewBox="0 0 100 100" width="30" height="30" style="fill: var(--accent-blue);">
-                                <path d="M40,20 L50,25 L60,20 L70,30 L65,50 L75,70 L60,85 L40,80 L30,60 L25,40 L40,20 Z" />
-                            </svg>
-                        </div>
-                        CONGOBOOST
-                    </a>
-                    <p style="font-size: 0.9rem; color: var(--text-primary);">L'orchestrateur digital de référence en RDC. Nous boostons les esprits et bâtissons les business de demain.</p>
-                </div>
-                <div class="footer-links">
-                    <h4 style="margin-bottom: 15px; color: var(--text-primary);">Solutions</h4>
-                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 0.9rem;">
-                        <li><a href="#solutions" style="text-decoration: none; color: var(--text-primary);">Modernisation</a></li>
-                        <li><a href="#solutions" style="text-decoration: none; color: var(--text-primary);">Orchestration SaaS</a></li>
-                        <li><a href="#solutions" style="text-decoration: none; color: var(--text-primary);">SaaS Scolaire</a></li>
-                    </ul>
-                </div>
-                <div class="footer-links">
-                    <h4 style="margin-bottom: 15px; color: var(--text-primary);">Entreprise</h4>
-                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 0.9rem;">
-                        <li><a href="#impact" style="text-decoration: none; color: var(--text-primary);">Impact</a></li>
-                        <li><a href="#testimonials" style="text-decoration: none; color: var(--text-primary);">Témoignages</a></li>
-                        <li><a href="https://wa.me/message/ARWYGVW5TELAF1" style="text-decoration: none; color: var(--text-primary);">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-social">
-                    <h4 style="margin-bottom: 15px; color: var(--text-primary);">Suivez-nous</h4>
-                    <div style="display: flex; gap: 20px;">
-                        <a href="https://www.tiktok.com/@congoboost.digita" style="text-decoration: none; font-size: 1.5rem;">📱</a>
-                        <a href="https://wa.me/message/ARWYGVW5TELAF1" style="text-decoration: none; font-size: 1.5rem;">💬</a>
-                    </div>
-                </div>
-            </div>
-            <div class="container" style="border-top: 1px solid var(--border); padding-top: 30px; text-align: center; color: var(--text-secondary); font-size: 0.8rem;">
-                <p>© 2026 CONGOBOOST DIGITAL. Fièrement construit à Kinshasa.</p>
-            </div>
-        </footer>
-    </main>
-
-    <script src="main.js?v=2.0"></script>
-    <script src="agent_organizer.js?v=2.0"></script>
+        // Animate progress bars on load
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.prog-fill').forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0';
+                setTimeout(() => { bar.style.width = width; }, 500);
+            });
+        });
+    </script>
 </body>
 </html>
