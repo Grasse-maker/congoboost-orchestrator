@@ -245,71 +245,60 @@
             handleUserInput(userText, actionType);
         };
 
-        // Core Conversation Logic
+        // Conversation History for API
+        let conversationHistory = [];
+
+        // Core Conversation Logic using Real AI (Gemini via Serverless)
         async function processAIResponse(input, actionType) {
             typingIndicator.style.display = 'flex';
             userInput.disabled = true;
             sendBtn.disabled = true;
 
-            // Simulate deep thinking based on step
-            await sleep(1500 + Math.random() * 1000);
-
             let responseHTML = "";
 
-            if (step === 0) {
-                // Initial message was sent, user replied
-                if (actionType === 'ignore') {
-                    responseHTML = `<p>Je comprends. Sachez cependant que dans l'économie éducative actuelle, la digitalisation n'est plus une option de confort, mais un <strong>impératif de survie</strong> financière.</p><p>Si vous changez d'avis, nous serons là.</p>`;
-                    step = 99; // end
-                } else {
-                    responseHTML = `<p>Très bien. D'un point de vue purement <strong>économique</strong>, votre établissement perd environ 15% de ses revenus chaque année à cause des "frictions administratives".</p>
-                    <ul>
-                        <li>Recouvrement lent des frais scolaires</li>
-                        <li>Erreurs humaines sur les reçus manuels</li>
-                        <li>Manque de communication instantanée poussant certains parents vers des écoles concurrentes</li>
-                    </ul>
-                    <p>En entreprise, on appelle cela le "Churn Rate". Souhaitez-vous découvrir comment notre architecture double-couche élimine ce problème en 30 jours ?</p>
-                    <div class="action-btns">
-                        <button class="action-btn primary" onclick="handleAction('solution')">Oui, montrez-moi la solution</button>
-                        <button class="action-btn" onclick="handleAction('action')">Passer à l'action directement</button>
-                    </div>`;
-                    step = 1;
+            if (actionType === 'action') {
+                responseHTML = `<p>Excellente décision stratégique.</p><p>Le passage à l'action immédiat est la caractéristique principale des leaders du secteur éducatif.</p><p>Je vous redirige vers un de nos <strong>consultants humains</strong> sur WhatsApp pour planifier le déploiement technique. Préparez-vous à une transformation complète.</p>`;
+                typingIndicator.style.display = 'none';
+                appendMessage('ai', responseHTML);
+                await sleep(2000);
+                redirectToWhatsApp();
+                return;
+            }
+
+            try {
+                // Add user message to history
+                if (input) {
+                    conversationHistory.push({ role: 'user', content: input });
                 }
-            } else if (step === 1) {
-                if (actionType === 'action') {
-                    responseHTML = `<p>Excellente décision stratégique.</p><p>Le passage à l'action immédiat est la caractéristique principale des leaders du secteur éducatif.</p><p>Je vous redirige vers un de nos <strong>consultants humains</strong> sur WhatsApp pour planifier le déploiement technique. Préparez-vous à une transformation complète.</p>`;
-                    step = 2;
-                } else {
-                    responseHTML = `<p>Notre écosystème hybride connecte deux mondes :</p>
-                    <p>1. Un <strong>tableau de bord SaaS</strong> pour votre administration (finances, bulletins, statistiques temps réel).</p>
-                    <p>2. Un <strong>portail parents/élèves</strong> hautement sécurisé pour la transparence absolue.</p>
-                    <p>Ce système permet d'encaisser les frais scolaires plus vite, de réduire la charge mentale de vos agents, et d'offrir une image "Elite" à votre école.</p>
-                    <p>L'analyse montre que l'installation sera rentabilisée dès le premier trimestre.</p>
-                    <div class="action-btns">
-                        <button class="action-btn primary" onclick="handleAction('action')">Je veux parler à un consultant (WhatsApp)</button>
-                    </div>`;
-                    step = 1; // wait for 'action'
-                }
-            } else if (step === 2) {
-                // Should redirect
-                responseHTML = `<p>Connexion sécurisée en cours vers Agentcy Consultant...</p>`;
-            } else {
-                // Fallback for custom typing
-                const lowerInput = input.toLowerCase();
-                if(lowerInput.includes('prix') || lowerInput.includes('combien')) {
-                    responseHTML = `<p>Le prix dépend de la taille de votre infrastructure (serveurs dédiés, nombre d'élèves). C'est un <strong>investissement</strong> qui s'autofinance par la réduction de vos pertes (estimées à $${lossAmount}).</p><p>Je vous conseille de discuter des modalités financières avec un consultant.</p><div class="action-btns"><button class="action-btn primary" onclick="handleAction('action')">Contacter un consultant</button></div>`;
-                } else {
-                    responseHTML = `<p>Je suis une IA spécialisée en analyse stratégique. Mon diagnostic est formel : la digitalisation est urgente.</p><p>Pour une implémentation sur-mesure, vous devez parler à un architecte humain.</p><div class="action-btns"><button class="action-btn primary" onclick="handleAction('action')">Passer à l'étape supérieure</button></div>`;
-                }
+
+                // Call Backend API
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        messages: conversationHistory,
+                        lossAmount: lossAmount
+                    })
+                });
+
+                if (!response.ok) throw new Error("API failed");
+                
+                const data = await response.json();
+                responseHTML = data.reply;
+
+                // Add AI response to history
+                conversationHistory.push({ role: 'model', content: responseHTML.replace(/<br>/g, '\n').replace(/<[^>]*>?/gm, '') }); // Stripped HTML for history
+
+                // Always append the action button below the AI response
+                responseHTML += `<div class="action-btns"><button class="action-btn primary" onclick="handleAction('action')">Parler à un humain (WhatsApp)</button></div>`;
+
+            } catch (error) {
+                console.error(error);
+                responseHTML = `<p>Je rencontre une légère surcharge réseau. Cependant, mon diagnostic reste formel : la digitalisation de votre établissement est urgente. Pour une implémentation sur-mesure, je vous conseille de parler directement à un architecte humain.</p><div class="action-btns"><button class="action-btn primary" onclick="handleAction('action')">Passer à l'étape supérieure</button></div>`;
             }
 
             typingIndicator.style.display = 'none';
             appendMessage('ai', responseHTML);
-
-            if(step === 2 || actionType === 'action') {
-                await sleep(2000);
-                redirectToWhatsApp();
-            }
 
             userInput.disabled = false;
             sendBtn.disabled = false;
@@ -318,15 +307,13 @@
 
         async function handleUserInput(text, actionType = null) {
             const inputVal = text || userInput.value.trim();
-            if(!inputVal) return;
+            if(!inputVal && !actionType) return;
             
-            // Clear input
-            userInput.value = '';
+            if(inputVal) {
+                userInput.value = '';
+                appendMessage('user', `<p>${inputVal}</p>`);
+            }
             
-            // Show user message
-            appendMessage('user', `<p>${inputVal}</p>`);
-            
-            // Process AI
             await processAIResponse(inputVal, actionType);
         }
 
@@ -343,26 +330,27 @@
             await sleep(2000);
             typingIndicator.style.display = 'none';
 
-            let firstMsg = `<p>Bonjour. Je suis <strong>Atlas</strong>, l'agent d'analyse de données chez Agentcy Enterprise.</p>`;
+            let firstMsgRaw = "";
+            let firstMsgHTML = `<p>Bonjour. Je suis <strong>Atlas</strong>, l'agent d'analyse de données chez Agentcy Enterprise.</p>`;
             
             if(lossAmount !== "0") {
-                firstMsg += `<p>J'ai réceptionné les données de votre diagnostic. Mon algorithme confirme une hémorragie financière critique estimée à <strong>$${lossAmount} par an</strong>.</p>
-                <p>En tant qu'entrepreneur, vous ne pouvez pas ignorer ces chiffres. Souhaitez-vous que je vous explique la source exacte de cette fuite, ou êtes-vous prêt à voir la solution ?</p>
-                <div class="action-btns">
-                    <button class="action-btn" onclick="handleAction('analyse')">Expliquez-moi cette perte</button>
-                    <button class="action-btn primary" onclick="handleAction('solution')">Comment stopper ça ?</button>
-                    <button class="action-btn" onclick="handleAction('ignore')">Ignorer le diagnostic</button>
-                </div>`;
+                firstMsgRaw = `Bonjour, je suis Atlas. J'ai réceptionné les données de votre diagnostic. Mon algorithme confirme une hémorragie financière critique estimée à $${lossAmount} par an. Comment puis-je vous aider ?`;
+                firstMsgHTML += `<p>J'ai réceptionné les données de votre diagnostic. Mon algorithme confirme une hémorragie financière critique estimée à <strong>$${lossAmount} par an</strong>.</p>
+                <p>En tant qu'entrepreneur, vous ne pouvez pas ignorer ces chiffres. Posez-moi vos questions sur la manière de stopper cette perte, ou demandez à parler à un humain pour passer à l'action.</p>`;
             } else {
-                firstMsg += `<p>Je suis connecté à une vaste base de données en entrepreneuriat et management moderne.</p>
-                <p>La gestion manuelle d'un établissement scolaire en 2026 est une erreur stratégique majeure. Quel est votre objectif prioritaire aujourd'hui ?</p>
-                <div class="action-btns">
-                    <button class="action-btn" onclick="handleAction('solution')">Moderniser mon école</button>
-                    <button class="action-btn primary" onclick="handleAction('action')">Parler à un humain</button>
-                </div>`;
+                firstMsgRaw = `Bonjour, je suis Atlas, connecté à une vaste base de données en entrepreneuriat et management moderne. Comment puis-je vous aider à moderniser votre établissement ?`;
+                firstMsgHTML += `<p>Je suis connecté à une vaste base de données en entrepreneuriat et management moderne.</p>
+                <p>La gestion manuelle d'un établissement scolaire en 2026 est une erreur stratégique majeure. Quel est votre objectif prioritaire aujourd'hui ? Posez-moi vos questions !</p>`;
             }
             
-            appendMessage('ai', firstMsg);
+            // Seed conversation history
+            conversationHistory.push({ role: 'model', content: firstMsgRaw });
+
+            firstMsgHTML += `<div class="action-btns">
+                    <button class="action-btn primary" onclick="handleAction('action')">Parler à un humain</button>
+                </div>`;
+            
+            appendMessage('ai', firstMsgHTML);
         });
 
     </script>
