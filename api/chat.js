@@ -6,9 +6,12 @@ export default async function handler(req, res) {
     try {
         const { messages, lossAmount } = req.body;
         
-        // This key is safely hidden on the Vercel server, not exposed to the browser
-        const GEMINI_API_KEY = "AIzaSyAzJYgQpcqnFrkQmPfB3Iglrj46zwkW9IA"; 
+        // This key is now securely pulled from Vercel Environment Variables
+        const GEMINI_API_KEY = process.env.GEMINI_API_KEY; 
         
+        if (!GEMINI_API_KEY) {
+            return res.status(500).json({ error: 'API Key not configured' });
+        }
         // Format conversation history for Gemini
         const formattedContents = messages.map(msg => ({
             role: msg.role === 'user' ? 'user' : 'model',
@@ -16,12 +19,15 @@ export default async function handler(req, res) {
         }));
 
         // Context injected as system instruction
-        const systemPrompt = `Tu es Atlas, l'IA Consultante Experte de l'agence 'Agentcy Enterprise'. 
-Tu parles à un directeur d'école ou un entrepreneur. 
-Le diagnostic a révélé que son école perd environ ${lossAmount}$ par an à cause d'une gestion manuelle (frictions administratives, retards de paiement, etc).
-Ton but est de l'écouter, de répondre intelligemment à ses questions sur le business, l'économie ou la gestion scolaire avec un ton très professionnel, analytique et rassurant.
-Si l'utilisateur semble convaincu ou demande comment faire, tu DOIS lui proposer de 'Passer à l'action' en parlant à un consultant humain, et lui dire de cliquer sur le bouton 'Parler à un humain'.
-Fais des réponses concises, structurées et percutantes. Pas de longs paragraphes.`;
+        const systemPrompt = `Tu es Atlas, l'IA Consultante Stratégique de l'agence 'Agentcy Enterprise'. 
+Tu es un expert en entrepreneuriat, économie, business, et modernisation des établissements scolaires.
+Tu parles à un dirigeant d'école ou un entrepreneur. 
+Le diagnostic a révélé une perte annuelle de ${lossAmount}$ due à une gestion obsolète. 
+Ta mission est de fournir des conseils EXTRÊMEMENT précis et détaillés. 
+Analyse les causes (frais non perçus, inefficacité administrative, image de marque dégradée) et explique comment la transition vers un écosystème SaaS (logiciel de gestion, bulletins numériques, automatisation WhatsApp) transforme une école en une entreprise d'élite.
+Ton ton doit être analytique, stratégique et percutant. 
+Si l'utilisateur demande comment faire ou semble convaincu, pousse-le à cliquer sur 'Parler à un humain' pour un audit personnalisé.
+Fais des réponses structurées avec des points clés.`;
 
         const payload = {
             contents: formattedContents,
