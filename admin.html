@@ -295,7 +295,6 @@
         function fetchTraffic() {
             // Group traffic by day
             trafficUnsubscribe = db.collection('agentcy_traffic')
-                .orderBy('timestamp', 'asc')
                 .onSnapshot(snap => {
                     document.getElementById('metric-visitors').innerText = snap.size;
                     
@@ -314,22 +313,32 @@
                         chartInstance.data.datasets[0].data = Object.values(countsByDay);
                         chartInstance.update();
                     }
-                }, err => console.log("Traffic err (Ignored if rules not set yet)", err));
+                }, err => {
+                    console.log("Traffic err", err);
+                    document.getElementById('metric-visitors').innerText = "0";
+                });
         }
 
         function fetchLeads() {
             leadsUnsubscribe = db.collection('agentcy_leads')
-                .orderBy('timestamp', 'desc')
                 .limit(50)
                 .onSnapshot(snap => {
                     document.getElementById('metric-leads').innerText = snap.size;
                     const tbody = document.querySelector('#leads-table tbody');
-                    if (snap.empty) return tbody.innerHTML = '<tr><td colspan="3">No leads yet.</td></tr>';
+                    if (snap.empty) {
+                        document.getElementById('trend-leads').innerHTML = `Aucun lead récent`;
+                        return tbody.innerHTML = '<tr><td colspan="3">No leads yet.</td></tr>';
+                    }
                     
                     tbody.innerHTML = '';
                     let newCount = 0;
-                    snap.forEach(doc => {
-                        const data = doc.data();
+                    
+                    // Sort client side
+                    const docs = [];
+                    snap.forEach(d => docs.push(d.data()));
+                    docs.sort((a,b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
+
+                    docs.forEach(data => {
                         const date = data.timestamp ? data.timestamp.toDate().toLocaleString() : 'Just now';
                         if (data.status === 'New' || !data.status) newCount++;
                         tbody.innerHTML += `<tr>
@@ -339,12 +348,15 @@
                         </tr>`;
                     });
                     document.getElementById('trend-leads').innerHTML = `↑ ${newCount} recent`;
+                }, err => {
+                    console.log("Leads err", err);
+                    document.getElementById('metric-leads').innerText = "0";
+                    document.getElementById('trend-leads').innerHTML = `Erreur de lecture`;
                 });
         }
 
         function fetchAudits() {
             auditsUnsubscribe = db.collection('agentcy_diagnostics')
-                .orderBy('timestamp', 'desc')
                 .limit(50)
                 .onSnapshot(snap => {
                     const tbody = document.querySelector('#audits-table tbody');
@@ -352,8 +364,13 @@
                     
                     tbody.innerHTML = '';
                     let totalLoss = 0;
-                    snap.forEach(doc => {
-                        const data = doc.data();
+
+                    // Sort client side
+                    const docs = [];
+                    snap.forEach(d => docs.push(d.data()));
+                    docs.sort((a,b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
+
+                    docs.forEach(data => {
                         const date = data.timestamp ? data.timestamp.toDate().toLocaleString() : 'Just now';
                         const loss = data.yearlyLoss || data.financial_impact?.annual_loss_usd || 0;
                         totalLoss += parseFloat(loss);
@@ -366,7 +383,7 @@
                         </tr>`;
                     });
                     document.getElementById('metric-risk').innerText = `$${totalLoss.toLocaleString()}`;
-                });
+                }, err => console.log("Audits err", err));
         }
     </script>
 </body>

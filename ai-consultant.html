@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentcy Enterprise - Atlas AI Consultant</title>
+    <style>
+        /* Geist / Inter Font */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --bg-color: #000000;
+            --text-color: #ededed;
+            --secondary-text: #a1a1aa;
+            --accent: #ffffff;
+            --user-msg: #27272a;
+            --ai-msg: transparent;
+            --border: #333;
+            --primary: #2563eb;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Header */
+        header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+        .logo-area { display: flex; align-items: center; gap: 10px; }
+        .logo-area svg { width: 24px; height: 24px; color: var(--accent); }
+        .logo-text { font-weight: 600; font-size: 1.1rem; letter-spacing: -0.5px; }
+        .status { font-size: 0.8rem; color: #10b981; display: flex; align-items: center; gap: 5px; }
+        .status-dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; box-shadow: 0 0 8px #10b981; }
+
+        /* Chat Area */
+        #chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px 20px;
+            scroll-behavior: smooth;
+        }
+
+        .chat-layout { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
+
+        .message {
+            display: flex;
+            gap: 16px;
+            max-width: 85%;
+            animation: fadeIn 0.4s ease-out forwards;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+
+        .message.user { align-self: flex-end; flex-direction: row-reverse; }
+        
+        .avatar {
+            width: 32px; height: 32px; border-radius: 4px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.8rem; font-weight: bold; flex-shrink: 0;
+        }
+        .ai-avatar { background: var(--accent); color: var(--bg-color); }
+        .user-avatar { background: var(--user-msg); border: 1px solid var(--border); }
+
+        .msg-content {
+            padding: 12px 16px;
+            border-radius: 8px;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        .message.ai .msg-content {
+            background: var(--ai-msg);
+        }
+        .message.user .msg-content {
+            background: var(--user-msg);
+            border: 1px solid var(--border);
+        }
+
+        /* Lists and bold in AI messages */
+        .msg-content strong { color: var(--accent); }
+        .msg-content ul { margin-left: 20px; margin-top: 10px; margin-bottom: 10px; }
+        .msg-content p { margin-bottom: 10px; }
+        .msg-content p:last-child { margin-bottom: 0; }
+
+        /* Action Buttons */
+        .action-btns {
+            display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px;
+        }
+        .action-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+            color: var(--text-color); padding: 8px 16px; border-radius: 50px;
+            cursor: pointer; font-size: 0.85rem; transition: all 0.2s;
+        }
+        .action-btn:hover { background: rgba(255,255,255,0.1); border-color: var(--secondary-text); }
+        .action-btn.primary { background: var(--accent); color: var(--bg-color); border-color: var(--accent); font-weight: 600; }
+        .action-btn.primary:hover { opacity: 0.9; }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            display: none; padding: 12px 16px; gap: 4px; align-items: center;
+        }
+        .dot { width: 6px; height: 6px; background: var(--secondary-text); border-radius: 50%; animation: blink 1.4s infinite both; }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes blink { 0%, 80%, 100% { opacity: 0.2; } 40% { opacity: 1; } }
+
+        /* Input Area */
+        .input-area {
+            max-width: 800px; margin: 0 auto; width: 100%; padding: 20px;
+        }
+        .input-box {
+            position: relative;
+            background: var(--user-msg); border: 1px solid var(--border);
+            border-radius: 12px; padding: 4px; display: flex;
+        }
+        input {
+            flex: 1; background: transparent; border: none; color: var(--text-color);
+            padding: 12px 16px; font-size: 1rem; outline: none;
+        }
+        input::placeholder { color: var(--secondary-text); }
+        button#send-btn {
+            background: var(--accent); color: var(--bg-color); border: none;
+            width: 40px; height: 40px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: opacity 0.2s;
+        }
+        button#send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            <span class="logo-text">Agentcy Atlas AI</span>
+        </div>
+        <div class="status">
+            <div class="status-dot"></div>
+            Online
+        </div>
+    </header>
+
+    <div id="chat-container">
+        <div class="chat-layout" id="chat-log">
+            <!-- Messages will be injected here -->
+        </div>
+        <div class="chat-layout">
+            <div class="message ai" id="typing" style="display: none;">
+                <div class="avatar ai-avatar">AI</div>
+                <div class="msg-content typing-indicator">
+                    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="input-area">
+        <div class="input-box">
+            <input type="text" id="user-input" placeholder="Répondez à l'IA ou posez une question..." autocomplete="off">
+            <button id="send-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // AI Logic Engine
+        const chatLog = document.getElementById('chat-log');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+        const typingIndicator = document.getElementById('typing');
+
+        let lossAmount = "0";
+        let step = 0; // Tracks the state of the conversation
+
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        if(urlParams.has('loss')) {
+            lossAmount = parseInt(urlParams.get('loss')).toLocaleString();
+        }
+
+        // WhatsApp redirect helper
+        function redirectToWhatsApp() {
+            const waText = `*CONSULTATION STRATÉGIQUE*\n\nBonjour Agentcy Enterprise,\n\nJ'ai discuté avec votre IA Atlas. Mon école subit une perte estimée à $${lossAmount}/an.\n\nJe suis prêt à passer à l'action pour moderniser ma gestion et découvrir votre écosystème double-couche.\n\nQuand pouvons-nous échanger ?`;
+            window.location.href = `https://wa.me/243846885648?text=${encodeURIComponent(waText)}`;
+        }
+
+        // Sleep function for realistic typing delays
+        const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+        // Add message to UI
+        function appendMessage(sender, htmlContent) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message ${sender}`;
+            
+            const avatarDiv = document.createElement('div');
+            avatarDiv.className = `avatar ${sender === 'ai' ? 'ai-avatar' : 'user-avatar'}`;
+            avatarDiv.innerText = sender === 'ai' ? 'AI' : 'Vous';
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'msg-content';
+            contentDiv.innerHTML = htmlContent;
+
+            msgDiv.appendChild(avatarDiv);
+            msgDiv.appendChild(contentDiv);
+            chatLog.appendChild(msgDiv);
+            
+            // Scroll to bottom
+            const chatContainer = document.getElementById('chat-container');
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // Action Buttons Handler
+        window.handleAction = function(actionType) {
+            let userText = "";
+            if(actionType === 'analyse') userText = "J'aimerais comprendre pourquoi.";
+            if(actionType === 'solution') userText = "Comment stopper cela avec votre système ?";
+            if(actionType === 'action') userText = "Je veux passer à l'action maintenant.";
+            if(actionType === 'ignore') userText = "Je gère déjà très bien.";
+
+            // Remove buttons after clicking
+            const btns = document.querySelectorAll('.action-btns');
+            btns.forEach(b => b.remove());
+
+            handleUserInput(userText, actionType);
+        };
+
+        // Core Conversation Logic
+        async function processAIResponse(input, actionType) {
+            typingIndicator.style.display = 'flex';
+            userInput.disabled = true;
+            sendBtn.disabled = true;
+
+            // Simulate deep thinking based on step
+            await sleep(1500 + Math.random() * 1000);
+
+            let responseHTML = "";
+
+            if (step === 0) {
+                // Initial message was sent, user replied
+                if (actionType === 'ignore') {
+                    responseHTML = `<p>Je comprends. Sachez cependant que dans l'économie éducative actuelle, la digitalisation n'est plus une option de confort, mais un <strong>impératif de survie</strong> financière.</p><p>Si vous changez d'avis, nous serons là.</p>`;
+                    step = 99; // end
+                } else {
+                    responseHTML = `<p>Très bien. D'un point de vue purement <strong>économique</strong>, votre établissement perd environ 15% de ses revenus chaque année à cause des "frictions administratives".</p>
+                    <ul>
+                        <li>Recouvrement lent des frais scolaires</li>
+                        <li>Erreurs humaines sur les reçus manuels</li>
+                        <li>Manque de communication instantanée poussant certains parents vers des écoles concurrentes</li>
+                    </ul>
+                    <p>En entreprise, on appelle cela le "Churn Rate". Souhaitez-vous découvrir comment notre architecture double-couche élimine ce problème en 30 jours ?</p>
+                    <div class="action-btns">
+                        <button class="action-btn primary" onclick="handleAction('solution')">Oui, montrez-moi la solution</button>
+                        <button class="action-btn" onclick="handleAction('action')">Passer à l'action directement</button>
+                    </div>`;
+                    step = 1;
+                }
+            } else if (step === 1) {
+                if (actionType === 'action') {
+                    responseHTML = `<p>Excellente décision stratégique.</p><p>Le passage à l'action immédiat est la caractéristique principale des leaders du secteur éducatif.</p><p>Je vous redirige vers un de nos <strong>consultants humains</strong> sur WhatsApp pour planifier le déploiement technique. Préparez-vous à une transformation complète.</p>`;
+                    step = 2;
+                } else {
+                    responseHTML = `<p>Notre écosystème hybride connecte deux mondes :</p>
+                    <p>1. Un <strong>tableau de bord SaaS</strong> pour votre administration (finances, bulletins, statistiques temps réel).</p>
+                    <p>2. Un <strong>portail parents/élèves</strong> hautement sécurisé pour la transparence absolue.</p>
+                    <p>Ce système permet d'encaisser les frais scolaires plus vite, de réduire la charge mentale de vos agents, et d'offrir une image "Elite" à votre école.</p>
+                    <p>L'analyse montre que l'installation sera rentabilisée dès le premier trimestre.</p>
+                    <div class="action-btns">
+                        <button class="action-btn primary" onclick="handleAction('action')">Je veux parler à un consultant (WhatsApp)</button>
+                    </div>`;
+                    step = 1; // wait for 'action'
+                }
+            } else if (step === 2) {
+                // Should redirect
+                responseHTML = `<p>Connexion sécurisée en cours vers Agentcy Consultant...</p>`;
+            } else {
+                // Fallback for custom typing
+                const lowerInput = input.toLowerCase();
+                if(lowerInput.includes('prix') || lowerInput.includes('combien')) {
+                    responseHTML = `<p>Le prix dépend de la taille de votre infrastructure (serveurs dédiés, nombre d'élèves). C'est un <strong>investissement</strong> qui s'autofinance par la réduction de vos pertes (estimées à $${lossAmount}).</p><p>Je vous conseille de discuter des modalités financières avec un consultant.</p><div class="action-btns"><button class="action-btn primary" onclick="handleAction('action')">Contacter un consultant</button></div>`;
+                } else {
+                    responseHTML = `<p>Je suis une IA spécialisée en analyse stratégique. Mon diagnostic est formel : la digitalisation est urgente.</p><p>Pour une implémentation sur-mesure, vous devez parler à un architecte humain.</p><div class="action-btns"><button class="action-btn primary" onclick="handleAction('action')">Passer à l'étape supérieure</button></div>`;
+                }
+            }
+
+            typingIndicator.style.display = 'none';
+            appendMessage('ai', responseHTML);
+
+            if(step === 2 || actionType === 'action') {
+                await sleep(2000);
+                redirectToWhatsApp();
+            }
+
+            userInput.disabled = false;
+            sendBtn.disabled = false;
+            userInput.focus();
+        }
+
+        async function handleUserInput(text, actionType = null) {
+            const inputVal = text || userInput.value.trim();
+            if(!inputVal) return;
+            
+            // Clear input
+            userInput.value = '';
+            
+            // Show user message
+            appendMessage('user', `<p>${inputVal}</p>`);
+            
+            // Process AI
+            await processAIResponse(inputVal, actionType);
+        }
+
+        // Event listeners
+        sendBtn.addEventListener('click', () => handleUserInput());
+        userInput.addEventListener('keypress', (e) => {
+            if(e.key === 'Enter') handleUserInput();
+        });
+
+        // Initialization Message
+        window.addEventListener('load', async () => {
+            await sleep(1000);
+            typingIndicator.style.display = 'flex';
+            await sleep(2000);
+            typingIndicator.style.display = 'none';
+
+            let firstMsg = `<p>Bonjour. Je suis <strong>Atlas</strong>, l'agent d'analyse de données chez Agentcy Enterprise.</p>`;
+            
+            if(lossAmount !== "0") {
+                firstMsg += `<p>J'ai réceptionné les données de votre diagnostic. Mon algorithme confirme une hémorragie financière critique estimée à <strong>$${lossAmount} par an</strong>.</p>
+                <p>En tant qu'entrepreneur, vous ne pouvez pas ignorer ces chiffres. Souhaitez-vous que je vous explique la source exacte de cette fuite, ou êtes-vous prêt à voir la solution ?</p>
+                <div class="action-btns">
+                    <button class="action-btn" onclick="handleAction('analyse')">Expliquez-moi cette perte</button>
+                    <button class="action-btn primary" onclick="handleAction('solution')">Comment stopper ça ?</button>
+                    <button class="action-btn" onclick="handleAction('ignore')">Ignorer le diagnostic</button>
+                </div>`;
+            } else {
+                firstMsg += `<p>Je suis connecté à une vaste base de données en entrepreneuriat et management moderne.</p>
+                <p>La gestion manuelle d'un établissement scolaire en 2026 est une erreur stratégique majeure. Quel est votre objectif prioritaire aujourd'hui ?</p>
+                <div class="action-btns">
+                    <button class="action-btn" onclick="handleAction('solution')">Moderniser mon école</button>
+                    <button class="action-btn primary" onclick="handleAction('action')">Parler à un humain</button>
+                </div>`;
+            }
+            
+            appendMessage('ai', firstMsg);
+        });
+
+    </script>
+</body>
+</html>

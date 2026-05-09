@@ -79,6 +79,14 @@ function runDiagnostic() {
     }
     recText.innerText = advice;
 
+    // Update Action Button to point to AI Consultant
+    const waButton = document.getElementById('diag-wa-btn');
+    if (waButton) {
+        // Redirection vers le chatbot IA au lieu de WhatsApp direct
+        waButton.href = `ai-consultant.html?loss=${totalYearlyLoss}`;
+        waButton.innerText = "Consulter l'IA Stratégique";
+    }
+
     // Sauvegarde Firestore via Agentcy Infrastructure
     if (window.AgentOrganizer) {
         window.AgentOrganizer.saveAudit({
