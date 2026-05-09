@@ -130,6 +130,15 @@
                     </div>
                 </div>
 
+                <!-- Test Automation Section -->
+                <div style="background: rgba(0, 112, 243, 0.05); border: 1px solid rgba(0, 112, 243, 0.2); padding: 20px; border-radius: 8px; margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h4 style="margin: 0; font-size: 0.9rem;">Test du Système d'Automatisation</h4>
+                        <p style="margin: 4px 0 0 0; font-size: 0.8rem; color: var(--geist-muted);">Vérifiez si vous recevez bien les alertes WhatsApp sur votre téléphone.</p>
+                    </div>
+                    <button class="btn" style="background: var(--geist-acc); color: #fff;" onclick="testNexusAlert()">Lancer un Test</button>
+                </div>
+
                 <div class="section-title">Site Activity (Page Views & Clicks)</div>
                 <div class="chart-container">
                     <canvas id="trafficChart"></canvas>
@@ -190,6 +199,26 @@
                 if (trafficUnsubscribe) trafficUnsubscribe();
             }
         });
+
+        async function testNexusAlert() {
+            const webhookUrl = "https://script.google.com/macros/s/AKfycbyuISpIUfYCRElys3ZxvENsFQDsh1O7yP239QSyGm1k9LUSxZQakv8kq-VzAwPO0Ho/exec";
+            const payload = {
+                title: "[TEST ADMIN] Alerte Système",
+                message: "Ceci est un test manuel depuis votre tableau de bord. Si vous recevez ce message, votre automatisation est opérationnelle !",
+                source: "Dashboard Analytics"
+            };
+            
+            try {
+                alert("Envoi du test... Vérifiez votre WhatsApp dans quelques secondes.");
+                await fetch(webhookUrl, {
+                    method: "POST",
+                    mode: "no-cors",
+                    body: JSON.stringify(payload)
+                });
+            } catch (e) {
+                alert("Erreur de test : " + e.message);
+            }
+        }
 
         async function checkAccess() {
             const email = document.getElementById('admin-email').value;
