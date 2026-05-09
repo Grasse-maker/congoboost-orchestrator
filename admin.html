@@ -341,10 +341,11 @@
                     docs.forEach(data => {
                         const date = data.timestamp ? data.timestamp.toDate().toLocaleString() : 'Just now';
                         if (data.status === 'New' || !data.status) newCount++;
+                        const action = data.message || data.type || 'Interaction';
                         tbody.innerHTML += `<tr>
                             <td>${date}</td>
-                            <td>${data.message || 'Interaction'}</td>
-                            <td><span class="badge badge-green">${data.status || 'New'}</span></td>
+                            <td>${action}</td>
+                            <td><span class="badge badge-green">${data.status || 'Active'}</span></td>
                         </tr>`;
                     });
                     document.getElementById('trend-leads').innerHTML = `↑ ${newCount} recent`;

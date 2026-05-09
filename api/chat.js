@@ -52,13 +52,20 @@ Fais des réponses concises, structurées et percutantes. Pas de longs paragraph
         const data = await response.json();
         
         if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-            const aiText = data.candidates[0].content.parts[0].text;
+            let aiText = data.candidates[0].content.parts[0].text;
             
-            // Basic markdown to HTML parsing for the response
+            // Advanced markdown to HTML parsing
             let htmlText = aiText
+                .replace(/```(.*?)```/gs, '<pre><code>$1</code></pre>') // Code blocks
                 .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                 .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/^[-*] (.*)/gm, '<li>$1</li>') // Bullet points
+                .replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>') // Wrap lists
+                .replace(/<\/ul><ul>/g, '') // Clean up nested lists
+                .replace(/\n\n/g, '</p><p>') // Paragraphs
                 .replace(/\n/g, '<br>');
+            
+            if (!htmlText.startsWith('<p>')) htmlText = `<p>${htmlText}</p>`;
                 
             return res.status(200).json({ reply: htmlText });
         } else {

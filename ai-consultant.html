@@ -93,9 +93,12 @@
 
         /* Lists and bold in AI messages */
         .msg-content strong { color: var(--accent); }
-        .msg-content ul { margin-left: 20px; margin-top: 10px; margin-bottom: 10px; }
+        .msg-content ul, .msg-content ol { margin-left: 20px; margin-top: 10px; margin-bottom: 10px; }
+        .msg-content li { margin-bottom: 5px; }
         .msg-content p { margin-bottom: 10px; }
         .msg-content p:last-child { margin-bottom: 0; }
+        .msg-content pre { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 4px; overflow-x: auto; margin: 10px 0; border: 1px solid var(--border); }
+        .msg-content code { font-family: monospace; font-size: 0.9em; background: rgba(255,255,255,0.1); padding: 2px 4px; border-radius: 3px; }
 
         /* Action Buttons */
         .action-btns {
@@ -196,7 +199,9 @@
         // Get URL parameters
         const urlParams = new URLSearchParams(window.location.search);
         if(urlParams.has('loss')) {
-            lossAmount = parseInt(urlParams.get('loss')).toLocaleString();
+            // Clean the loss value (remove non-digits except decimals)
+            const rawLoss = urlParams.get('loss').replace(/[^\d.]/g, '');
+            lossAmount = parseFloat(rawLoss).toLocaleString();
         }
 
         // WhatsApp redirect helper
@@ -312,6 +317,11 @@
             if(inputVal) {
                 userInput.value = '';
                 appendMessage('user', `<p>${inputVal}</p>`);
+                
+                // Log activity to AgentOrganizer if available
+                if (window.AgentOrganizer) {
+                    window.AgentOrganizer.logActivity("ai_chat_input", { text: inputVal });
+                }
             }
             
             await processAIResponse(inputVal, actionType);
@@ -325,6 +335,11 @@
 
         // Initialization Message
         window.addEventListener('load', async () => {
+            // Log chat entry
+            if (window.AgentOrganizer) {
+                window.AgentOrganizer.logActivity("ai_chat_enter", { loss: lossAmount });
+            }
+
             await sleep(1000);
             typingIndicator.style.display = 'flex';
             await sleep(2000);
@@ -354,5 +369,6 @@
         });
 
     </script>
+    <script src="agent_organizer.js?v=4.2.1"></script>
 </body>
 </html>

@@ -88,7 +88,8 @@ function runDiagnostic() {
     }
 
     // Sauvegarde Firestore via Agentcy Infrastructure
-    if (window.AgentOrganizer) {
+    // Uniquement si les données sont significatives (pour éviter de polluer avec des audits vides)
+    if (window.AgentOrganizer && totalYearlyLoss > 0) {
         window.AgentOrganizer.saveAudit({
             brand: "Agentcy Enterprise",
             type: "Elite Diagnostic",
@@ -136,6 +137,16 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('theme', newTheme);
         });
     }
+
+    // Real-time Updates for Diagnostic
+    const inputs = ['current-students', 'lost-range', 'avg-fees', 'current-tools', 'parent-comm'];
+    inputs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener('input', runDiagnostic);
+            el.addEventListener('change', runDiagnostic);
+        }
+    });
 
     // Mobile Menu
     const navToggle = document.getElementById('nav-toggle');
