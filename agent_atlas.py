@@ -13,38 +13,38 @@ class AgentAtlas:
 
     def generate_executive_briefing(self):
         """
-        Génère le briefing stratégique matinal pour l'Architecte.
+        Génère le briefing stratégique matinal pour l'Architecte via l'IA Brain.
         """
-        now = datetime.datetime.now()
-        # Simulation de récupération de données réelles (Leads, Audits)
-        leads_count = 12 # Exemple
-        audits_count = 45 # Exemple
+        from agent_brain import brain
         
-        briefing = f"""AGENTCY ENTERPRISE - EXECUTIVE BRIEFING
----
-DATE: {now.strftime('%d/%m/%Y')}
-STATUS: ALL SYSTEMS NOMINAL
-INFRASTRUCTURE: Vercel Production Environment
+        # Données réelles simulées
+        metrics = {
+            "date": datetime.datetime.now().strftime('%d/%m/%Y'),
+            "leads_active": 14,
+            "audits_performed": 48,
+            "avg_loss": 19200,
+            "market_roi_potential": 820000,
+            "focus_sectors": ["Education (ITI KAMO)", "Logistique", "Santé"]
+        }
 
-[PERFORMANCE METRICS]
-- Active Leads: {leads_count}
-- Strategic Audits Performed: {audits_count}
-- Avg. Identified Loss: $18,400 / institution
-- Potential Market ROI: $740,000 (Current Pipeline)
+        system_instruction = """Tu es le Cerveau d'Atlas, le module d'analyse d'Agentcy Enterprise.
+Ta mission est de rédiger un briefing stratégique pour 'L'Architecte' (le dirigeant).
+Le ton doit être extrêmement professionnel, humain, précis et inspirant. Ne sois pas robotique.
+Analyse les chiffres, souligne les opportunités et propose des actions concrètes basées sur les secteurs prioritaires.
+Structure ton rapport avec des sections claires et des points stratégiques."""
 
-[STRATEGIC SECTOR ANALYSIS - KINSHASA]
-1. EDUCATION: Critical need for "Bureau Zéro Papier". ITI KAMO is our benchmark.
-2. LOGISTICS: Emerging demand for automated inventory tracking.
-3. HEALTHCARE: Patient flow management via WhatsApp is a massive blue ocean.
-
-[RECOMMANDATIONS]
-- Enforce the "Premium" pricing model for new educational leads.
-- Deploy the "Diagnostic Santé" module by next week.
-- Automate the follow-up of clients having performed an audit.
-
-WE DO NOT JUST BUILD APPS, WE ARCHITECT SOVEREIGNTY.
-"""
-        return self.nexus.broadcast_intelligence("Morning Strategic Report", briefing, "HIGH")
+        user_data = f"Voici les métriques du jour : {json.dumps(metrics)}"
+        
+        print("[*] Atlas : Réflexion stratégique en cours via Gemini...")
+        report = brain.think(system_instruction, user_data)
+        
+        print("\n" + "="*50)
+        print("RAPPORT STRATÉGIQUE ATLAS")
+        print("="*50)
+        print(report)
+        print("="*50 + "\n")
+        
+        return self.nexus.broadcast_intelligence("Morning Strategic Report", report, "HIGH")
 
 if __name__ == "__main__":
     atlas = AgentAtlas()

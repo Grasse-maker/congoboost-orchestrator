@@ -39,27 +39,37 @@ class AgentSentinel:
         return audit_data
 
     def monitor_tiktok(self):
-        print("[*] Surveillance de l'empreinte TikTok & Réseaux...")
-        # Simulation d'insights basés sur les interactions réelles imaginées
-        engagement = {
-            "views": "En forte hausse sur les démos SaaS",
-            "top_comment": "Comment peut-on intégrer le Mobile Money dans une école ?",
-            "sentiment": "Curieux et demandeur de solutions concrètes",
-            "action_items": [
-                {
-                    "title": "Optimisation Mobile Money (M-Pesa)",
-                    "description": "L'analyse TikTok montre que 85% des utilisateurs demandent une preuve de paiement instantanée. Action : Ajouter un badge 'M-Pesa Ready' sur la page d'accueil.",
-                    "priority": "High"
-                },
-                {
-                    "title": "Calculateur ROI Scolaire",
-                    "description": "Les directeurs d'écoles à Kinshasa sont sensibles aux pertes administratives. Action : Créer une section dédiée au calcul des frais non perçus.",
-                    "priority": "Medium"
-                }
-            ]
+        print("[*] Sentinel : Analyse de l'empreinte digitale via l'IA Brain...")
+        from agent_brain import brain
+        
+        raw_data = {
+            "views_growth": "25% week-over-week",
+            "top_mentions": ["modernisation scolaire", "M-Pesa payments", "Kinshasa Digital"],
+            "user_sentiments": "Forte curiosité pour l'automatisation, mais peur de la complexité technique."
         }
-        self._save_insight("tiktok_monitor", engagement)
-        return engagement
+
+        system_instruction = """Tu es Sentinel, l'agent de veille stratégique d'Agentcy Enterprise.
+Tu analyses les réseaux sociaux (TikTok) et le marché local de Kinshasa.
+Rédige un rapport d'analyse humain, stratégique et précis.
+Ne te contente pas de lister les données, explique ce qu'elles signifient pour le futur de l'agence.
+Propose 2 ou 3 actions prioritaires basées sur cette analyse."""
+
+        report = brain.think(system_instruction, f"Données brutes : {json.dumps(raw_data)}")
+        
+        insight_data = {
+            "human_analysis": report,
+            "timestamp": time.ctime(),
+            "priority": "HIGH"
+        }
+        
+        print("\n" + "="*50)
+        print("SENTINEL - ANALYSE DE MARCHÉ")
+        print("="*50)
+        print(report)
+        print("="*50 + "\n")
+
+        self._save_insight("market_strategy", insight_data)
+        return insight_data
 
     def _save_insight(self, category, data):
         # Utilisation de Firestore pour le Cloud (Indépendant de l'ordinateur)

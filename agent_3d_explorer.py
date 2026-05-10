@@ -13,16 +13,28 @@ class Agent3DExplorer:
         self.suggestions_file = "designer_instructions.json" # Partagé avec l'Agent Designer
 
     def explore_trends(self):
-        print(f"[{datetime.now().strftime('%H:%M:%S')}] 🚀 Agent 3D Explorer : Exploration des tendances WebGL/Three.js...")
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] [3D] Agent 3D Explorer : Analyse des tendances WebGL via l'IA Brain...")
+        from agent_brain import brain
         
-        # Simulation d'exploration (Dans un vrai cas, utiliserait un scraper ou API)
-        trends = [
-            {"type": "3D Dashboard", "tech": "Three.js / CSS 3D", "impact": "High-End Visual"},
-            {"type": "Floating Particles", "tech": "Canvas API", "impact": "Futuristic Vibe"},
-            {"type": "Interactive DRC Map 3D", "tech": "SVG + JS Animation", "impact": "National Prestige"}
-        ]
+        system_instruction = """Tu es l'explorateur 3D d'Agentcy Enterprise. 
+Ta mission est d'analyser les tendances du design web (Three.js, WebGL, UI interactive) 
+et de proposer des concepts de prototypes qui vont 'impressionner' (WOW factor) les clients de l'agence.
+Rédige tes suggestions de manière technique mais inspirante. 
+Donne 2 ou 3 concepts précis avec la technologie à utiliser et l'impact visuel attendu."""
+
+        user_input = "Quelles sont les meilleures tendances UI/UX 3D pour un tableau de bord SaaS premium en 2026 ?"
         
-        self.apply_suggestions(trends)
+        report = brain.think(system_instruction, user_input)
+        
+        print("\n" + "="*50)
+        print("EXPLORATEUR 3D - CONCEPTS INNOVANTS")
+        print("="*50)
+        print(report)
+        print("="*50 + "\n")
+
+        # Extraction simplifiée des tendances pour le Designer (simulation)
+        # Dans un cas réel, on pourrait demander à l'IA de formater un JSON précis.
+        self.apply_suggestions([{"type": "IA Generated Concept", "tech": "Three.js/GLSL", "impact": "Premium"}])
 
     def apply_suggestions(self, trends):
         print("[*] Agent 3D Explorer : Génération de prototypes pour le site...")

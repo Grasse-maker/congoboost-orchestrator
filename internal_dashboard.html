@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentcy OS - Internal Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050505;
+            --surface: #121212;
+            --primary: #00f2ff;
+            --accent: #7000ff;
+            --text: #ffffff;
+            --text-dim: #a0a0a0;
+            --success: #00ff88;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Outfit', sans-serif; 
+            background: var(--bg); 
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        aside {
+            background: var(--surface);
+            border-right: 1px solid rgba(255,255,255,0.05);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .logo { font-weight: 700; font-size: 1.2rem; letter-spacing: 2px; }
+        .logo span { color: var(--primary); }
+
+        nav ul { list-style: none; }
+        nav li { 
+            padding: 1rem; 
+            margin-bottom: 0.5rem; 
+            border-radius: 8px; 
+            cursor: pointer;
+            transition: 0.3s;
+            color: var(--text-dim);
+        }
+        nav li:hover, nav li.active { background: rgba(0,242,255,0.1); color: var(--primary); }
+
+        /* Main Content */
+        main { padding: 3rem; overflow-y: auto; }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .stat-card h3 { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 0.5rem; }
+        .stat-card p { font-size: 2rem; font-weight: 700; }
+        .stat-card .trend { font-size: 0.8rem; color: var(--success); margin-top: 0.5rem; }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 2rem;
+        }
+        .card h2 { margin-bottom: 1.5rem; font-size: 1.2rem; }
+
+        /* Table */
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 1rem; color: var(--text-dim); font-size: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        td { padding: 1rem; font-size: 0.9rem; border-bottom: 1px solid rgba(255,255,255,0.02); }
+
+        /* Atlas Briefing */
+        .atlas-box {
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.05) 0%, rgba(112, 0, 255, 0.05) 100%);
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            padding: 2rem;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .atlas-box::before {
+            content: "ATLAS INTELLIGENCE";
+            position: absolute;
+            top: 10px; right: 10px;
+            font-size: 0.6rem;
+            opacity: 0.3;
+            letter-spacing: 2px;
+        }
+        .atlas-text { font-size: 0.95rem; line-height: 1.6; color: #d0d0d0; }
+
+        .badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            background: rgba(0,255,136,0.1);
+            color: var(--success);
+        }
+
+        /* Glass Form */
+        .ask-atlas {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+        }
+        input {
+            flex: 1;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 12px;
+            color: white;
+            outline: none;
+        }
+        button {
+            background: var(--primary);
+            color: black;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <aside>
+            <div class="logo">AGENTCY<span> OS</span></div>
+            <nav>
+                <ul>
+                    <li class="active">Overview</li>
+                    <li>CRM Leads</li>
+                    <li>School OS Prototypes</li>
+                    <li>Marketing Hub</li>
+                    <li>Atlas Settings</li>
+                </ul>
+            </nav>
+        </aside>
+        <main>
+            <div class="header">
+                <div>
+                    <h1>Architect Dashboard</h1>
+                    <p style="color: var(--text-dim);">Contrôle opérationnel de la SaaS Factory</p>
+                </div>
+                <div class="badge">SYSTEM READY</div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Traffic</h3>
+                    <p id="total-traffic">---</p>
+                    <div class="trend">+12% vs hier</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Leads</h3>
+                    <p id="active-leads">---</p>
+                    <div class="trend" style="color: var(--primary);">2 en attente</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Audits réalisés</h3>
+                    <p id="total-audits">---</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Potentiel ROI</h3>
+                    <p id="total-roi">$0k</p>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="main-column">
+                    <div class="card">
+                        <h2>Récents Prospects (CRM)</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>DATE</th>
+                                    <th>MESSAGE / SOURCE</th>
+                                    <th>STATUT</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leads-body">
+                                <tr><td colspan="3">Chargement des données...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card">
+                        <h2>Activité du Réseau</h2>
+                        <div id="traffic-chart" style="height: 100px; display: flex; align-items: flex-end; gap: 4px;">
+                            <!-- Simple chart bars -->
+                        </div>
+                    </div>
+                </div>
+                <div class="side-column">
+                    <div class="atlas-box">
+                        <h2 style="color: var(--primary); margin-bottom: 1rem;">Briefing Strategique</h2>
+                        <div class="atlas-text" id="atlas-briefing">
+                            Bonjour Architecte. Je synchronise vos données...
+                        </div>
+                        <div class="ask-atlas">
+                            <input type="text" placeholder="Demander à Atlas...">
+                            <button>→</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="agent_organizer.js"></script>
+    <script>
+        const Dashboard = {
+            async init() {
+                this.loadData();
+                setInterval(() => this.loadData(), 30000); // Auto refresh
+            },
+
+            async loadData() {
+                if (typeof db === 'undefined') return;
+
+                // Load Leads
+                const leadsSnapshot = await db.collection('agentcy_leads').orderBy('timestamp', 'desc').limit(5).get();
+                const leadsBody = document.getElementById('leads-body');
+                leadsBody.innerHTML = '';
+                
+                leadsSnapshot.forEach(doc => {
+                    const data = doc.data();
+                    const date = data.timestamp ? data.timestamp.toDate().toLocaleDateString() : 'N/A';
+                    leadsBody.innerHTML += `
+                        <tr>
+                            <td>${date}</td>
+                            <td>${data.message.substring(0, 30)}...</td>
+                            <td><span class="badge" style="background: rgba(255, 200, 0, 0.1); color: #ffcc00;">${data.status || 'new'}</span></td>
+                        </tr>
+                    `;
+                });
+
+                // Update Stats
+                const trafficSnap = await db.collection('agentcy_traffic').get();
+                document.getElementById('total-traffic').innerText = trafficSnap.size;
+
+                const leadsAllSnap = await db.collection('agentcy_leads').get();
+                document.getElementById('active-leads').innerText = leadsAllSnap.size;
+
+                const auditsSnap = await db.collection('agentcy_diagnostics').get();
+                document.getElementById('total-audits').innerText = auditsSnap.size;
+                
+                let totalRoi = 0;
+                auditsSnap.forEach(doc => {
+                    totalRoi += (doc.data().totalYearlyLoss || 0);
+                });
+                document.getElementById('total-roi').innerText = `$${Math.round(totalRoi/1000)}k`;
+
+                // Update Atlas Briefing (mock for now, would call /api/chat)
+                this.updateAtlas();
+            },
+
+            updateAtlas() {
+                const text = "Architecte, le tunnel de conversion est stable. Nous avons identifié un potentiel de " + document.getElementById('total-roi').innerText + " de pertes récupérables chez vos prospects. Focus suggéré : Suivi WhatsApp du dernier lead.";
+                document.getElementById('atlas-briefing').innerText = text;
+            }
+        };
+
+        window.onload = () => Dashboard.init();
+    </script>
+</body>
+</html>

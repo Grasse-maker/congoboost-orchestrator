@@ -1,0 +1,57 @@
+{
+    "product": "School OS Core",
+    "version": "1.0.0-prototype",
+    "market": "DRC / Sub-Saharan Africa",
+    "collections": {
+        "schools": {
+            "fields": {
+                "name": "string",
+                "location": "string",
+                "director": "string",
+                "subscription_status": "active | trial | suspended",
+                "currency": "USD | CDF"
+            }
+        },
+        "students": {
+            "fields": {
+                "first_name": "string",
+                "last_name": "string",
+                "matricule": "string (unique)",
+                "class_id": "reference",
+                "parent_phone": "string (whatsapp format)",
+                "status": "enrolled | late_payment | suspended"
+            }
+        },
+        "payments": {
+            "fields": {
+                "student_id": "reference",
+                "amount": "number",
+                "method": "M-Pesa | Orange Money | Cash",
+                "transaction_id": "string",
+                "timestamp": "serverTimestamp",
+                "confirmed": "boolean"
+            }
+        },
+        "notifications": {
+            "fields": {
+                "recipient": "string (parent_phone)",
+                "type": "payment_reminder | result_alert | general_announcement",
+                "message": "string",
+                "sent_at": "timestamp",
+                "status": "delivered | failed"
+            }
+        }
+    },
+    "automation_triggers": [
+        {
+            "event": "new_payment",
+            "action": "send_whatsapp_receipt",
+            "agent": "Automation Engineer"
+        },
+        {
+            "event": "late_payment_detected",
+            "action": "schedule_reminder_whatsapp",
+            "delay": "24h"
+        }
+    ]
+}
