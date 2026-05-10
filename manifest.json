@@ -1,0 +1,21 @@
+{
+  "name": "ITI KAMO – Plateforme Scolaire",
+  "short_name": "ITI KAMO",
+  "description": "Gestion scolaire intelligente : élèves, paiements Mobile Money, tableau de bord IA.",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0f1117",
+  "theme_color": "#6366f1",
+  "lang": "fr-FR",
+  "categories": ["education", "productivity"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Nouveau Paiement", "url": "/?page=payments", "description": "Enregistrer un paiement Mobile Money" },
+    { "name": "Liste des Élèves", "url": "/?page=students", "description": "Consulter les élèves" }
+  ]
+}

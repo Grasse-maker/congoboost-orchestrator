@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ITI KAMO – Hors Ligne</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root { --bg:#0f1117; --surface:#1a1d27; --primary:#6366f1; --text:#f1f5f9; --text-dim:#94a3b8; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:var(--text);
+      display:flex; align-items:center; justify-content:center; min-height:100vh; text-align:center; padding:2rem; }
+    .icon { font-size:5rem; margin-bottom:1.5rem; }
+    h1 { font-size:2rem; font-weight:800; letter-spacing:-1px; margin-bottom:0.75rem; }
+    p { color:var(--text-dim); max-width:400px; margin:0 auto 2rem; line-height:1.6; }
+    .btn { background:var(--primary); color:#fff; padding:0.875rem 2rem; border-radius:12px;
+      border:none; font-family:inherit; font-weight:700; cursor:pointer; font-size:1rem; }
+    .btn:hover { background:#4f46e5; }
+    .card { background:var(--surface); border-radius:16px; padding:2rem; max-width:440px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">📡</div>
+    <h1>Vous êtes hors ligne</h1>
+    <p>ITI KAMO ne peut pas se connecter au réseau. Vérifiez votre connexion internet ou réessayez dans quelques instants.</p>
+    <p style="margin-bottom:1.5rem;font-size:0.875rem">Les données déjà consultées restent disponibles en cache.</p>
+    <button class="btn" onclick="window.location.reload()">Réessayer</button>
+  </div>
+</body>
+</html>
