@@ -152,6 +152,11 @@
             font-weight: 600;
             cursor: pointer;
         }
+        
+        @keyframes slideUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
 
     </style>
 </head>
@@ -201,6 +206,27 @@
 
             <div class="content-grid">
                 <div class="main-column">
+                    <div class="card">
+                        <h2>SaaS Client Portfolio</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>CLIENT</th>
+                                    <th>REVENUE (MTD)</th>
+                                    <th>STUDENTS</th>
+                                    <th>STATUS</th>
+                                </tr>
+                            </thead>
+                            <tbody id="portfolio-body">
+                                <tr>
+                                    <td><strong style="color: var(--primary);">ITI KAMO</strong></td>
+                                    <td id="kamo-revenue">0 CDF</td>
+                                    <td id="kamo-students">0</td>
+                                    <td><span class="badge">ACTIVE</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <div class="card">
                         <h2>Récents Prospects (CRM)</h2>
                         <table>
@@ -286,6 +312,29 @@
                 });
                 document.getElementById('total-roi').innerText = `$${Math.round(totalRoi/1000)}k`;
 
+                // --- PORTFOLIO DATA (ITI KAMO) ---
+                try {
+                    const kamoStudents = await db.collection('kamo_students').get();
+                    document.getElementById('kamo-students').innerText = kamoStudents.size;
+
+                    const kamoPayments = await db.collection('kamo_payments').get();
+                    let kamoTotal = 0;
+                    kamoPayments.forEach(d => kamoTotal += (d.data().amount || 0));
+                    document.getElementById('kamo-revenue').innerText = `${kamoTotal.toLocaleString()} CDF`;
+                } catch(e) { console.warn("Portfolio error:", e); }
+
+                // --- REAL-TIME ALERTS ---
+                if (!this.alertsInitialized) {
+                    db.collection('kamo_payments').orderBy('timestamp', 'desc').limit(1).onSnapshot(snap => {
+                        if (!snap.empty && !this.firstLoad) {
+                            const p = snap.docs[0].data();
+                            this.notify(`💰 Nouveau Paiement ITI KAMO : ${p.amount.toLocaleString()} CDF`);
+                        }
+                        this.firstLoad = false;
+                    });
+                    this.alertsInitialized = true;
+                }
+
                 // Update Atlas Briefing (mock for now, would call /api/chat)
                 this.updateAtlas();
             },
@@ -293,6 +342,23 @@
             updateAtlas() {
                 const text = "Architecte, le tunnel de conversion est stable. Nous avons identifié un potentiel de " + document.getElementById('total-roi').innerText + " de pertes récupérables chez vos prospects. Focus suggéré : Suivi WhatsApp du dernier lead.";
                 document.getElementById('atlas-briefing').innerText = text;
+            },
+
+            notify(msg) {
+                const toast = document.createElement('div');
+                toast.className = 'badge';
+                toast.style.position = 'fixed';
+                toast.style.bottom = '2rem';
+                toast.style.right = '2rem';
+                toast.style.padding = '1rem 2rem';
+                toast.style.background = 'var(--primary)';
+                toast.style.color = 'black';
+                toast.style.boxShadow = '0 10px 30px rgba(0,242,255,0.3)';
+                toast.style.zIndex = '1000';
+                toast.style.animation = 'slideUp 0.3s ease';
+                toast.innerText = msg;
+                document.body.appendChild(toast);
+                setTimeout(() => toast.remove(), 5000);
             }
         };
 
