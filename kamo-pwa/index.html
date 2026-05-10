@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ITI KAMO – Plateforme Scolaire Premium</title>
+  <meta name="description" content="Gestion scolaire intelligente : élèves, paiements Mobile Money, tableau de bord et notifications IA." />
+  <meta name="theme-color" content="#6366f1" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="pwa-styles.css" />
+</head>
+<body>
+
+  <!-- SPLASH SCREEN -->
+  <div id="splash" class="splash">
+    <div class="splash-inner">
+      <div class="splash-logo">
+        <span class="splash-icon">🎓</span>
+        <h1>ITI KAMO</h1>
+        <p>Chargement de la plateforme...</p>
+      </div>
+      <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- SIDEBAR NAVIGATION -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-icon">🎓</span>
+      <div>
+        <strong>ITI KAMO</strong>
+        <small>Plateforme Scolaire</small>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-page="dashboard" id="nav-dashboard">
+        <span class="nav-icon">📊</span>
+        <span>Dashboard</span>
+      </button>
+      <button class="nav-item" data-page="students" id="nav-students">
+        <span class="nav-icon">👩‍🎓</span>
+        <span>Élèves</span>
+      </button>
+      <button class="nav-item" data-page="payments" id="nav-payments">
+        <span class="nav-icon">💸</span>
+        <span>Paiements</span>
+      </button>
+      <button class="nav-item" data-page="classes" id="nav-classes">
+        <span class="nav-icon">📚</span>
+        <span>Classes</span>
+      </button>
+      <button class="nav-item" data-page="notifications" id="nav-notifications">
+        <span class="nav-icon">🔔</span>
+        <span>Notifications</span>
+      </button>
+      <button class="nav-item" data-page="atlas" id="nav-atlas">
+        <span class="nav-icon">🧠</span>
+        <span>Atlas IA</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="theme-toggle" id="themeToggle" title="Changer le thème">
+        <span id="themeIcon">🌙</span>
+      </button>
+      <div class="user-avatar">Dir.</div>
+    </div>
+  </aside>
+
+  <!-- MOBILE TOP BAR -->
+  <header class="mobile-header">
+    <button id="menuToggle" class="menu-toggle">☰</button>
+    <span class="mobile-title">ITI KAMO</span>
+    <div class="header-status">
+      <span class="status-dot" id="onlineStatus"></span>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content" id="mainContent">
+    <!-- Pages are injected here by pwa-main.js -->
+  </main>
+
+  <!-- TOAST NOTIFICATIONS -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+
+  <!-- PWA Main Script -->
+  <script src="pwa-main.js"></script>
+</body>
+</html>
