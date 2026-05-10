@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4f46e5"/>
+      <stop offset="100%" style="stop-color:#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:rgba(255,255,255,0.15)"/>
+      <stop offset="100%" style="stop-color:rgba(255,255,255,0)"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background rounded square -->
+  <rect width="192" height="192" rx="40" fill="url(#bg)"/>
+
+  <!-- Shine overlay -->
+  <rect width="192" height="96" rx="40" fill="url(#shine)"/>
+
+  <!-- Graduation cap (mortarboard) -->
+  <!-- Board top flat part -->
+  <rect x="52" y="82" width="88" height="10" rx="4" fill="white" opacity="0.95" filter="url(#glow)"/>
+
+  <!-- Diamond/rhombus top of cap -->
+  <polygon points="96,54 140,82 96,92 52,82" fill="white" opacity="0.95"/>
+
+  <!-- Cap top shine -->
+  <polygon points="96,54 118,68 96,74 74,68" fill="rgba(255,255,255,0.3)"/>
+
+  <!-- Tassel string -->
+  <line x1="140" y1="82" x2="140" y2="108" stroke="white" stroke-width="3" opacity="0.85" stroke-linecap="round"/>
+
+  <!-- Tassel end -->
+  <circle cx="140" cy="112" r="5" fill="#fbbf24"/>
+  <line x1="136" y1="117" x2="134" y2="128" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+  <line x1="140" y1="117" x2="140" y2="130" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+  <line x1="144" y1="117" x2="146" y2="128" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Book under cap (School OS symbol) -->
+  <rect x="68" y="96" width="56" height="36" rx="4" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+  <line x1="96" y1="96" x2="96" y2="132" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+
+  <!-- Lines on book -->
+  <line x1="74" y1="108" x2="91" y2="108" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="74" y1="115" x2="91" y2="115" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="74" y1="122" x2="91" y2="122" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="101" y1="108" x2="118" y2="108" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="101" y1="115" x2="118" y2="115" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="101" y1="122" x2="118" y2="122" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- "K" letter watermark bottom right -->
+  <text x="148" y="175" font-family="system-ui" font-weight="900" font-size="22" fill="rgba(255,255,255,0.2)" text-anchor="middle">K</text>
+</svg>
