@@ -44,14 +44,13 @@ Si l'utilisateur demande comment faire ou semble convaincu, pousse-le à cliquer
 Fais des réponses structurées avec des points clés.`;
 
         const payload = {
-            contents: formattedContents,
-            systemInstruction: {
-                role: "system",
+            system_instruction: {
                 parts: [{ text: systemPrompt }]
             },
+            contents: formattedContents,
             generationConfig: {
                 temperature: 0.7,
-                maxOutputTokens: 500,
+                maxOutputTokens: 800,
             }
         };
 
@@ -71,25 +70,34 @@ Fais des réponses structurées avec des points clés.`;
 
         const data = await response.json();
         
-        if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-            let aiText = data.candidates[0].content.parts[0].text;
+        if (data.candidates && data.candidates[0]) {
+            const candidate = data.candidates[0];
             
-            // Advanced markdown to HTML parsing
-            let htmlText = aiText
-                .replace(/```(.*?)```/gs, '<pre><code>$1</code></pre>') // Code blocks
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                .replace(/^[-*] (.*)/gm, '<li>$1</li>') // Bullet points
-                .replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>') // Wrap lists
-                .replace(/<\/ul><ul>/g, '') // Clean up nested lists
-                .replace(/\n\n/g, '</p><p>') // Paragraphs
-                .replace(/\n/g, '<br>');
-            
-            if (!htmlText.startsWith('<p>')) htmlText = `<p>${htmlText}</p>`;
+            if (candidate.content && candidate.content.parts && candidate.content.parts[0]) {
+                let aiText = candidate.content.parts[0].text;
                 
-            return res.status(200).json({ reply: htmlText });
+                // Advanced markdown to HTML parsing
+                let htmlText = aiText
+                    .replace(/```(.*?)```/gs, '<pre><code>$1</code></pre>') 
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                    .replace(/^[-*] (.*)/gm, '<li>$1</li>') 
+                    .replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>') 
+                    .replace(/<\/ul><ul>/g, '') 
+                    .replace(/\n\n/g, '</p><p>') 
+                    .replace(/\n/g, '<br>');
+                
+                if (!htmlText.startsWith('<p>')) htmlText = `<p>${htmlText}</p>`;
+                    
+                return res.status(200).json({ reply: htmlText });
+            } else if (candidate.finishReason === 'SAFETY') {
+                return res.status(200).json({ reply: "<p>Désolé, je ne peux pas répondre à cette demande pour des raisons de sécurité. Concentrons-nous sur la stratégie de votre établissement.</p>" });
+            } else {
+                console.error("No content in candidate:", JSON.stringify(candidate));
+                throw new Error("Empty AI response");
+            }
         } else {
-            throw new Error("Invalid response format from Gemini");
+            throw new Error("No candidates returned from Gemini");
         }
 
     } catch (error) {
