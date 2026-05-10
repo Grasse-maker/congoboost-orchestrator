@@ -6,33 +6,27 @@ export default async function handler(req, res) {
     try {
         const { messages, lossAmount } = req.body;
         
-        // This key is now securely pulled from Vercel Environment Variables
         const GEMINI_API_KEY = process.env.GEMINI_API_KEY; 
         
         if (!GEMINI_API_KEY) {
-            return res.status(500).json({ error: 'API Key not configured' });
+            return res.status(200).json({ reply: "<p>[Erreur Configuration] La clé API Gemini n'est pas configurée dans Vercel. Veuillez l'ajouter dans les variables d'environnement (GEMINI_API_KEY).</p>" });
         }
+
         // Format conversation history for Gemini
-        // IMPORTANT: Gemini requires the first message in 'contents' to be from the 'user' role.
         let formattedContents = messages
             .map(msg => ({
                 role: msg.role === 'user' ? 'user' : 'model',
                 parts: [{ text: msg.content }]
             }));
 
-        // If the history starts with a model message (like the initial welcome), remove it
-        // because the system instruction already handles the identity.
         if (formattedContents.length > 0 && formattedContents[0].role === 'model') {
             formattedContents.shift();
         }
 
-        // If after shifting we have nothing, and the user just sent a message, 
-        // make sure we have at least that message.
         if (formattedContents.length === 0) {
             return res.status(200).json({ reply: "<p>Bonjour ! Je suis Atlas. Comment puis-je vous aider aujourd'hui ?</p>" });
         }
 
-        // Context injected as system instruction
         const systemPrompt = `Tu es Atlas, l'IA Consultante Stratégique de l'agence 'Agentcy Enterprise'. 
 Tu es un expert en entrepreneuriat, économie, business, et modernisation des établissements scolaires.
 Tu parles à un dirigeant d'école ou un entrepreneur. 
@@ -50,22 +44,25 @@ Fais des réponses structurées avec des points clés.`;
             contents: formattedContents,
             generationConfig: {
                 temperature: 0.7,
-                maxOutputTokens: 800,
+                maxOutputTokens: 1000,
             }
         };
 
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(payload)
-        });
+        let response;
+        try {
+            response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+        } catch (fetchErr) {
+            return res.status(200).json({ reply: `<p>Erreur de connexion au serveur IA : ${fetchErr.message}. Vérifiez que le serveur Vercel a accès à Internet.</p>` });
+        }
 
         if (!response.ok) {
-            const errText = await response.text();
-            console.error("Gemini API Error:", errText);
-            throw new Error(`API Error: ${response.status}`);
+            const errData = await response.json().catch(() => ({}));
+            console.error("Gemini API Error:", errData);
+            return res.status(200).json({ reply: `<p>L'IA a retourné une erreur (${response.status}) : ${errData.error?.message || 'Erreur inconnue'}.</p>` });
         }
 
         const data = await response.json();
@@ -93,19 +90,14 @@ Fais des réponses structurées avec des points clés.`;
             } else if (candidate.finishReason === 'SAFETY') {
                 return res.status(200).json({ reply: "<p>Désolé, je ne peux pas répondre à cette demande pour des raisons de sécurité. Concentrons-nous sur la stratégie de votre établissement.</p>" });
             } else {
-                console.error("No content in candidate:", JSON.stringify(candidate));
-                throw new Error("Empty AI response");
+                return res.status(200).json({ reply: "<p>Désolé, j'ai eu un problème pour formuler ma réponse (FinishReason: " + candidate.finishReason + "). Essayons de reformuler.</p>" });
             }
         } else {
-            throw new Error("No candidates returned from Gemini");
+            return res.status(200).json({ reply: "<p>Désolé, aucune réponse n'a été générée par l'IA. Veuillez réessayer.</p>" });
         }
 
     } catch (error) {
         console.error('Chat API Error:', error);
-        return res.status(500).json({ 
-            error: 'Internal Server Error', 
-            details: error.message,
-            stack: error.stack 
-        });
+        return res.status(200).json({ reply: `<p>Une erreur interne est survenue : ${error.message}</p>` });
     }
 }
