@@ -28,15 +28,14 @@ export default async function handler(req, res) {
 Expert en business et modernisation scolaire. Perte annuelle détectée: ${lossAmount}$. 
 Donne des conseils précis, structurés et pousse vers une consultation humaine sur WhatsApp.`;
 
-        // Note: v1 supports system_instruction for Gemini 1.5
         const payload = {
             system_instruction: { parts: [{ text: systemPrompt }] },
             contents: formattedContents,
             generationConfig: { temperature: 0.7, maxOutputTokens: 1000 }
         };
 
-        // Utilisation du modèle stable v1
-        const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+        // Utilisation du modèle 'gemini-flash-latest' identifié via debug
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
         
         const response = await fetch(url, {
             method: 'POST',
