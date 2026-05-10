@@ -88,17 +88,29 @@ function runDiagnostic() {
     }
 
     // Sauvegarde Firestore via Agentcy Infrastructure
-    // Uniquement si les données sont significatives (pour éviter de polluer avec des audits vides)
-    if (window.AgentOrganizer && totalYearlyLoss > 0) {
-        window.AgentOrganizer.saveAudit({
-            brand: "Agentcy Enterprise",
-            type: "Elite Diagnostic",
-            totalLoss: totalYearlyLoss,
-            satisfaction: satisfaction,
-            efficiency: Math.round(efficiency),
-            potentialROI: potentialROI,
-            inputs: { students, lostStudents, fees, tools, communication }
-        });
+    // Utilisation d'un debounce pour éviter de spammer Firestore à chaque frappe
+    clearTimeout(window.diagDebounce);
+    window.diagDebounce = setTimeout(() => {
+        if (window.AgentOrganizer && totalYearlyLoss > 0) {
+            window.AgentOrganizer.saveAudit({
+                brand: "Agentcy Enterprise",
+                type: "Elite Diagnostic",
+                totalLoss: totalYearlyLoss,
+                satisfaction: satisfaction,
+                efficiency: Math.round(efficiency),
+                potentialROI: potentialROI,
+                inputs: { students, lostStudents, fees, tools, communication }
+            });
+            console.log("Audit sauvegardé avec succès.");
+        }
+    }, 2000); // 2 secondes de délai
+}
+
+function forceSaveAudit() {
+    // Force la sauvegarde immédiate (utilisé lors du clic sur le bouton d'action)
+    if (window.diagDebounce) {
+        clearTimeout(window.diagDebounce);
+        runDiagnostic();
     }
 }
 

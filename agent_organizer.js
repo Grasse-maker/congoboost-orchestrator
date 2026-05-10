@@ -40,10 +40,12 @@ const PROJECT_ID = "agentcy"; // Préfixe pour éviter les collisions dans KinCo
 
 const AgentOrganizer = {
     init() {
+        if (this.initialized) return;
         console.log(`🤖 Agent Organisateur [${PROJECT_ID}] : Initialisation sur Firestore...`);
         this.logActivity("page_view", { url: window.location.pathname, referrer: document.referrer });
         this.setupFormHandlers();
         this.syncState();
+        this.initialized = true;
     },
 
     // Sauvegarde des activités globales du site (Analytics)
@@ -84,6 +86,14 @@ const AgentOrganizer = {
     // Sauvegarde des messages de contact (Collection: agentcy_leads)
     async logContact(message) {
         if (!db) return;
+        
+        // Anti-doublon : Éviter de logguer le même lead plusieurs fois en une session
+        const leadKey = `lead_${btoa(message).substring(0, 16)}`;
+        if (sessionStorage.getItem(leadKey)) {
+            console.log("[~] Lead déjà loggué pour cette session.");
+            return;
+        }
+
         try {
             const collectionName = `${PROJECT_ID}_leads`;
             await db.collection(collectionName).add({
@@ -93,6 +103,8 @@ const AgentOrganizer = {
             });
             console.log(`[+] Lead de contact loggé dans ${collectionName}`);
             
+            sessionStorage.setItem(leadKey, "true");
+
             // Déclenchement de l'alerte WhatsApp via le Nexus
             this.notifyNexus("Nouveau Lead Détecté", message);
             

@@ -13,10 +13,24 @@ export default async function handler(req, res) {
             return res.status(500).json({ error: 'API Key not configured' });
         }
         // Format conversation history for Gemini
-        const formattedContents = messages.map(msg => ({
-            role: msg.role === 'user' ? 'user' : 'model',
-            parts: [{ text: msg.content }]
-        }));
+        // IMPORTANT: Gemini requires the first message in 'contents' to be from the 'user' role.
+        let formattedContents = messages
+            .map(msg => ({
+                role: msg.role === 'user' ? 'user' : 'model',
+                parts: [{ text: msg.content }]
+            }));
+
+        // If the history starts with a model message (like the initial welcome), remove it
+        // because the system instruction already handles the identity.
+        if (formattedContents.length > 0 && formattedContents[0].role === 'model') {
+            formattedContents.shift();
+        }
+
+        // If after shifting we have nothing, and the user just sent a message, 
+        // make sure we have at least that message.
+        if (formattedContents.length === 0) {
+            return res.status(200).json({ reply: "<p>Bonjour ! Je suis Atlas. Comment puis-je vous aider aujourd'hui ?</p>" });
+        }
 
         // Context injected as system instruction
         const systemPrompt = `Tu es Atlas, l'IA Consultante Stratégique de l'agence 'Agentcy Enterprise'. 

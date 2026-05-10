@@ -213,8 +213,34 @@
         // Sleep function for realistic typing delays
         const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
+        // Typewriter effect for AI messages
+        async function typeWriter(container, html, speed = 15) {
+            return new Promise(async (resolve) => {
+                const temp = document.createElement('div');
+                temp.innerHTML = html;
+                const nodes = Array.from(temp.childNodes);
+                
+                for (const node of nodes) {
+                    if (node.nodeType === Node.TEXT_NODE) {
+                        const text = node.textContent;
+                        for (let i = 0; i < text.length; i++) {
+                            container.innerHTML += text[i];
+                            const chatContainer = document.getElementById('chat-container');
+                            chatContainer.scrollTop = chatContainer.scrollHeight;
+                            await sleep(speed);
+                        }
+                    } else {
+                        container.appendChild(node.cloneNode(true));
+                        const chatContainer = document.getElementById('chat-container');
+                        chatContainer.scrollTop = chatContainer.scrollHeight;
+                    }
+                }
+                resolve();
+            });
+        }
+
         // Add message to UI
-        function appendMessage(sender, htmlContent) {
+        async function appendMessage(sender, htmlContent, animate = false) {
             const msgDiv = document.createElement('div');
             msgDiv.className = `message ${sender}`;
             
@@ -224,13 +250,17 @@
             
             const contentDiv = document.createElement('div');
             contentDiv.className = 'msg-content';
-            contentDiv.innerHTML = htmlContent;
-
+            
             msgDiv.appendChild(avatarDiv);
             msgDiv.appendChild(contentDiv);
             chatLog.appendChild(msgDiv);
+
+            if (sender === 'ai' && animate) {
+                await typeWriter(contentDiv, htmlContent);
+            } else {
+                contentDiv.innerHTML = htmlContent;
+            }
             
-            // Scroll to bottom
             const chatContainer = document.getElementById('chat-container');
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
@@ -238,10 +268,10 @@
         // Action Buttons Handler
         window.handleAction = function(actionType) {
             let userText = "";
-            if(actionType === 'analyse') userText = "J'aimerais comprendre pourquoi.";
-            if(actionType === 'solution') userText = "Comment stopper cela avec votre système ?";
-            if(actionType === 'action') userText = "Je veux passer à l'action maintenant.";
-            if(actionType === 'ignore') userText = "Je gère déjà très bien.";
+            if(actionType === 'analyse') userText = "Expliquez-moi d'où vient cette perte.";
+            if(actionType === 'solution') userText = "Comment votre système peut-il m'aider ?";
+            if(actionType === 'roi') userText = "Quel ROI puis-je espérer en 6 mois ?";
+            if(actionType === 'action') userText = "Je souhaite parler à un consultant maintenant.";
 
             // Remove buttons after clicking
             const btns = document.querySelectorAll('.action-btns');
@@ -299,11 +329,29 @@
 
             } catch (error) {
                 console.error(error);
-                responseHTML = `<p>Je rencontre une légère surcharge réseau. Cependant, mon diagnostic reste formel : la digitalisation de votre établissement est urgente. Pour une implémentation sur-mesure, je vous conseille de parler directement à un architecte humain.</p><div class="action-btns"><button class="action-btn primary" onclick="handleAction('action')">Passer à l'étape supérieure</button></div>`;
+                responseHTML = `<p>Je rencontre une légère latence réseau due à une forte demande. Cependant, mon analyse de votre diagnostic est terminée.</p>
+                <p>Pour obtenir des réponses immédiates et détaillées sur votre projet de modernisation, je vous recommande de basculer vers une <strong>consultation humaine directe</strong>.</p>
+                <div class="action-btns"><button class="action-btn primary" onclick="handleAction('action')">Contacter un consultant (WhatsApp)</button></div>`;
             }
 
             typingIndicator.style.display = 'none';
-            appendMessage('ai', responseHTML);
+            await appendMessage('ai', responseHTML, true);
+
+            // Add new set of quick replies
+            const quickReplies = `
+                <div class="action-btns">
+                    <button class="action-btn" onclick="handleAction('roi')">ROI estimé</button>
+                    <button class="action-btn" onclick="handleAction('solution')">Solutions techniques</button>
+                    <button class="action-btn primary" onclick="handleAction('action')">WhatsApp Direct</button>
+                </div>
+            `;
+            const quickReplyDiv = document.createElement('div');
+            quickReplyDiv.innerHTML = quickReplies;
+            chatLog.appendChild(quickReplyDiv);
+
+            // Force scroll to bottom again after AI response
+            const chatContainer = document.getElementById('chat-container');
+            chatContainer.scrollTop = chatContainer.scrollHeight;
 
             userInput.disabled = false;
             sendBtn.disabled = false;
@@ -361,11 +409,17 @@
             // Seed conversation history
             conversationHistory.push({ role: 'model', content: firstMsgRaw });
 
-            firstMsgHTML += `<div class="action-btns">
+            const quickReplies = `
+                <div class="action-btns">
+                    <button class="action-btn" onclick="handleAction('analyse')">Analyser la perte</button>
+                    <button class="action-btn" onclick="handleAction('roi')">ROI potentiel</button>
                     <button class="action-btn primary" onclick="handleAction('action')">Parler à un humain</button>
                 </div>`;
             
-            appendMessage('ai', firstMsgHTML);
+            await appendMessage('ai', firstMsgHTML, true);
+            const quickReplyDiv = document.createElement('div');
+            quickReplyDiv.innerHTML = quickReplies;
+            chatLog.appendChild(quickReplyDiv);
         });
 
     </script>
